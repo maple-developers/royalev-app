@@ -9,9 +9,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="HeaderBar">
         <item name="android:background">#98242A</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -50,6 +52,6 @@
         <item name="colorPrimary">#03A9F4</item>
         <item name="colorPrimaryDark">#FFCC00</item>
         <item name="colorAccent">#4fa881</item>
-        <item name="android:windowBackground">@drawable/bg</item>
+        <item name="android:windowBackground">@drawable/bg_main</item>
     </style>
 </resources>
