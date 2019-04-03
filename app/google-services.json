@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "993955393387",
+    "firebase_url": "https://rimaproject-b8cb7.firebaseio.com",
+    "project_id": "rimaproject-b8cb7",
+    "storage_bucket": "rimaproject-b8cb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993955393387:android:8d6e0a255f48250f",
+        "android_client_info": {
+          "package_name": "com.maple.rimaproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993955393387-3q2qm52vdhghcfd6lous6jf9ofa4fq7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maple.rimaproject",
+            "certificate_hash": "b3e419a75a8d968296003a074b12aa2c4782476d"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpM5YkOieitWh4_TWqMBgg4lgNYACEnoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993955393387-vf68ee0eeq12042t3pbhat0ci0rv45ma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

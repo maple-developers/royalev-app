@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="auth_page_margin">24dp</dimen>
+    <dimen name="folded_size">20sp</dimen>
+    <dimen name="unfolded_size">40sp</dimen>
+    <dimen name="option_size">56dp</dimen>
+    <dimen name="text_padding">16dp</dimen>
+    <dimen name="input_width">220dp</dimen>
+    <dimen name="label_size">20sp</dimen>
+    <dimen name="folded_label_padding">22sp</dimen>
+    <dimen name="logo_size">64dp</dimen>
+    <dimen name="guideline_margin">56dp</dimen>
+
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_size_normal">100dp</dimen>
+    <dimen name="text_size">12sp</dimen>
+    <dimen name="tab_max_width">264dp</dimen>
+    <dimen name="tab_padding_bottom">16dp</dimen>
+    <dimen name="tab_label">14sp</dimen>
+    <dimen name="custom_tab_layout_height">72dp</dimen>
+
+    <dimen name="app_bar_height">256dp</dimen>
+    <dimen name="expanded_toolbar_title_margin_start">64dp</dimen>
+</resources>
