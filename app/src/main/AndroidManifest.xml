@@ -15,6 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activites.ProjectsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NavigationActivity"/>
+        </activity>
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
@@ -24,19 +29,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- <activity android:name=".Chat_Main_Activity"></activity> -->
+        </activity> <!-- <activity android:name=".Chat_Main_Activity"></activity> -->
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name">
-
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".Chat_Main_Activity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:launchMode="singleTop"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private List<String> mData;

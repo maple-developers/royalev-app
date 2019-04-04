@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 
+
 public class ImageUtils {
 
     public static final int AVATAR_WIDTH = 128;

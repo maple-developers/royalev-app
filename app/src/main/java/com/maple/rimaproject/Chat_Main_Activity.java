@@ -1,6 +1,5 @@
 package com.maple.rimaproject;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +28,8 @@ import com.maple.rimaproject.service.ServiceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 public class Chat_Main_Activity extends AppCompatActivity {
     private static String TAG = "Chat_Main_Activity";
     private ViewPager viewPager;

@@ -4,25 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.maple.rimaproject.fragments.FavoritesFragment;
 import com.maple.rimaproject.fragments.HomeFragment;
+import com.maple.rimaproject.fragments.ProjectsFragment;
 import com.maple.rimaproject.fragments.SearchFragment;
 import com.maple.rimaproject.util.BottomNavigationViewHelper;
+
 
 public class NavigationActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,32 +32,36 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-//                    Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_dashboard:
-                    changeFragmentMethod(new SearchFragment(), "test");
-
-                    Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_notifications:
-//                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_chat:
-//                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
-
-//                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.navigation_home:
+//                    changeFragmentMethod(new HomeFragment(), "test");
+////                    Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_dashboard:
+//                    changeFragmentMethod(new SearchFragment(), "test");
+//
+////                    Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_projects:
+////                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_favorites:
+////                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+////                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_chats:
+////                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+////                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
 
 
     @Override
@@ -91,15 +96,19 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
                             case R.id.navigation_dashboard:
                                changeFragmentMethod(new SearchFragment(), "test");
 
+//                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.navigation_projects:
+                            changeFragmentMethod(new ProjectsFragment(), "project");
                                 Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
                                 break;
-                            case R.id.navigation_notifications:
-//                            changeFragmentMethod(new FavoriteFragment(), getString(R.string.favorite));
-                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+                            case R.id.navigation_favorites:
+//                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+                                NavigationActivity.this.changeFragmentMethod(new FavoritesFragment(), "");
                                 break;
-                            case R.id.navigation_chat:
+                            case R.id.navigation_alerts:
                                 Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
-                                NavigationActivity.this.changeFragmentMethod(new SearchFragment(), "");
+//                                NavigationActivity.this.changeFragmentMethod(new SearchFragment(), "");
                                 break;
                         }
                         return true;

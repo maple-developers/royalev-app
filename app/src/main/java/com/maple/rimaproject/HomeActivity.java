@@ -2,20 +2,19 @@ package com.maple.rimaproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -25,43 +24,44 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity  implements MyRecyclerViewAdapter.ItemClickListener, ExampleBottomSheetDialog.BottomSheetListener{
+
+public class HomeActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener, ExampleBottomSheetDialog.BottomSheetListener{
 
     private TextView mTextMessage;
     SliderLayout sliderLayout;
     MyRecyclerViewAdapter adapter;
     private Toolbar mTopToolbar;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_dashboard:
-                    Toast.makeText(HomeActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_notifications:
-                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_chat:
-                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
-
-                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.navigation_home:
+//                    Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_dashboard:
+//                    Toast.makeText(HomeActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_notifications:
+//                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                case R.id.navigation_chat:
+//                    startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+//
+//                    Toast.makeText(HomeActivity.this, "navigation_notifications", Toast.LENGTH_SHORT).show();
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        mTopToolbar =  findViewById(R.id.my_toolbar);
-        setSupportActionBar(mTopToolbar);
+//        mTopToolbar =  findViewById(R.id.my_toolbar);
+//        setSupportActionBar(mTopToolbar);
 
         sliderLayout = findViewById(R.id.imageSlider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity  implements MyRecyclerViewAd
 //        });
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

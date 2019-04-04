@@ -1,38 +1,52 @@
 package com.maple.rimaproject.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageView;
 
-import com.google.firebase.database.annotations.NotNull;
 import com.maple.rimaproject.R;
+import com.maple.rimaproject.activites.ProjectsActivity;
 
-import me.bendik.simplerangeview.SimpleRangeView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-
-public class SearchFragment extends Fragment {
+public class ProjectsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    SimpleRangeView fixed_rangeview;
-    EditText editStart,editEnd;
-
     private OnFragmentInteractionListener mListener;
 
-    public SearchFragment() {
+
+    @BindView(R.id.imgVilla)
+    ImageView imgVilla;
+
+    @BindView(R.id.imgAppartments)
+    ImageView imgAppartments;
+
+    @BindView(R.id.imgOffices)
+    ImageView imgOffices;
+
+    @BindView(R.id.imgShops)
+    ImageView imgShops;
+
+    RecyclerView rv_projects;
+    public ProjectsFragment() {
 
     }
 
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static ProjectsFragment newInstance(String param1, String param2) {
+        ProjectsFragment fragment = new ProjectsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -52,32 +66,17 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_projects, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
-        editStart = (EditText) view.findViewById(R.id.edit_start);
-        editEnd = (EditText) view.findViewById(R.id.edit_end);
-
-        fixed_rangeview = view.findViewById(R.id.fixed_rangeview);
-
-
-        fixed_rangeview.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {
+        ButterKnife.bind(this,view);
+        imgAppartments.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStartRangeChanged(@NotNull SimpleRangeView rangeView, int start) {
-                editStart.setText(String.valueOf(start));
-            }
-
-            @Override
-            public void onEndRangeChanged(@NotNull SimpleRangeView rangeView, int end) {
-                editEnd.setText(String.valueOf(end));
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ProjectsActivity.class);
+                startActivity(i);
             }
         });
-
-//        fixed_rangeview.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
-//            @Override
-//            public void onRangeChanged(@NotNull SimpleRangeView rangeView, int start, int end) {
-//                editRange.setText(String.valueOf(start) + " - " + String.valueOf(end));
-//            }
-//        });
+//        rv_projects = view.findViewById(R.id.rv_projects);
         return view;
     }
 
@@ -87,7 +86,6 @@ public class SearchFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
 
     public interface OnFragmentInteractionListener {

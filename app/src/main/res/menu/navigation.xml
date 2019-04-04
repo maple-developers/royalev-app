@@ -18,11 +18,11 @@
 
     <item
         android:id="@+id/navigation_favorites"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_favorite_black_24dp"
         android:title="Favorites" />
 
     <item
-        android:id="@+id/navigation_chats"
+        android:id="@+id/navigation_alerts"
         android:icon="@drawable/ic_notifications_active_black_24dp"
         android:title="Alerts" />
 

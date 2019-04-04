@@ -3,6 +3,7 @@ package com.maple.rimaproject.Font;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -10,13 +11,14 @@ import android.widget.TextView;
 
 import com.maple.rimaproject.R;
 
+
 /**
  * Created by Khalid Aldaboubi on 4/3/2019 11:32 AM .
  * Maple Technologies Ltd
  * khalid.aldaboubi93@gmail.com
  * Project Name : royalev-app
  */
-public class CustomTextView extends android.support.v7.widget.AppCompatTextView {
+public class CustomTextView extends AppCompatTextView {
 
     public CustomTextView(Context context) {
         this(context, null);
