@@ -20,6 +20,8 @@ import com.maple.rimaproject.model.Project;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.gujun.android.taggroup.TagGroup;
+
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowHolder> {
 
@@ -48,6 +50,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         list.add("khalid");
         list.add("ali");
 //        holder.txtTags.setTags(list);
+        holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات تجارية"});
     }
 
 
@@ -68,13 +71,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
 
     public class SingleItemRowHolder extends RecyclerView.ViewHolder{
         protected CustomTextView tvAddress, tvMobile, tvPrice, tvNote;
-//        TagContainerLayout txtTags;
+        TagGroup txtTags;
         protected Button btnDelivered, btnNotDelivered;
         protected LinearLayout cardlinear;
 
         public SingleItemRowHolder(View view) {
             super(view);
-//            txtTags = view.findViewById(R.id.txtTags);
+            txtTags = view.findViewById(R.id.txtTags);
 //            tvAddress = view.findViewById(R.id.tv_address);
 //            tvAddress = view.findViewById(R.id.tv_address);
 //            tvMobile = view.findViewById(R.id.tv_mobile);

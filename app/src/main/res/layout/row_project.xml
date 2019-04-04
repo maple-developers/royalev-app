@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/tools"
-    custom:cardElevation="3dp"
+    custom:cardElevation="4dp"
     custom:cardUseCompatPadding="true">
 
     <RelativeLayout
@@ -30,17 +30,13 @@
             android:textColor="#FFF"
             custom:typefaceAsset="ge_ss_light.otf" />
 
-        <co.lujun.androidtagview.TagContainerLayout
+        <me.gujun.android.taggroup.TagGroup
             android:id="@+id/txtTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:padding="10dp"
-            app:container_enable_drag="false"
-            app:horizontal_interval="10dp"
-            app:vertical_interval="10dp"
-            app:tag_clickable="true"
-            app:tag_theme="pure_teal" />
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            style="@style/TagGroup"
+            android:layout_below="@+id/imgProject"/>
 
         <com.maple.rimaproject.Font.CustomTextView
             android:layout_width="match_parent"
