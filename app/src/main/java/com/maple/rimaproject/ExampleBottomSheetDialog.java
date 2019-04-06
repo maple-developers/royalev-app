@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 
+import com.maple.rimaproject.adapters.CustomAndroidGridViewAdapter;
+
 import java.util.ArrayList;
 
 

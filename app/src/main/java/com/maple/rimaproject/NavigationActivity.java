@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.maple.rimaproject.activites.Contactus_Activity;
 import com.maple.rimaproject.fragments.FavoritesFragment;
 import com.maple.rimaproject.fragments.HomeFragment;
 import com.maple.rimaproject.fragments.ProjectsFragment;
@@ -183,7 +184,8 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            Intent i = new Intent(this, Contactus_Activity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
