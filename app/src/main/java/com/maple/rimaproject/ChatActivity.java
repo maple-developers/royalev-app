@@ -81,7 +81,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     public static final int VIEW_TYPE_USER_MESSAGE = 0;
     public static final int VIEW_TYPE_FRIEND_MESSAGE = 1;
     private ListMessageAdapter adapter;
-    private String roomId;
+    private String roomId = "1247894327";
     private ArrayList<CharSequence> idFriend;
     private Consersation consersation;
     private ImageButton btnSend;
@@ -116,7 +116,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         });
         Intent intentData = getIntent();
         idFriend = intentData.getCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID);
-        roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
+        Toast.makeText(this, "dsfsdf -- "+idFriend , Toast.LENGTH_SHORT).show();
+//        roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
         String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
 
         consersation = new Consersation();
@@ -210,6 +211,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             recyclerChat.setAdapter(adapter);
+
+
+
         }
     }
     private void chooseImage() {
@@ -344,10 +348,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 newMessage.text = content;
                 newMessage.type = "text";
                 newMessage.idSender = StaticConfig.UID;
-                newMessage.idReceiver = roomId;
+                newMessage.idReceiver = "";
                 newMessage.timestamp = System.currentTimeMillis();
-
-                FirebaseDatabase.getInstance().getReference().child("message/" + roomId).push().setValue(newMessage);
+                Toast.makeText(this, "sdfsdfsdf "+StaticConfig.UID, Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference().child("user").child(StaticConfig.UID).child("message").push().setValue(newMessage);
             }
 
         }

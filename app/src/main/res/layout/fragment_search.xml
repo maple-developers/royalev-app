@@ -37,7 +37,6 @@
                 android:id="@+id/fixed_rangeview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 app:count="100"
                 app:end="1000"
                 app:endFixed="10000"

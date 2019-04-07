@@ -3,6 +3,7 @@ package com.maple.rimaproject.model;
 
 
 public class User {
+    public String id;
     public String name;
     public String email;
     public String avata;

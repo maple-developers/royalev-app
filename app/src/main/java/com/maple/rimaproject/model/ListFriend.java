@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 
 public class ListFriend {
-    private ArrayList<Friend> listFriend;
+    private ArrayList<User> listFriend;
 
-    public ArrayList<Friend> getListFriend() {
+    public ArrayList<User> getListFriend() {
         return listFriend;
     }
 
@@ -15,15 +15,15 @@ public class ListFriend {
     }
 
     public String getAvataById(String id){
-        for(Friend friend: listFriend){
-            if(id.equals(friend.id)){
-                return friend.avata;
+        for(User user: listFriend){
+            if(id.equals(user.id)){
+                return user.avata;
             }
         }
         return "";
     }
 
-    public void setListFriend(ArrayList<Friend> listFriend) {
+    public void setListFriend(ArrayList<User> listFriend) {
         this.listFriend = listFriend;
     }
 }

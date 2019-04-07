@@ -1,18 +1,20 @@
 package com.maple.rimaproject.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.maple.rimaproject.R;
-import com.maple.rimaproject.activites.ProjectsActivity;
+import com.maple.rimaproject.adapters.ItemAdapter;
+import com.maple.rimaproject.model.Project;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,19 +30,11 @@ public class ProjectsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
 
-    @BindView(R.id.imgVilla)
-    ImageView imgVilla;
+    @BindView(R.id.rv_projects)
+    RecyclerView rvProjects;
 
-    @BindView(R.id.imgAppartments)
-    ImageView imgAppartments;
-
-    @BindView(R.id.imgOffices)
-    ImageView imgOffices;
-
-    @BindView(R.id.imgShops)
-    ImageView imgShops;
-
-    RecyclerView rv_projects;
+    ItemAdapter itemAdapter;
+    ArrayList<Project> projectsList = new ArrayList<>();
     public ProjectsFragment() {
 
     }
@@ -69,15 +63,26 @@ public class ProjectsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
 
         ButterKnife.bind(this,view);
-        imgAppartments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ProjectsActivity.class);
-                startActivity(i);
-            }
-        });
+        fillProjects();
+//        DeliveryOrderModel deliveryOrderModel = (DeliveryOrderModel) responseObject;
+        rvProjects.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+        itemAdapter = new ItemAdapter(getActivity(), projectsList,false);
+
+        rvProjects.setAdapter(itemAdapter);
+        itemAdapter.notifyDataSetChanged();
 //        rv_projects = view.findViewById(R.id.rv_projects);
         return view;
+    }
+
+    public void fillProjects() {
+        for (int i=0; i < 16; i++){
+            Project project = new Project();
+            project.setId(1);
+            project.setName("khalid");
+            project.setName("aldaboubi");
+            projectsList.add(project);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

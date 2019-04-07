@@ -205,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 initNewUserInfo();
                                 Toast.makeText(LoginActivity.this, "Register and Login success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, Chat_Main_Activity.class));
+                                startActivity(new Intent(LoginActivity.this, ChatActivity.class));
                                 LoginActivity.this.finish();
                             }
                         }
@@ -341,6 +341,7 @@ public class LoginActivity extends AppCompatActivity {
                     waitingDialog.dismiss();
                     HashMap hashUser = (HashMap) dataSnapshot.getValue();
                     User userInfo = new User();
+                    userInfo.id = (String) hashUser.get("id");
                     userInfo.name = (String) hashUser.get("name");
                     userInfo.email = (String) hashUser.get("email");
                     userInfo.avata = (String) hashUser.get("avata");
@@ -359,6 +360,7 @@ public class LoginActivity extends AppCompatActivity {
          */
         void initNewUserInfo() {
             User newUser = new User();
+            newUser.id = user.getUid();
             newUser.email = user.getEmail();
             newUser.name = user.getEmail().substring(0, user.getEmail().indexOf("@"));
             newUser.avata = StaticConfig.STR_DEFAULT_BASE64;

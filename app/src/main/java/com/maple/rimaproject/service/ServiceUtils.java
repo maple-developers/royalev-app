@@ -17,6 +17,7 @@ import com.maple.rimaproject.data.SharedPreferenceHelper;
 import com.maple.rimaproject.data.StaticConfig;
 import com.maple.rimaproject.model.Friend;
 import com.maple.rimaproject.model.ListFriend;
+import com.maple.rimaproject.model.User;
 
 import java.util.HashMap;
 
@@ -95,8 +96,8 @@ public class ServiceUtils {
                 public void onServiceConnected(ComponentName className,
                                                IBinder service) {
                     FriendChatService.LocalBinder binder = (FriendChatService.LocalBinder) service;
-                    for (Friend friend : binder.getService().listFriend.getListFriend()) {
-                        binder.getService().mapMark.put(friend.idRoom, true);
+                    for (User friend : binder.getService().listFriend.getListFriend()) {
+                        binder.getService().mapMark.put(friend.id, true);
                     }
                 }
 
@@ -121,7 +122,7 @@ public class ServiceUtils {
 
     public static void updateFriendStatus(Context context, ListFriend listFriend){
         if(isNetworkConnected(context)) {
-            for (Friend friend : listFriend.getListFriend()) {
+            for (User friend : listFriend.getListFriend()) {
                 final String fid = friend.id;
                 FirebaseDatabase.getInstance().getReference().child("user/" + fid + "/status").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

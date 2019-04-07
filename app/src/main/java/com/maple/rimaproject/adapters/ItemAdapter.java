@@ -2,6 +2,7 @@ package com.maple.rimaproject.adapters;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.maple.rimaproject.Font.CustomTextView;
 import com.maple.rimaproject.R;
+import com.maple.rimaproject.activites.ProjectDetailsActivity;
 import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
 
     @Override
     public ItemAdapter.SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_project, null);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_project2, null);
         ItemAdapter.SingleItemRowHolder mh = new ItemAdapter.SingleItemRowHolder(v);
         return mh;
     }
@@ -50,7 +52,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         list.add("khalid");
         list.add("ali");
 //        holder.txtTags.setTags(list);
-        holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات تجارية"});
+        holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات", "عقارات", "مكاتب"});
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, ProjectDetailsActivity.class);
+                mContext.startActivity(i);
+            }
+        });
     }
 
 

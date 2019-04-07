@@ -81,7 +81,7 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
         toggle.syncState();
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+//        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
 
         changeFragmentMethod(new HomeFragment(), "test");
         bottomNavigation.setOnNavigationItemSelectedListener(

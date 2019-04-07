@@ -44,11 +44,11 @@ public final class FriendDB {
     }
 
 
-    public void addListFriend(ListFriend listFriend){
-        for(Friend friend: listFriend.getListFriend()){
-            addFriend(friend);
-        }
-    }
+//    public void addListFriend(ListFriend listFriend){
+//        for(Friend friend: listFriend.getListFriend()){
+//            addFriend(friend);
+//        }
+//    }
 
     public ListFriend getListFriend() {
         ListFriend listFriend = new ListFriend();
@@ -81,7 +81,7 @@ public final class FriendDB {
 
     /* Inner class that defines the table contents */
     public static class FeedEntry implements BaseColumns {
-        static final String TABLE_NAME = "friend";
+        static final String TABLE_NAME = "user";
         static final String COLUMN_NAME_ID = "friendID";
         static final String COLUMN_NAME_NAME = "name";
         static final String COLUMN_NAME_EMAIL = "email";
