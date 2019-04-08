@@ -105,13 +105,7 @@ public class HomeFragment extends Fragment {
 //            sliderView.setDescription("The quick brown fox jumps over the lazy dog.\n" + "Jackdaws love my big sphinx of quartz. " + (i + 1));
             final int finalI = i;
 
-            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(SliderView sliderView) {
-                    Toast.makeText(getContext(), "This is slider " + (finalI + 1), Toast.LENGTH_SHORT).show();
 
-                }
-            });
 
             //at last add this view in your layout :
             sliderLayout.addSliderView(sliderView);

@@ -10,20 +10,31 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.google.firebase.database.annotations.NotNull;
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.adapters.CustomAndroidGridViewAdapter;
+import com.stfalcon.pricerangebar.RangeBarWithChart;
+import com.stfalcon.pricerangebar.SeekBarWithChart;
 
 import java.util.ArrayList;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 import me.bendik.simplerangeview.SimpleRangeView;
+
+import static java.sql.DriverManager.println;
 
 
 public class SearchFragment extends Fragment {
@@ -35,6 +46,10 @@ public class SearchFragment extends Fragment {
     GridView gridView;
     Context context;
     ArrayList arrayList;
+
+    RangeBarWithChart rangeBar;
+
+
     public static String[] gridViewStrings = {
             "حراسة و امن 7/24",
             "أحواض سباحة",
@@ -66,6 +81,12 @@ public class SearchFragment extends Fragment {
     };
     private String mParam1;
     private String mParam2;
+
+
+    ImageView plus1, plus2, plus3, plus4, minus1, minus2, minus3, minus4;
+    int countbad, bathroom, living, kitchen;
+    TextView badRoom, bathRoomText, livingRoom, KitchenRoom;
+    CheckBox security;
 
     SimpleRangeView fixed_rangeview;
     EditText editStart,editEnd;
@@ -104,11 +125,96 @@ public class SearchFragment extends Fragment {
         editEnd = (EditText) view.findViewById(R.id.edit_end);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        gridView = (GridView) view.findViewById(R.id.grid);
-        gridView.setAdapter(new CustomAndroidGridViewAdapter(getActivity(), gridViewStrings, gridViewImages));
+//        gridView = (GridView) view.findViewById(R.id.grid);
+//        gridView.setAdapter(new CustomAndroidGridViewAdapter(getActivity(), gridViewStrings, gridViewImages));
+
 
         //initInstances(view);
         fixed_rangeview = view.findViewById(R.id.fixed_rangeview);
+//        rangeBar = view.findViewById(R.id.range);
+
+
+        badRoom = view.findViewById(R.id.badroom);
+        bathRoomText = view.findViewById(R.id.bathroom);
+        livingRoom = view.findViewById(R.id.livingroom);
+        KitchenRoom = view.findViewById(R.id.kitchen);
+        plus1 = view.findViewById(R.id.btnPlus1);
+        plus2 = view.findViewById(R.id.btnPlus2);
+        plus3 = view.findViewById(R.id.btnPlus3);
+        plus4 = view.findViewById(R.id.btnPlus4);
+        minus1 = view.findViewById(R.id.btnMinus1);
+        minus2 = view.findViewById(R.id.btnMinus2);
+        minus3 = view.findViewById(R.id.btnMinus3);
+        minus4 = view.findViewById(R.id.btnMinus4);
+        security=view.findViewById(R.id.check1);
+
+
+        plus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countbad++;
+
+                badRoom.setText(String.valueOf(countbad));
+            }
+        });
+        plus2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bathroom++;
+                bathRoomText.setText(String.valueOf(bathroom));
+            }
+        });
+        plus3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                living++;
+                livingRoom.setText(String.valueOf(living));
+            }
+        });
+        plus4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kitchen++;
+                KitchenRoom.setText(String.valueOf(kitchen));
+            }
+        });
+        minus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (countbad > 0) {
+                    countbad--;
+
+                    badRoom.setText(String.valueOf(countbad));}
+            }
+        });
+        minus2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bathroom > 0) {
+                    bathroom--;
+
+                    bathRoomText.setText(String.valueOf(bathroom));}
+            }
+        });
+        minus3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (living > 0) {
+                    living--;
+
+                    livingRoom.setText(String.valueOf(living));}
+            }
+        });
+        minus4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (kitchen > 0) {
+                    kitchen--;
+
+                    KitchenRoom.setText(String.valueOf(kitchen));
+                }
+            }
+        });
 
 
         fixed_rangeview.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {

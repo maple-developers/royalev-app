@@ -173,21 +173,28 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_homee) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            changeFragmentMethod(new HomeFragment(),"");
+        } else if (id == R.id.nav_our_projects) {
+            changeFragmentMethod(new ProjectsFragment(),"");
+        } else if (id == R.id.nav_favorites_projects) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_chat) {
+            startActivity(new Intent(this,LoginActivity.class));
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_favor) {
+            NavigationActivity.this.changeFragmentMethod(new FavoritesFragment(),"");
+        } else if (id == R.id.nav_contactus) {
             Intent i = new Intent(this, Contactus_Activity.class);
             startActivity(i);
         }
+        else if (id == R.id.nav_my_account) {
 
+        }
+        else if (id == R.id.nav_login_out) {
+
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

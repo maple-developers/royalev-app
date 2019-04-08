@@ -16,12 +16,10 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.maple.rimaproject.data.StaticConfig;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 
 public class RegisterActivity extends AppCompatActivity {

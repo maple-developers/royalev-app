@@ -4,7 +4,7 @@ package com.maple.rimaproject.model;
 
 public class Configuration {
     private String label;
-    private String  value;
+    private String value;
     private int icon;
 
     public Configuration(String label, String value, int icon){

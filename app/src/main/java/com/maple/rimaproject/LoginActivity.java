@@ -12,10 +12,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.maple.rimaproject.MainActivity;
+import com.maple.rimaproject.data.FriendDB;
+import com.maple.rimaproject.data.SharedPreferenceHelper;
+import com.maple.rimaproject.data.StaticConfig;
+import com.maple.rimaproject.model.Friend;
+import com.maple.rimaproject.model.ListFriend;
+import com.maple.rimaproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,23 +29,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.maple.rimaproject.data.SharedPreferenceHelper;
-import com.maple.rimaproject.data.StaticConfig;
-import com.maple.rimaproject.model.User;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyProgressDialog;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
-    FloatingActionButton fab;
     private final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    FloatingActionButton fab;
     private EditText editTextUsername, editTextPassword;
     private LovelyProgressDialog waitingDialog;
 
@@ -48,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
     private boolean firstTimeAccess;
+
+    private ListFriend dataListFriend = null;
+    private ArrayList<String> listFriendID = null;
+
 
     @Override
     protected void onStart() {
@@ -59,18 +67,95 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FirebaseApp.initializeApp(this);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         editTextUsername = (EditText) findViewById(R.id.et_username);
         editTextPassword = (EditText) findViewById(R.id.et_password);
+
+        if (dataListFriend == null) {
+            dataListFriend = FriendDB.getInstance(LoginActivity.this).getListFriend();
+            if (dataListFriend.getListFriend().size() > 0) {
+                listFriendID = new ArrayList<>();
+                for (Friend friend : dataListFriend.getListFriend()) {
+                    listFriendID.add(friend.id);
+                }
+//                detectFriendOnline.start();
+            }
+        }
+
+        if (listFriendID == null) {
+            listFriendID = new ArrayList<>();
+            getListFriendUId();
+        }
+
         firstTimeAccess = true;
         initFirebase();
     }
 
 
+    private void getListFriendUId() {
+        FirebaseDatabase.getInstance().getReference().child("friend/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    HashMap mapRecord = (HashMap) dataSnapshot.getValue();
+                    Iterator listKey = mapRecord.keySet().iterator();
+                    while (listKey.hasNext()) {
+                        String key = listKey.next().toString();
+                        listFriendID.add(mapRecord.get(key).toString());
+                    }
+                    getAllFriendInfo(0);
+                } else {
+//                    dialogFindAllFriend.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
     /**
-     * Khởi tạo các thành phần cần thiết cho việc quản lý đăng nhập
+     * Truy cap bang user lay thong tin id nguoi dung
      */
+    private void getAllFriendInfo(final int index) {
+        if (index == listFriendID.size()) {
+            //save list friend
+//            adapter.notifyDataSetChanged();
+//            dialogFindAllFriend.dismiss();
+//            mSwipeRefreshLayout.setRefreshing(false);
+//            detectFriendOnline.start();
+        } else {
+            final String id = listFriendID.get(index);
+            FirebaseDatabase.getInstance().getReference().child("user/" + id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        Friend user = new Friend();
+                        HashMap mapUserInfo = (HashMap) dataSnapshot.getValue();
+                        user.name = (String) mapUserInfo.get("name");
+                        user.email = (String) mapUserInfo.get("email");
+                        user.avata = (String) mapUserInfo.get("avata");
+                        user.id = id;
+                        user.idRoom = id.compareTo(StaticConfig.UID) > 0 ? (StaticConfig.UID + id).hashCode() + "" : "" + (id + StaticConfig.UID).hashCode();
+                        dataListFriend.getListFriend().add(user);
+                        FriendDB.getInstance(LoginActivity.this).addFriend(user);
+                    }
+                    getAllFriendInfo(index + 1);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+
+        /**
+         * Khởi tạo các thành phần cần thiết cho việc quản lý đăng nhập
+         */
     private void initFirebase() {
         //Khoi tao thanh phan de dang nhap, dang ky
         mAuth = FirebaseAuth.getInstance();
@@ -82,9 +167,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     StaticConfig.UID = user.getUid();
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuth StateChanged:signed_in:" + user.getUid());
                     if (firstTimeAccess) {
-                        startActivity(new Intent(LoginActivity.this, Chat_Main_Activity.class));
+                        startActivity(new Intent(LoginActivity.this, ChatActivity.class));
                         LoginActivity.this.finish();
                     }
                 } else {
@@ -261,9 +346,11 @@ public class LoginActivity extends AppCompatActivity {
                                         .setCancelable(false)
                                         .setConfirmButtonText("Ok")
                                         .show();
+
                             } else {
                                 saveUserInfo();
-                                startActivity(new Intent(LoginActivity.this, Chat_Main_Activity.class));
+                                Log.e("werwaqsdas", "sdfsdfds");
+                                startActivity(new Intent(LoginActivity.this, ChatActivity.class));
                                 LoginActivity.this.finish();
                             }
                         }
@@ -281,6 +368,145 @@ public class LoginActivity extends AppCompatActivity {
          *
          * @param email
          */
+
+
+        /**
+         * TIm id cua email tren server
+         *
+         * @param email
+         */
+        private void findIDEmail(String email) {
+//        dialogWait.setCancelable(false)
+//                .setIcon(R.drawable.ic_add_friend)
+//                .setTitle("Finding friend....")
+//                .setTopColorRes(R.color.colorPrimary)
+//                .show();
+            FirebaseDatabase.getInstance().getReference().child("user").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//                dialogWait.dismiss();
+                    if (dataSnapshot.getValue() == null) {
+                        //email not found
+//                    new LovelyInfoDialog(context)
+//                            .setTopColorRes(R.color.colorAccent)
+//                            .setIcon(R.drawable.ic_add_friend)
+//                            .setTitle("Fail")
+//                            .setMessage("Email not found")
+//                            .show();
+                    } else {
+                        String id = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
+                        if (id.equals(StaticConfig.UID)) {
+//                        new LovelyInfoDialog(context)
+//                                .setTopColorRes(R.color.colorAccent)
+//                                .setIcon(R.drawable.ic_add_friend)
+//                                .setTitle("Fail")
+//                                .setMessage("Email not valid")
+//                                .show();
+                        } else {
+                            HashMap userMap = (HashMap) ((HashMap) dataSnapshot.getValue()).get(id);
+                            Friend user = new Friend();
+                            user.name = (String) userMap.get("name");
+                            user.email = (String) userMap.get("email");
+                            user.avata = (String) userMap.get("avata");
+                            user.id = id;
+                            user.idRoom = id.compareTo(StaticConfig.UID) > 0 ? (StaticConfig.UID + id).hashCode() + "" : "" + (id + StaticConfig.UID).hashCode();
+                            checkBeforAddFriend(id, user);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        /**
+         * Lay danh sach friend cua một UID
+         */
+        private void checkBeforAddFriend(final String idFriend, Friend userInfo) {
+////        dialogWait.setCancelable(false)
+//                .setIcon(R.drawable.ic_add_friend)
+//                .setTitle("Add friend....")
+//                .setTopColorRes(R.color.colorPrimary)
+//                .show();
+
+            //Check xem da ton tai id trong danh sach id chua
+            if (listFriendID.contains(idFriend)) {
+//            dialogWait.dismiss();
+//            new LovelyInfoDialog(ChatActivity.this)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .setIcon(R.drawable.ic_add_friend)
+//                    .setTitle("Friend")
+//                    .setMessage("User "+userInfo.email + " has been friend")
+//                    .show();
+            } else {
+                addFriend(idFriend, true);
+                listFriendID.add(idFriend);
+                dataListFriend.getListFriend().add(userInfo);
+                FriendDB.getInstance(LoginActivity.this).addFriend(userInfo);
+//            adapter.notifyDataSetChanged();
+            }
+        }
+
+        /**
+         * Add friend
+         *
+         * @param idFriend
+         */
+        private void addFriend(final String idFriend, boolean isIdFriend) {
+            if (idFriend != null) {
+                if (isIdFriend) {
+                    FirebaseDatabase.getInstance().getReference().child("friend/" + StaticConfig.UID).push().setValue(idFriend)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        addFriend(idFriend, false);
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+//                                dialogWait.dismiss();
+                                    new LovelyInfoDialog(LoginActivity.this)
+                                            .setTopColorRes(R.color.colorAccent)
+                                            .setIcon(R.drawable.ic_add_friend)
+                                            .setTitle("False")
+                                            .setMessage("False to add friend success")
+                                            .show();
+                                }
+                            });
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child("friend/" + idFriend).push().setValue(StaticConfig.UID).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                addFriend(null, false);
+                            }
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+//                                dialogWait.dismiss();
+
+                                }
+                            });
+                }
+            } else {
+//            dialogWait.dismiss();
+//            new LovelyInfoDialog(context)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .setIcon(R.drawable.ic_add_friend)
+//                    .setTitle("Success")
+//                    .setMessage("Add friend success")
+//                    .show();
+            }
+        }
+
         void resetPassword(final String email) {
             mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -306,29 +532,29 @@ public class LoginActivity extends AppCompatActivity {
                                     .show();
                         }
                     })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    new LovelyInfoDialog(LoginActivity.this) {
+                    .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public LovelyInfoDialog setConfirmButtonText(String text) {
-                            findView(com.yarolegovich.lovelydialog.R.id.ld_btn_confirm).setOnClickListener(new View.OnClickListener() {
+                        public void onFailure(@NonNull Exception e) {
+                            new LovelyInfoDialog(LoginActivity.this) {
                                 @Override
-                                public void onClick(View view) {
-                                    dismiss();
+                                public LovelyInfoDialog setConfirmButtonText(String text) {
+                                    findView(com.yarolegovich.lovelydialog.R.id.ld_btn_confirm).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dismiss();
+                                        }
+                                    });
+                                    return super.setConfirmButtonText(text);
                                 }
-                            });
-                            return super.setConfirmButtonText(text);
+                            }
+                                    .setTopColorRes(R.color.colorAccent)
+                                    .setIcon(R.drawable.ic_pass_reset)
+                                    .setTitle("False")
+                                    .setMessage("False to sent email to " + email)
+                                    .setConfirmButtonText("Ok")
+                                    .show();
                         }
-                    }
-                            .setTopColorRes(R.color.colorAccent)
-                            .setIcon(R.drawable.ic_pass_reset)
-                            .setTitle("False")
-                            .setMessage("False to sent email to " + email)
-                            .setConfirmButtonText("Ok")
-                            .show();
-                }
-            });
+                    });
         }
 
         /**
@@ -341,11 +567,28 @@ public class LoginActivity extends AppCompatActivity {
                     waitingDialog.dismiss();
                     HashMap hashUser = (HashMap) dataSnapshot.getValue();
                     User userInfo = new User();
-                    userInfo.id = (String) hashUser.get("id");
                     userInfo.name = (String) hashUser.get("name");
                     userInfo.email = (String) hashUser.get("email");
                     userInfo.avata = (String) hashUser.get("avata");
                     SharedPreferenceHelper.getInstance(LoginActivity.this).saveUserInfo(userInfo);
+
+                    FirebaseDatabase.getInstance().getReference().child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                User user = snapshot.getValue(User.class);
+                                if (user.type.equals("agent")) {
+                                    findIDEmail(user.email);
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
                 @Override
@@ -360,7 +603,6 @@ public class LoginActivity extends AppCompatActivity {
          */
         void initNewUserInfo() {
             User newUser = new User();
-            newUser.id = user.getUid();
             newUser.email = user.getEmail();
             newUser.name = user.getEmail().substring(0, user.getEmail().indexOf("@"));
             newUser.avata = StaticConfig.STR_DEFAULT_BASE64;

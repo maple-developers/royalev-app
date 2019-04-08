@@ -1,13 +1,11 @@
 package com.maple.rimaproject;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,12 +18,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Continuation;
+import com.maple.rimaproject.data.FriendDB;
+import com.maple.rimaproject.data.SharedPreferenceHelper;
+import com.maple.rimaproject.data.StaticConfig;
+import com.maple.rimaproject.model.Consersation;
+import com.maple.rimaproject.model.Friend;
+import com.maple.rimaproject.model.ListFriend;
+import com.maple.rimaproject.model.Message;
+import com.maple.rimaproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,55 +37,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.maple.rimaproject.R;
+import com.maple.rimaproject.data.FriendDB;
 import com.maple.rimaproject.data.SharedPreferenceHelper;
 import com.maple.rimaproject.data.StaticConfig;
 import com.maple.rimaproject.model.Consersation;
+import com.maple.rimaproject.model.Friend;
+import com.maple.rimaproject.model.ListFriend;
 import com.maple.rimaproject.model.Message;
+import com.maple.rimaproject.model.User;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Iterator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
-
-
-    FirebaseStorage storage;
-    StorageReference storageReference,imageRef;
-    private static final int Selected = 100;
-    ProgressDialog progressDialog;
-    UploadTask uploadTask;
-    Uri uriImage;
-
-    ImageButton PickImage;
-    TextView YourUrlImage;
-
     private RecyclerView recyclerChat;
     public static final int VIEW_TYPE_USER_MESSAGE = 0;
     public static final int VIEW_TYPE_FRIEND_MESSAGE = 1;
     private ListMessageAdapter adapter;
-    private String roomId = "1247894327";
+    private String roomId;
     private ArrayList<CharSequence> idFriend;
     private Consersation consersation;
     private ImageButton btnSend;
@@ -89,35 +67,19 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayoutManager linearLayoutManager;
     public static HashMap<String, Bitmap> bitmapAvataFriend;
     public Bitmap bitmapAvataUser;
-    private Button btnChoose, btnUpload;
+
+    private ListFriend dataListFriend = null;
+    private ArrayList<String> listFriendID = null;
 
 
-    private Uri filePath;
-
-    private final int PICK_IMAGE_REQUEST = 71;
-
-    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
-        PickImage = findViewById(R.id.attach);
-
-
-        PickImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
         Intent intentData = getIntent();
         idFriend = intentData.getCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID);
-        Toast.makeText(this, "dsfsdf -- "+idFriend , Toast.LENGTH_SHORT).show();
-//        roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
+        roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
+//        Log.e("ewewewccc", roomId);
         String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
 
         consersation = new Consersation();
@@ -132,193 +94,172 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             bitmapAvataUser = null;
         }
 
+
+        if (dataListFriend == null) {
+            dataListFriend = FriendDB.getInstance(ChatActivity.this).getListFriend();
+            if (dataListFriend.getListFriend().size() > 0) {
+                listFriendID = new ArrayList<>();
+                for (Friend friend : dataListFriend.getListFriend()) {
+                    listFriendID.add(friend.id);
+                }
+//                detectFriendOnline.start();
+            }
+        }
+
+        if (listFriendID == null) {
+            listFriendID = new ArrayList<>();
+            getListFriendUId();
+        }
+
+
+
+
+//        FirebaseDatabase.getInstance().getReference().child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    User user = snapshot.getValue(User.class);
+//                    if(user.type.equals("agent")){
+//                        findIDEmail(user.email);
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
+
+
         editWriteMessage = (EditText) findViewById(R.id.editWriteMessage);
-        if (idFriend != null && nameFriend != null) {
+//        if (dataListFriend.getListFriend().size() != 0) {
+
 //            getSupportActionBar().setTitle(nameFriend);
             linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyclerChat = (RecyclerView) findViewById(R.id.recyclerChat);
             recyclerChat.setLayoutManager(linearLayoutManager);
             adapter = new ListMessageAdapter(this, consersation, bitmapAvataFriend, bitmapAvataUser);
-//            FirebaseDatabase.getInstance().getReference().child("message/"+ roomId).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    if (dataSnapshot.getValue() != null) {
-//
-//                        HashMap mapMessage = (HashMap) dataSnapshot.getValue();
-//                        Message newMessage = new Message();
-//
-//
-//                        newMessage.idSender = (String) mapMessage.get("idSender");
-//                        newMessage.idReceiver = (String) mapMessage.get("idReceiver");
-//                        newMessage.text = (String) mapMessage.get("text");
-//                        newMessage.type = (String) mapMessage.get("type");
-//                        newMessage.timestamp = (long) mapMessage.get("timestamp");
-//                        consersation.getListMessageData().add(newMessage);
-//                        adapter.notifyDataSetChanged();
-//                        linearLayoutManager.scrollToPosition(consersation.getListMessageData().size() - 1);
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-            FirebaseDatabase.getInstance().getReference().child("message/" + roomId).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                    if (dataSnapshot.getValue() != null) {
-
-                        HashMap mapMessage = (HashMap) dataSnapshot.getValue();
-                        Message newMessage = new Message();
 
 
+            if (dataListFriend.getListFriend().size() != 0){
 
-                        newMessage.idSender = (String) mapMessage.get("idSender");
-                        newMessage.idReceiver = (String) mapMessage.get("idReceiver");
-                        newMessage.text = (String) mapMessage.get("text");
-                        newMessage.type = (String) mapMessage.get("type");
-                        newMessage.timestamp = (long) mapMessage.get("timestamp");
-                        consersation.getListMessageData().add(newMessage);
-                        for (int i=0; i < consersation.getListMessageData().size(); i++){
-                            Log.e("sdfsdfsdf", consersation.getListMessageData().get(i).text);
-//                            Log.e("sdfsdfsdf", consersation.getListMessageData().get(i).type);
+
+            for (int i=0; i < dataListFriend.getListFriend().size(); i++){
+                Log.e("sfdgfdgfdgfdg", dataListFriend.getListFriend().get(i).idRoom);
+                FirebaseDatabase.getInstance().getReference().child("message").child(dataListFriend.getListFriend().get(i).idRoom).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.e("eeeeeeeq", dataSnapshot.getKey());
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            if (!snapshot.child("idSender").getValue().equals(StaticConfig.UID)){
+                                Log.e("rewtertre", dataSnapshot.getKey());
+
+                                FirebaseDatabase.getInstance().getReference().child("message/" + dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        if (dataSnapshot.getValue() != null) {
+                                            HashMap mapMessage = (HashMap) dataSnapshot.getValue();
+                                            Message newMessage = new Message();
+                                            newMessage.idSender = (String) mapMessage.get("idSender");
+                                            newMessage.idReceiver = (String) mapMessage.get("idReceiver");
+                                            newMessage.text = (String) mapMessage.get("text");
+                                            newMessage.timestamp = (long) mapMessage.get("timestamp");
+                                            consersation.getListMessageData().add(newMessage);
+                                            adapter.notifyDataSetChanged();
+                                            linearLayoutManager.scrollToPosition(consersation.getListMessageData().size() - 1);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            } else {
+
+                            }
                         }
-                        adapter.notifyDataSetChanged();
-                        linearLayoutManager.scrollToPosition(consersation.getListMessageData().size() - 1);
                     }
-                }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            recyclerChat.setAdapter(adapter);
-
-
-
-        }
-    }
-    private void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-       
-   
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                Log.e("onActivityResult", "onActivityResult: "+bitmap );
-                uploadImage();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void uploadImage() {
-
-        if(filePath != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-
-            ref.putFile(filePath).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()){
-                        throw task.getException();
                     }
-                    return ref.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()){
-                        progressDialog.dismiss();
-                        Uri downUri = task.getResult();
-                        String content = downUri.toString();
-                        if (content.length() > 0) {
-                            editWriteMessage.setText("");
+                });
+            }
+
+
+            if (consersation.getListMessageData().size() == 0){
+                FirebaseDatabase.getInstance().getReference().child("message/" + dataListFriend.getListFriend().get(0).idRoom).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot5, String s) {
+                        if (dataSnapshot5.getValue() != null) {
+                            HashMap mapMessage = (HashMap) dataSnapshot5.getValue();
                             Message newMessage = new Message();
-                            newMessage.text = content;
-                            newMessage.type = "image";
-                            newMessage.idSender = StaticConfig.UID;
-                            newMessage.idReceiver = roomId;
-                            newMessage.timestamp = System.currentTimeMillis();
-
-                            FirebaseDatabase.getInstance().getReference().child("message/" + roomId).push().setValue(newMessage);
+                            newMessage.idSender = (String) mapMessage.get("idSender");
+                            newMessage.idReceiver = (String) mapMessage.get("idReceiver");
+                            newMessage.text = (String) mapMessage.get("text");
+                            newMessage.timestamp = (long) mapMessage.get("timestamp");
+                            consersation.getListMessageData().add(newMessage);
+                            adapter.notifyDataSetChanged();
+                            linearLayoutManager.scrollToPosition(consersation.getListMessageData().size() - 1);
                         }
-
-                        Log.d("sdfsdfdsf", "onComplete: Url: "+ downUri.toString());
                     }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Log.e("onFailure", "onFailure: "+e.getMessage() );
-                            Toast.makeText(ChatActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
 
-//            ref.putFile(filePath)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(ChatActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
-//                            Log.e("onFailure", "onFailure: "+e.getMessage() );
-//                            Toast.makeText(ChatActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-//                                    .getTotalByteCount());
-//                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-//                        }
-//                    });
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+                } else {
+
+            }
+
+
+            recyclerChat.setAdapter(adapter);
+//        }
+
+        for (int i=0; i < dataListFriend.getListFriend().size(); i++) {
+            getFriend(dataListFriend.getListFriend().get(i).id);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
@@ -328,6 +269,69 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             this.finish();
         }
         return true;
+    }
+
+    /**
+     * Lay danh sach ban be tren server
+     */
+    private void getListFriendUId() {
+        FirebaseDatabase.getInstance().getReference().child("friend/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    HashMap mapRecord = (HashMap) dataSnapshot.getValue();
+                    Iterator listKey = mapRecord.keySet().iterator();
+                    while (listKey.hasNext()) {
+                        String key = listKey.next().toString();
+                        listFriendID.add(mapRecord.get(key).toString());
+                    }
+                    getAllFriendInfo(0);
+                } else {
+//                    dialogFindAllFriend.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    /**
+     * Truy cap bang user lay thong tin id nguoi dung
+     */
+    private void getAllFriendInfo(final int index) {
+        if (index == listFriendID.size()) {
+            //save list friend
+            adapter.notifyDataSetChanged();
+//            dialogFindAllFriend.dismiss();
+//            mSwipeRefreshLayout.setRefreshing(false);
+//            detectFriendOnline.start();
+        } else {
+            final String id = listFriendID.get(index);
+            FirebaseDatabase.getInstance().getReference().child("user/" + id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        Friend user = new Friend();
+                        HashMap mapUserInfo = (HashMap) dataSnapshot.getValue();
+                        user.name = (String) mapUserInfo.get("name");
+                        user.email = (String) mapUserInfo.get("email");
+                        user.avata = (String) mapUserInfo.get("avata");
+                        user.id = id;
+                        user.idRoom = id.compareTo(StaticConfig.UID) > 0 ? (StaticConfig.UID + id).hashCode() + "" : "" + (id + StaticConfig.UID).hashCode();
+                        dataListFriend.getListFriend().add(user);
+                        FriendDB.getInstance(ChatActivity.this).addFriend(user);
+                    }
+                    getAllFriendInfo(index + 1);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -343,17 +347,322 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.btnSend) {
             String content = editWriteMessage.getText().toString().trim();
             if (content.length() > 0) {
-                editWriteMessage.setText("");
-                Message newMessage = new Message();
-                newMessage.text = content;
-                newMessage.type = "text";
-                newMessage.idSender = StaticConfig.UID;
-                newMessage.idReceiver = "";
-                newMessage.timestamp = System.currentTimeMillis();
-                Toast.makeText(this, "sdfsdfsdf "+StaticConfig.UID, Toast.LENGTH_SHORT).show();
-                FirebaseDatabase.getInstance().getReference().child("user").child(StaticConfig.UID).child("message").push().setValue(newMessage);
+
+                for (int i=0; i < dataListFriend.getListFriend().size(); i++){
+//                    Log.e("ghfggdfgdf", "ewerwer "+ dataListFriend.getListFriend().get(i).email);
+//
+//
+//                        deleteFriend(dataListFriend.getListFriend().get(i).id);
+//                        Log.e("ghfggdfgdf", "ewerwer "+ dataListFriend.getListFriend().get(i).id);
+//
+//
+//
+                    editWriteMessage.setText("");
+                    Message newMessage = new Message();
+                    newMessage.text = content;
+                    newMessage.idSender = StaticConfig.UID;
+                    newMessage.idReceiver = dataListFriend.getListFriend().get(i).idRoom;
+                    newMessage.timestamp = System.currentTimeMillis();
+                    FirebaseDatabase.getInstance().getReference().child("message/" + dataListFriend.getListFriend().get(i).idRoom).push().setValue(newMessage);
+                }
+
+
+//                editWriteMessage.setText("");
+//                Message newMessage = new Message();
+//                newMessage.text = content;
+//                newMessage.idSender = StaticConfig.UID;
+//                newMessage.idReceiver = roomId;
+//                newMessage.timestamp = System.currentTimeMillis();
+//                FirebaseDatabase.getInstance().getReference().child("message/" + roomId).push().setValue(newMessage);
+
+
+            }
+        }
+    }
+
+    private void deleteFriend(final String idFriend) {
+        if (idFriend != null) {
+            FirebaseDatabase.getInstance().getReference().child("friend").child(idFriend).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.getValue() == null) {
+
+                    } else {
+//                        String idRemoval = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
+                        for (final DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (!dataSnapshot1.getValue().equals(StaticConfig.UID)){
+                                final String keyDeleted = dataSnapshot1.getKey();
+                                FirebaseDatabase.getInstance().getReference().child("friend")
+
+                                        .child(idFriend).child(dataSnapshot1.getKey()).removeValue()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                FirebaseDatabase.getInstance().getReference().child("friend").child(String.valueOf(dataSnapshot1.getValue())).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (final DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
+                                                            if (dataSnapshot2.getValue().equals(idFriend)) {
+                                                                FirebaseDatabase.getInstance().getReference().child("friend").child(String.valueOf(dataSnapshot1.getValue())).child(dataSnapshot2.getKey()).removeValue();
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+//                                                Intent intentDeleted = new Intent(FriendsFragment.ACTION_DELETE_FRIEND);
+//                                                intentDeleted.putExtra("idFriend", idFriend);
+//                                                ChatActivity.this.sendBroadcast(intentDeleted);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+//
+                                            }
+                                        });
+                            }
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+//            dialogWaitDeleting.dismiss();
+//            new LovelyInfoDialog(context)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .setTitle("Error")
+//                    .setMessage("Error occurred during deleting friend")
+//                    .show();
+        }
+    }
+
+    private void getFriend(final String idFriend) {
+        if (idFriend != null) {
+            FirebaseDatabase.getInstance().getReference().child("friend").child(idFriend).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.getValue() == null) {
+
+                    } else {
+//                        String idRemoval = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
+                        for (final DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (!dataSnapshot1.getValue().equals(StaticConfig.UID)){
+                                FirebaseDatabase.getInstance().getReference().child("friend")
+                                        .child(idFriend).child(dataSnapshot1.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        FirebaseDatabase.getInstance().getReference().child("friend").child(String.valueOf(dataSnapshot.getValue())).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                Log.e("tryghfghg", String.valueOf(dataSnapshot.getKey()));
+                                                for (final DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
+//                                                    if (dataSnapshot.getValue().equals(idFriend)) {
+//
+//                                                        FirebaseDatabase.getInstance().getReference().child("friend").child(dataSnapshot2.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                            @Override
+//                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                                Log.e("tryghfghg", String.valueOf(dataSnapshot.getValue()));
+//                                                            }
+//
+//                                                            @Override
+//                                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                                            }
+//                                                        });
+//                                                    }
+                                                    Log.e("tryghfghg1", String.valueOf(dataSnapshot1.getValue()));
+                                                    Log.e("tryghfghg2", String.valueOf(idFriend));
+                                                    if (dataSnapshot2.getValue().equals(idFriend)) {
+                                                        Log.e("tryghfghg", String.valueOf(dataSnapshot2.getKey()));
+                                                    }
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                Log.e("glghlkf", String.valueOf(dataSnapshot1.getValue()));
+                            }
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+//            dialogWaitDeleting.dismiss();
+//            new LovelyInfoDialog(context)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .setTitle("Error")
+//                    .setMessage("Error occurred during deleting friend")
+//                    .show();
+        }
+    }
+
+
+    /**
+     * TIm id cua email tren server
+     *
+     * @param email
+     */
+    private void findIDEmail(String email) {
+//        dialogWait.setCancelable(false)
+//                .setIcon(R.drawable.ic_add_friend)
+//                .setTitle("Finding friend....")
+//                .setTopColorRes(R.color.colorPrimary)
+//                .show();
+        FirebaseDatabase.getInstance().getReference().child("user").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                dialogWait.dismiss();
+                if (dataSnapshot.getValue() == null) {
+                    //email not found
+//                    new LovelyInfoDialog(context)
+//                            .setTopColorRes(R.color.colorAccent)
+//                            .setIcon(R.drawable.ic_add_friend)
+//                            .setTitle("Fail")
+//                            .setMessage("Email not found")
+//                            .show();
+                } else {
+                    String id = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
+                    if (id.equals(StaticConfig.UID)) {
+//                        new LovelyInfoDialog(context)
+//                                .setTopColorRes(R.color.colorAccent)
+//                                .setIcon(R.drawable.ic_add_friend)
+//                                .setTitle("Fail")
+//                                .setMessage("Email not valid")
+//                                .show();
+                    } else {
+                        HashMap userMap = (HashMap) ((HashMap) dataSnapshot.getValue()).get(id);
+                        Friend user = new Friend();
+                        user.name = (String) userMap.get("name");
+                        user.email = (String) userMap.get("email");
+                        user.avata = (String) userMap.get("avata");
+                        user.id = id;
+                        user.idRoom = id.compareTo(StaticConfig.UID) > 0 ? (StaticConfig.UID + id).hashCode() + "" : "" + (id + StaticConfig.UID).hashCode();
+                        checkBeforAddFriend(id, user);
+                    }
+                }
             }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * Lay danh sach friend cua một UID
+     */
+    private void checkBeforAddFriend(final String idFriend, Friend userInfo) {
+////        dialogWait.setCancelable(false)
+//                .setIcon(R.drawable.ic_add_friend)
+//                .setTitle("Add friend....")
+//                .setTopColorRes(R.color.colorPrimary)
+//                .show();
+
+        //Check xem da ton tai id trong danh sach id chua
+        if (listFriendID.contains(idFriend)) {
+//            dialogWait.dismiss();
+//            new LovelyInfoDialog(ChatActivity.this)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .setIcon(R.drawable.ic_add_friend)
+//                    .setTitle("Friend")
+//                    .setMessage("User "+userInfo.email + " has been friend")
+//                    .show();
+        } else {
+            addFriend(idFriend, true);
+            listFriendID.add(idFriend);
+            dataListFriend.getListFriend().add(userInfo);
+            FriendDB.getInstance(ChatActivity.this).addFriend(userInfo);
+//            adapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * Add friend
+     *
+     * @param idFriend
+     */
+    private void addFriend(final String idFriend, boolean isIdFriend) {
+        if (idFriend != null) {
+            if (isIdFriend) {
+                FirebaseDatabase.getInstance().getReference().child("friend/" + StaticConfig.UID).push().setValue(idFriend)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    addFriend(idFriend, false);
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+//                                dialogWait.dismiss();
+                                new LovelyInfoDialog(ChatActivity.this)
+                                        .setTopColorRes(R.color.colorAccent)
+                                        .setIcon(R.drawable.ic_add_friend)
+                                        .setTitle("False")
+                                        .setMessage("False to add friend success")
+                                        .show();
+                            }
+                        });
+            } else {
+                FirebaseDatabase.getInstance().getReference().child("friend/" + idFriend).push().setValue(StaticConfig.UID).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            addFriend(null, false);
+                        }
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+//                                dialogWait.dismiss();
+
+                            }
+                        });
+            }
+        } else {
+//            dialogWait.dismiss();
+//            new LovelyInfoDialog(context)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .setIcon(R.drawable.ic_add_friend)
+//                    .setTitle("Success")
+//                    .setMessage("Add friend success")
+//                    .show();
         }
     }
 }
@@ -387,85 +696,44 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemMessageFriendHolder) {
+            ((ItemMessageFriendHolder) holder).txtContent.setText(consersation.getListMessageData().get(position).text);
 
-//            Log.e("fgdfgfdg", consersation.getListMessageData().get(position).text);
-//            if(consersation.getListMessageData().get(position).type.equals("image")){
-//                ((ItemMessageUserHolder) holder).imgContent.setVisibility(View.VISIBLE);
-//                ((ItemMessageUserHolder) holder).txtContent.setVisibility(View.GONE);
-//                Picasso.get().load(consersation.getListMessageData().get(position).text).into(((ItemMessageFriendHolder) holder).imgContent);
+//            Bitmap currentAvata = bitmapAvata.get(consersation.getListMessageData().get(position).idSender);
+//            if (currentAvata != null) {
+//                ((ItemMessageFriendHolder) holder).avata.setImageBitmap(currentAvata);
 //            } else {
-                ((ItemMessageFriendHolder) holder).txtContent.setText(consersation.getListMessageData().get(position).text);
-                Bitmap currentAvata = bitmapAvata.get(consersation.getListMessageData().get(position).idSender);
-                if (currentAvata != null) {
-                    ((ItemMessageFriendHolder) holder).avata.setImageBitmap(currentAvata);
-                } else {
-                    final String id = consersation.getListMessageData().get(position).idSender;
-                    if (bitmapAvataDB.get(id) == null) {
-                        bitmapAvataDB.put(id, FirebaseDatabase.getInstance().getReference().child("user/" + id + "/avata"));
-                        bitmapAvataDB.get(id).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.getValue() != null) {
-                                    String avataStr = (String) dataSnapshot.getValue();
-                                    if (!avataStr.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-                                        byte[] decodedString = Base64.decode(avataStr, Base64.DEFAULT);
-                                        ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-                                    } else {
-                                        ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avata));
-                                    }
-                                    notifyDataSetChanged();
-                                }
+                final String id = consersation.getListMessageData().get(position).idSender;
+                if(bitmapAvataDB.get(id) == null){
+                    bitmapAvataDB.put(id, FirebaseDatabase.getInstance().getReference().child("user/" + id + "/avata"));
+                    bitmapAvataDB.get(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() != null) {
+                                String avataStr = (String) dataSnapshot.getValue();
+//                                if(!avataStr.equals(StaticConfig.STR_DEFAULT_BASE64)) {
+                                    byte[] decodedString = Base64.decode(avataStr, Base64.DEFAULT);
+//                                    ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
+//                                }else{
+//                                    ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avata));
+//                                }
+                                notifyDataSetChanged();
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
-                    }
-                }
-//            }
+                        }
+                    });
+//                }
+            }
         } else if (holder instanceof ItemMessageUserHolder) {
-//            if(consersation.getListMessageData().get(position).type.equals("image")){
-//                ((ItemMessageUserHolder) holder).homeprogress.setVisibility(View.VISIBLE);
-
-//                ((ItemMessageUserHolder) holder).txtContent.setVisibility(View.GONE);
-//                Picasso.get().load(consersation.getListMessageData().get(position).text)
-//                        .into(((ItemMessageUserHolder) holder).imgContent);
-
-                if(consersation.getListMessageData().get(position).type.equals("image")){
-                    ((ItemMessageUserHolder) holder).imgContent.setVisibility(View.VISIBLE);
-                    ((ItemMessageUserHolder) holder).txtContent.setVisibility(View.GONE);
-                    ((ItemMessageUserHolder) holder).homeprogress.setVisibility(View.VISIBLE);
-                } else if (consersation.getListMessageData().get(position).type.equals("text")){
-                    ((ItemMessageUserHolder) holder).imgContent.setVisibility(View.GONE);
-                    ((ItemMessageUserHolder) holder).txtContent.setVisibility(View.VISIBLE);
-                    ((ItemMessageUserHolder) holder).homeprogress.setVisibility(View.GONE);
-                }
-
-
-                Picasso.get().load(consersation.getListMessageData().get(position).text)
-                        .into(((ItemMessageUserHolder) holder).imgContent, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                ((ItemMessageUserHolder) holder).homeprogress.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-
-                            }
-
-                        });
-//            }
-                ((ItemMessageUserHolder) holder).txtContent.setText(consersation.getListMessageData().get(position).text);
-//            }
+            ((ItemMessageUserHolder) holder).txtContent.setText(consersation.getListMessageData().get(position).text);
             if (bitmapAvataUser != null) {
                 ((ItemMessageUserHolder) holder).avata.setImageBitmap(bitmapAvataUser);
             }
-
         }
     }
 
@@ -482,30 +750,23 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 class ItemMessageUserHolder extends RecyclerView.ViewHolder {
     public TextView txtContent;
-    public ImageView imgContent;
-    public ProgressBar homeprogress;
     public CircleImageView avata;
 
     public ItemMessageUserHolder(View itemView) {
         super(itemView);
         txtContent = (TextView) itemView.findViewById(R.id.textContentUser);
-        imgContent = (ImageView) itemView.findViewById(R.id.imgContentUser);
-        homeprogress = (ProgressBar) itemView.findViewById(R.id.homeprogress);
         avata = (CircleImageView) itemView.findViewById(R.id.imageView2);
     }
 }
 
 class ItemMessageFriendHolder extends RecyclerView.ViewHolder {
     public TextView txtContent;
-    public ImageView imgContent;
-    public ProgressBar homeprogress;
     public CircleImageView avata;
 
     public ItemMessageFriendHolder(View itemView) {
         super(itemView);
         txtContent = (TextView) itemView.findViewById(R.id.textContentFriend);
-        imgContent = (ImageView) itemView.findViewById(R.id.ImgContentFriend);
-        homeprogress = (ProgressBar) itemView.findViewById(R.id.homeprogress);
         avata = (CircleImageView) itemView.findViewById(R.id.imageView3);
     }
+
 }

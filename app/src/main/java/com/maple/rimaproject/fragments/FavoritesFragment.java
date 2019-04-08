@@ -1,6 +1,5 @@
 package com.maple.rimaproject.fragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +11,7 @@ import android.view.ViewGroup;
 
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.adapters.FavoritesAdapter;
-import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.model.Favorite;
-import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
 

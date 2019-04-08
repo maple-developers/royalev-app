@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.model.Favorite;
-import com.maple.rimaproject.model.Project;
 
 import java.util.List;
 

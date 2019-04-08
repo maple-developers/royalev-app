@@ -1,6 +1,6 @@
 package com.maple.rimaproject;
+
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.maple.rimaproject.data.FriendDB;
+import com.maple.rimaproject.data.GroupDB;
+import com.maple.rimaproject.data.SharedPreferenceHelper;
+import com.maple.rimaproject.data.StaticConfig;
+import com.maple.rimaproject.model.Configuration;
+import com.maple.rimaproject.model.User;
+import com.maple.rimaproject.service.ServiceUtils;
+import com.maple.rimaproject.util.ImageUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -33,15 +42,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.maple.rimaproject.R;
-import com.maple.rimaproject.data.FriendDB;
-//import com.android.rivchat.data.GroupDB;
-import com.maple.rimaproject.data.SharedPreferenceHelper;
-import com.maple.rimaproject.data.StaticConfig;
-import com.maple.rimaproject.model.Configuration;
-import com.maple.rimaproject.model.User;
-import com.maple.rimaproject.service.ServiceUtils;
-import com.maple.rimaproject.util.ImageUtils;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyProgressDialog;
 
@@ -49,7 +49,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class UserProfileFragment extends Fragment {
@@ -214,7 +213,7 @@ public class UserProfileFragment extends Fragment {
                                             .show();
                                 }
                             }
-                        })
+                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -280,7 +279,7 @@ public class UserProfileFragment extends Fragment {
     }
 
     public class UserInfoAdapter extends RecyclerView.Adapter<UserInfoAdapter.ViewHolder>{
-        public List<Configuration> profileConfig;
+        private List<Configuration> profileConfig;
 
         public UserInfoAdapter(List<Configuration> profileConfig){
             this.profileConfig = profileConfig;
@@ -298,13 +297,14 @@ public class UserProfileFragment extends Fragment {
             final Configuration config = profileConfig.get(position);
             holder.label.setText(config.getLabel());
             holder.value.setText(config.getValue());
+//            holder.icon.setImageResource(config.getIcon());
             ((RelativeLayout)holder.label.getParent()).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(config.getLabel().equals(SIGNOUT_LABEL)){
                         FirebaseAuth.getInstance().signOut();
                         FriendDB.getInstance(getContext()).dropDB();
-                        //  GroupDB.getInstance(getContext()).dropDB();
+                        GroupDB.getInstance(getContext()).dropDB();
                         ServiceUtils.stopServiceFriendChat(getContext().getApplicationContext(), true);
                         getActivity().finish();
                     }
