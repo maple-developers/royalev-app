@@ -7,6 +7,7 @@ import android.os.Bundle;
 //import android.support.design.widget.CollapsingToolbarLayout;
 //import android.support.design.widget.CoordinatorLayout;
 //import android.support.v4.app.Fragment;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ import com.stfalcon.pricerangebar.RangeBarWithChart;
 import com.stfalcon.pricerangebar.SeekBarWithChart;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
@@ -45,7 +49,21 @@ public class SearchFragment extends Fragment {
     CoordinatorLayout rootLayoutAndroid;
     GridView gridView;
     Context context;
-    ArrayList arrayList;
+    ArrayList <Integer> arrayList=new ArrayList<>();;
+CheckBox check_1Security;
+    CheckBox check_2swimbool;
+    CheckBox check_3childgame;
+    CheckBox check_4shower;
+    CheckBox check_5parking;
+    CheckBox check_6gym;
+    CheckBox check_7gardens;
+    CheckBox check_8football;
+    CheckBox check_9resturant;
+    CheckBox check_10market;
+    CheckBox check_11cenima;
+    CheckBox check_12shopping;
+Button search;
+
 
     RangeBarWithChart rangeBar;
 
@@ -81,6 +99,8 @@ public class SearchFragment extends Fragment {
     };
     private String mParam1;
     private String mParam2;
+int rangStart;
+int rangEnd;
 
 
     ImageView plus1, plus2, plus3, plus4, minus1, minus2, minus3, minus4;
@@ -147,6 +167,270 @@ public class SearchFragment extends Fragment {
         minus3 = view.findViewById(R.id.btnMinus3);
         minus4 = view.findViewById(R.id.btnMinus4);
         security=view.findViewById(R.id.check1);
+        check_1Security=view.findViewById(R.id.check1);
+        check_2swimbool=view.findViewById(R.id.check2);
+        check_3childgame=view.findViewById(R.id.check3);
+        check_4shower=view.findViewById(R.id.check4);
+        check_5parking=view.findViewById(R.id.check5);
+        check_6gym=view.findViewById(R.id.check6);
+        check_7gardens=view.findViewById(R.id.check7);
+        check_8football=view.findViewById(R.id.check8);
+        check_9resturant=view.findViewById(R.id.check9);
+        check_10market=view.findViewById(R.id.check10);
+        check_11cenima=view.findViewById(R.id.check11);
+        check_12shopping=view.findViewById(R.id.check12);
+search=view.findViewById(R.id.btn_search);
+
+        check_1Security.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(1);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==1){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_2swimbool.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(2);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==2){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_3childgame.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(3);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==3){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_4shower.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(4);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==4){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+            }
+        });
+        check_5parking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(5);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==5){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_6gym.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(6);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==6){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_7gardens.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(7);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==7){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_8football.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(8);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==8){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_9resturant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(9);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==9){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_10market.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(10);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==10){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_11cenima.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(11);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==11){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+        check_12shopping.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    arrayList.add(12);
+                }else
+                {
+                    for (int i=0 ; i<arrayList.size();i++){
+
+                        if (arrayList.get(i)==12){
+                            arrayList.remove(i);
+
+
+                        }
+                    }
+
+                }
+
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(arrayList);
+                Log.e("arrayList", "arrayList: "+ arrayList+"\n"+"bathroom"+bathroom+"\n"+"living"+living+"\n"+"kitchen"+kitchen+"\n"+"countbad"+countbad +"\n"+"rangStart="+rangStart+"\n"+"rangEnd="+rangEnd);
+            }
+        });
+
+
 
 
         plus1.setOnClickListener(new View.OnClickListener() {
@@ -220,14 +504,27 @@ public class SearchFragment extends Fragment {
         fixed_rangeview.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView rangeView, int start) {
-                editStart.setText(String.valueOf(start));
+
+
+
+
+                String start1= String.valueOf(start+"K");
+                editStart.setText(start1);
+                Log.e("onStartRangeChanged", "onStartRangeChanged: "+start1 );
+
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView rangeView, int end) {
-                editEnd.setText(String.valueOf(end));
+
+
+                String End1=String.valueOf(end+"K");
+                editEnd.setText(End1);
+                Log.e("onStartRangeChanged", "onStartRangeChanged: "+End1);
+
             }
         });
+
 
 //        fixed_rangeview.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
 //            @Override
@@ -235,6 +532,7 @@ public class SearchFragment extends Fragment {
 //                editRange.setText(String.valueOf(start) + " - " + String.valueOf(end));
 //            }
 //        });
+
         return view;
     }
 //    private void initInstances(View v) {

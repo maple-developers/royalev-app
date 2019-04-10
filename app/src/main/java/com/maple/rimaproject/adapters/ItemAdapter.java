@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.maple.rimaproject.Font.CustomTextView;
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.activites.ProjectDetailsActivity;
@@ -30,6 +33,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
     private List<Project> ordersList;
     private Activity mContext;
     private boolean isHomeFragment = false;
+    SharedPreference sharedPreference;
 //    private SweetAlertDialog sweetAlertDialog;
 
 
@@ -37,6 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         this.ordersList = ordersList;
         this.mContext = context;
         this.isHomeFragment = isHomeFragment;
+        sharedPreference = new SharedPreference();
     }
 
     @Override
@@ -53,7 +58,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         list.add("ali");
 //        holder.txtTags.setTags(list);
         holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات", "عقارات", "مكاتب"});
-
+        if (checkFavoriteItem(ordersList.get(i))) {
+            holder.likeButton.setLiked(true);
+            Log.e("ssss","true");
+        } else {
+            holder.likeButton.setLiked(false);
+            Log.e("ssss","fasle");
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +72,37 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
                 mContext.startActivity(i);
             }
         });
+
+        holder.likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                sharedPreference.addFavorite(mContext, ordersList.get(i));
+                Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                sharedPreference.removeFavorite(mContext, ordersList.get(i));
+                Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+
+    public boolean checkFavoriteItem(Project checkProject) {
+        boolean check = false;
+        List<Project> favorites = sharedPreference.getFavorites(mContext);
+        if (favorites != null) {
+            for (Project project : favorites) {
+                if (project.equals(checkProject)) {
+                    check = true;
+                    break;
+                }
+            }
+        }
+        return check;
+    }
 
     public void dialogOptions(Dialog d, View v){
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -84,10 +124,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         TagGroup txtTags;
         protected Button btnDelivered, btnNotDelivered;
         protected LinearLayout cardlinear;
+        LikeButton likeButton;
 
         public SingleItemRowHolder(View view) {
             super(view);
             txtTags = view.findViewById(R.id.txtTags);
+            likeButton = view.findViewById(R.id.favorite);
 //            tvAddress = view.findViewById(R.id.tv_address);
 //            tvAddress = view.findViewById(R.id.tv_address);
 //            tvMobile = view.findViewById(R.id.tv_mobile);

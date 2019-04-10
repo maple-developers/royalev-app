@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.adapters.ItemAdapter;
+import com.maple.rimaproject.adapters.SharedPreference;
 import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class ProjectsFragment extends Fragment {
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjects;
+
+    SharedPreference sharedPreference;
 
     ItemAdapter itemAdapter;
     ArrayList<Project> projectsList = new ArrayList<>();
@@ -63,6 +66,7 @@ public class ProjectsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
 
         ButterKnife.bind(this,view);
+        sharedPreference = new SharedPreference();
         fillProjects();
 //        DeliveryOrderModel deliveryOrderModel = (DeliveryOrderModel) responseObject;
         rvProjects.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -78,9 +82,9 @@ public class ProjectsFragment extends Fragment {
     public void fillProjects() {
         for (int i=0; i < 16; i++){
             Project project = new Project();
-            project.setId(1);
-            project.setName("khalid");
-            project.setName("aldaboubi");
+            project.setId(i);
+            project.setName("project name "+i);
+            project.setDetails("details "+i);
             projectsList.add(project);
         }
     }

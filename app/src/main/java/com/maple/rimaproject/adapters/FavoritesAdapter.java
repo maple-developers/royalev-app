@@ -11,25 +11,33 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.model.Favorite;
+import com.maple.rimaproject.model.Product;
+import com.maple.rimaproject.model.Project;
 
 import java.util.List;
 
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.SingleItemRowHolder> {
 
-    private List<Favorite> ordersList;
+    private List<Project> ordersList;
     private Activity mContext;
     private boolean isHomeFragment = false;
+    SharedPreference sharedPreference;
+
 //    private SweetAlertDialog sweetAlertDialog;
 
 
-    public FavoritesAdapter(Activity context, List<Favorite> ordersList, boolean isHomeFragment) {
+    public FavoritesAdapter(Activity context, List<Project> ordersList, boolean isHomeFragment) {
         this.ordersList = ordersList;
         this.mContext = context;
         this.isHomeFragment = isHomeFragment;
+        sharedPreference=new SharedPreference();
     }
 
     @Override
@@ -42,6 +50,50 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
     @Override
     public void onBindViewHolder(final FavoritesAdapter.SingleItemRowHolder holder, final int i) {
 
+
+        holder.likeButton.setLiked(true);
+//        if (checkFavoriteItem(ordersList.get(i))) {
+//            holder.likeButton.setLiked(true);
+//        } else {
+//            holder.likeButton.setLiked(false);
+//        }
+
+        holder.likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+//                sharedPreference.addFavorite(mContext, ordersList.get(i));
+                Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                sharedPreference.removeFavorite(mContext, ordersList.get(i));
+                remove(ordersList
+                        .get(i));
+                Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    public boolean checkFavoriteItem(Project checkProject) {
+        boolean check = false;
+        List<Project> favorites = sharedPreference.getFavorites(mContext);
+        if (favorites != null) {
+            for (Project project : favorites) {
+                if (project.equals(checkProject)) {
+                    check = true;
+                    break;
+                }
+            }
+        }
+        return check;
+    }
+
+    public void remove(Project project) {
+        ordersList.remove(project);
+        notifyDataSetChanged();
     }
 
 
@@ -60,13 +112,16 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
 
 
 
+
     public class SingleItemRowHolder extends RecyclerView.ViewHolder{
         protected TextView tvNumber, tvAddress, tvMobile, tvPrice, tvNote;
         protected Button btnDelivered, btnNotDelivered;
         protected LinearLayout cardlinear;
+        LikeButton likeButton;
 
         public SingleItemRowHolder(View view) {
             super(view);
+            likeButton = view.findViewById(R.id.favorite);
 //            tvNumber = view.findViewById(R.id.tv_no);
 //            tvAddress = view.findViewById(R.id.tv_address);
 //            tvAddress = view.findViewById(R.id.tv_address);

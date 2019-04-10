@@ -1,70 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.HomeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment"
-    android:background="#FFF">
+    android:background="#DBD1C0"
+    >
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:src="@drawable/logo"
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_54sdp">
 
 
-    <com.smarteist.autoimageslider.SliderLayout
-        android:id="@+id/imageSlider"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="8dp"
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_alignParentStart="true"
 
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
-
-
-    <com.maple.rimaproject.Font.CustomTextView
-        android:id="@+id/customTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="رويال ايف"
-        android:textSize="@dimen/_23sdp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/imageSlider"
-        custom:typefaceAsset="ge_ss_light.otf"
-        tools:layout_editor_absoluteX="0dp" />
-
-
-    <com.maple.rimaproject.Font.CustomTextView
-        android:id="@+id/txtWlc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:text="للاستشارات العقارية والتسويق العقاري \n في اسطنبول مسجل لدى غرفة تجارة اسطنبول \n \n نسعى دائما من خلال الثقة والشفافية بالتعامل لتقديم أفضل الفرص والعروض العقارية وباسعار مناسبة"
-        android:textSize="@dimen/_18sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customTextView"
-        custom:typefaceAsset="ge_ss_light.otf" />
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="87dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="87dp"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
 
 
-</android.support.constraint.ConstraintLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPageAndroidDetails"
+                android:layout_width="match_parent"
+                android:layout_height="174dp"
+                android:layout_below="@+id/imageView4"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#00000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+            </android.support.v4.view.ViewPager>
+
+
+
+
+            <com.maple.rimaproject.Font.CustomTextView
+                android:id="@+id/customTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewPageAndroidDetails"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center"
+                android:text="رويال ايف"
+                android:textSize="@dimen/_23sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPageAndroidDetails"
+                custom:typefaceAsset="ge_ss_light.otf" />
+
+
+
+
+            <com.maple.rimaproject.Font.CustomTextView
+                android:id="@+id/txtWlc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_below="@+id/customTextView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+
+
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="للاستشارات العقارية والتسويق العقاري \n في اسطنبول مسجل لدى غرفة تجارة اسطنبول \n \n نسعى دائما من خلال الثقة والشفافية بالتعامل لتقديم أفضل الفرص والعروض العقارية وباسعار مناسبة"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView"
+                app:layout_constraintVertical_bias="0.0"
+                custom:typefaceAsset="ge_ss_light.otf" />
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</ScrollView>
+
+
+
+
+
+
+
+
+
+
+
