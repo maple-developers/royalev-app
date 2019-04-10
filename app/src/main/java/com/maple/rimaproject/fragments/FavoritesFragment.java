@@ -8,12 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.adapters.FavoritesAdapter;
+import com.maple.rimaproject.adapters.ItemAdapter;
+import com.maple.rimaproject.adapters.SharedPreference;
 import com.maple.rimaproject.model.Favorite;
+import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,11 +36,10 @@ public class FavoritesFragment extends Fragment {
     RecyclerView rvFavorites;
 
     FavoritesAdapter itemAdapter;
-    ArrayList<Favorite> favoritesList = new ArrayList<>();
+    List<Project> favoritesList = new ArrayList<>();
+    SharedPreference sharedPreference;
 
-
-    private OnFragmentInteractionListener mListener;
-
+    ArrayList<Project> projectsList = new ArrayList<>();
     public FavoritesFragment() {
         // Required empty public constructor
     }
@@ -62,33 +68,51 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this,view);
+        sharedPreference = new SharedPreference();
+        favoritesList = sharedPreference.getFavorites(getActivity());
 
-        fillFavorites();
-        rvFavorites.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        itemAdapter = new FavoritesAdapter(getActivity(), favoritesList,false);
 
-        rvFavorites.setAdapter(itemAdapter);
-        itemAdapter.notifyDataSetChanged();
+        if (favoritesList == null) {
+            Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+        } else {
+
+            if (favoritesList.size() == 0) {
+                Toast.makeText(getActivity(), "0", Toast.LENGTH_SHORT).show();
+            }
+
+            if (favoritesList != null) {
+                itemAdapter = new FavoritesAdapter(getActivity(), favoritesList,false);
+            }
+                rvFavorites.setLayoutManager(new LinearLayoutManager(getActivity()));
+                itemAdapter = new FavoritesAdapter(getActivity(), favoritesList, false);
+                rvFavorites.setAdapter(itemAdapter);
+                itemAdapter.notifyDataSetChanged();
+
+            }
+
+
+
+
+
         return view;
     }
 
-    public void fillFavorites() {
-        for (int i=0; i < 16; i++){
-            Favorite favorite = new Favorite();
-            favorite.setId(1);
-            favorite.setName("khalid");
-            favorite.setName("aldaboubi");
-            favoritesList.add(favorite);
-        }
-    }
+//    public void fillFavorites() {
+//        for (int i=0; i < 16; i++){
+//            Favorite favorite = new Favorite();
+//            favorite.setId(1);
+//            favorite.setName("khalid");
+//            favorite.setName("aldaboubi");
+//            favoritesList.add(favorite);
+//        }
+//    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
