@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
                 .load(images.get(position))
                 .resize(600,400)
                 .into(imageView);
+        Log.e("cxzx", "cxzx: "+images.get(position) );
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -93,7 +93,7 @@ public class Project implements Serializable{
     }
 
     public String getReferenceId() {
-        return referenceId;
+        return referenceId.equals("") ? "غير محدد" : referenceId;
     }
 
     public void setReferenceId(String referenceId) {
@@ -101,7 +101,7 @@ public class Project implements Serializable{
     }
 
     public String getArea() {
-        return area;
+        return area.equals("") ? "غير محدد" : area;
     }
 
     public void setArea(String area) {
@@ -109,7 +109,7 @@ public class Project implements Serializable{
     }
 
     public String getDetails() {
-        return details;
+        return details.equals("") ? "غير محدد" : details;
     }
 
     public void setDetails(String details) {
@@ -117,7 +117,7 @@ public class Project implements Serializable{
     }
 
     public String getLocation() {
-        return location;
+        return location.equals("") ? "غير محدد" : location;
     }
 
     public void setLocation(String location) {
@@ -125,7 +125,7 @@ public class Project implements Serializable{
     }
 
     public String getLatitude() {
-        return latitude;
+        return latitude.equals("") ? "غير محدد" : latitude;
     }
 
     public void setLatitude(String latitude) {
@@ -133,7 +133,7 @@ public class Project implements Serializable{
     }
 
     public String getLongitude() {
-        return longitude;
+        return longitude.equals("") ? "غير محدد" : longitude;
     }
 
     public void setLongitude(String longitude) {
@@ -141,7 +141,7 @@ public class Project implements Serializable{
     }
 
     public String getPricesFrom() {
-        return pricesFrom;
+        return pricesFrom.equals("") ? "غير محدد" : pricesFrom;
     }
 
     public void setPricesFrom(String pricesFrom) {
@@ -149,7 +149,7 @@ public class Project implements Serializable{
     }
 
     public String getStatus() {
-        return status;
+        return status.equals("") ? "غير محدد" : status;
     }
 
     public void setStatus(String status) {
@@ -157,7 +157,7 @@ public class Project implements Serializable{
     }
 
     public String getPlan1() {
-        return plan1;
+        return plan1.equals("") ? "غير محدد" : plan1;
     }
 
     public void setPlan1(String plan1) {
@@ -165,7 +165,7 @@ public class Project implements Serializable{
     }
 
     public String getPlan2() {
-        return plan2;
+        return plan2.equals("") ? "غير محدد" : plan2;
     }
 
     public void setPlan2(String plan2) {
@@ -173,15 +173,14 @@ public class Project implements Serializable{
     }
 
     public String getTypes() {
-        return types;
-    }
+        return types.equals("") ? "غير محدد" : referenceId;    }
 
     public void setTypes(String types) {
         this.types = types;
     }
 
     public String getSizes() {
-        return sizes;
+        return sizes.equals("") ? "غير محدد" : sizes;
     }
 
     public void setSizes(String sizes) {
@@ -189,7 +188,7 @@ public class Project implements Serializable{
     }
 
     public String getFeatures() {
-        return features;
+        return features.equals("") ? "غير محدد" : features;
     }
 
     public void setFeatures(String features) {
@@ -197,15 +196,14 @@ public class Project implements Serializable{
     }
 
     public String getCreateDate() {
-        return createDate;
-    }
+        return createDate.equals("") ? "غير محدد" : createDate;    }
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
     public String getUpdateDate() {
-        return updateDate;
+        return updateDate.equals("") ? "غير محدد" : updateDate;
     }
 
     public void setUpdateDate(String updateDate) {
@@ -252,7 +250,7 @@ public class Project implements Serializable{
 
 
         public String getPhotoPath() {
-            return photoPath;
+            return photoPath.equals("") ? "غير محدد" : photoPath;
         }
 
         public void setPhotoPath(String photoPath) {
@@ -260,7 +258,7 @@ public class Project implements Serializable{
         }
 
         public String getStatus() {
-            return status;
+            return status.equals("") ? "غير محدد" : status;
         }
 
         public void setStatus(String status) {
