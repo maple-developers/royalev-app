@@ -1,14 +1,20 @@
 package com.maple.rimaproject.Retrofit;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Project {
+public class Project implements Serializable{
+
+
 
     @SerializedName("reference_id")
     @Expose
@@ -61,6 +67,30 @@ public class Project {
     @SerializedName("sliders")
     @Expose
     private List<Slider> sliders = null;
+
+
+    public Project(){
+
+    }
+
+    protected Project(Parcel in) {
+        id = in.readInt();
+        referenceId = in.readString();
+        area = in.readString();
+        details = in.readString();
+        location = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
+        pricesFrom = in.readString();
+        status = in.readString();
+        plan1 = in.readString();
+        plan2 = in.readString();
+        types = in.readString();
+        sizes = in.readString();
+        features = in.readString();
+        createDate = in.readString();
+        updateDate = in.readString();
+    }
 
     public String getReferenceId() {
         return referenceId;
@@ -202,7 +232,7 @@ public class Project {
 //-----------------------------------com.example.Slider.java-----------------------------------
 
 
-    public class Slider {
+    public class Slider implements Serializable {
 
         @SerializedName("photo_path")
         @Expose
@@ -210,6 +240,16 @@ public class Project {
         @SerializedName("status")
         @Expose
         private String status;
+
+        protected Slider(Parcel in) {
+            photoPath = in.readString();
+            status = in.readString();
+        }
+
+
+
+
+
 
         public String getPhotoPath() {
             return photoPath;
@@ -227,6 +267,12 @@ public class Project {
             this.status = status;
         }
 
+
+
+        public void readFromParcel(Parcel in) {
+           photoPath = in.readString();
+           status = in.readString();
+        }
     }
     @Override
     public boolean equals(Object obj) {
@@ -240,13 +286,10 @@ public class Project {
         if (id != other.id)
             return false;
         return true;
+
     }
 
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", name=" + referenceId + ", description="
-                + details +"]";
-    }
+
 
 
     @Override
@@ -256,6 +299,9 @@ public class Project {
         result = prime * result + id;
         return result;
     }
+
+
+
 }
 
 

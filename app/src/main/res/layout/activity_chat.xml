@@ -2,8 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/colorIndivateTab">
+    android:background="@color/colorIndivateTab"
+    app:ignore="NamespaceTypo">
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:minHeight="?attr/actionBarSize"
+        android:contentInsetStart="0dp"
+        app:contentInsetStart="0dp"
+        >
+
+        <com.maple.rimaproject.Font.CustomTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:typefaceAsset="ge_ss_light.otf"
+            android:text="الدردشة"
+            android:layout_gravity="center"
+            android:textColor="#FFF"
+            android:textSize="@dimen/_18sdp"
+            android:gravity="center"/>
+    </android.support.v7.widget.Toolbar>
 
 
     <ImageButton
@@ -28,7 +56,9 @@
         android:id="@+id/recyclerChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/line">
+        android:layout_above="@id/line"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_below="@id/toolbar">
 
     </android.support.v7.widget.RecyclerView>
 

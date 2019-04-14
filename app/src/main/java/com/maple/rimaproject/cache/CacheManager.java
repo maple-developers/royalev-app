@@ -1,13 +1,6 @@
 package com.maple.rimaproject.cache;
 
 import android.content.Context;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import android.os.Build;
 import android.util.Log;
 
@@ -33,6 +26,15 @@ import java.nio.charset.StandardCharsets;
  * khalid.aldaboubi93@gmail.com
  * Project Name : royalev-app
  */
+
+import static com.maple.rimaproject.BuildConfig.DEBUG;
+
+/**
+ * Created by pawneshwer on 11-Dec-16.
+ * to save json into cache
+ */
+
+
 public class CacheManager {
     private Context context;
     private static final String TAG = CacheManager.class.getSimpleName();
@@ -59,16 +61,18 @@ public class CacheManager {
             bufferedWriter.close();
 
         } catch (FileNotFoundException e) {
-            Log.e(TAG, e.getLocalizedMessage());
+
+            M.l(TAG,e);
         } catch (IOException e) {
-            Log.e(TAG, e.getLocalizedMessage());
+            M.l(TAG,e);
         } finally {
             if (outputStream != null) {
                 try {
                     outputStream.flush();
                     outputStream.close();
                 } catch (IOException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
+
+                    M.l(TAG,e);
                 }
             }
         }
@@ -97,19 +101,22 @@ public class CacheManager {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Log.e(TAG, "loadJson, FileNotFoundException e: '" + e + "'");
+
+            if (DEBUG) Log.e(TAG, "loadJson, FileNotFoundException e: '" + e + "'");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "loadJson, IOException e: '" + e + "'");
+            if (DEBUG) Log.e(TAG, "loadJson, IOException e: '" + e + "'");
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    Log.e(TAG, "loadJson, finally, e: '" + e + "'");
+
+                    if (DEBUG) Log.e(TAG, "loadJson, finally, e: '" + e + "'");
                 }
             }
         }
         return jsonData;
     }
+
 }

@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.maple.rimaproject.R;
+
+import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.Retrofit.GetUser;
 import com.maple.rimaproject.Retrofit.RetrofitClient;
+import com.maple.rimaproject.adapters.FavoritesAdapter;
 import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
 
@@ -34,7 +37,8 @@ public class ProjectsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     int id;
-List<Project> allProject=new ArrayList<>();
+
+    List<Project> allProject=new ArrayList<>();
     ArrayList<Project> arr=new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 
@@ -75,17 +79,29 @@ List<Project> allProject=new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
 
         ButterKnife.bind(this,view);
-        sharedPreference = new SharedPreference();
-        fillProjects();
+        sharedPreference = new SharedPreference("projects");
+        allProject = sharedPreference.getArrayList(getContext());
+        for (int i=0; i< allProject.size(); i++){
+            Log.e("uiytfdg", String.valueOf(allProject.get(i).getId()));
+        }
+
+        for (int i=0; i < allProject.size(); i++){
+            Log.e("fkdsjgh", allProject.get(i).getArea());
+        }
 //        DeliveryOrderModel deliveryOrderModel = (DeliveryOrderModel) responseObject;
         rvProjects.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        itemAdapter = new ItemAdapter(getActivity(), arr,false);
+
+        itemAdapter = new ItemAdapter(getActivity(), allProject, false);
+        rvProjects.setAdapter(itemAdapter);
+        itemAdapter.notifyDataSetChanged();
+
 
 
 //        rv_projects = view.findViewById(R.id.rv_projects);
         return view;
     }
+
 
     public void fillProjects() {
         GetUser service = RetrofitClient.getClient("http://138.201.220.66/royalevcms/").create(GetUser.class);
@@ -156,6 +172,7 @@ List<Project> allProject=new ArrayList<>();
             }
         });
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

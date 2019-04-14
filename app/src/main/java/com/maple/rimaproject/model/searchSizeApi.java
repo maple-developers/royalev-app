@@ -1,17 +1,18 @@
 package com.maple.rimaproject.model;
 
-import android.content.Intent;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.maple.rimaproject.Retrofit.Project;
 
-/**
- * Created by Khalid Aldaboubi on 4/3/2019 4:01 PM .
- * Maple Technologies Ltd
- * khalid.aldaboubi93@gmail.com
- * Project Name : royalev-app
- */
-public class Project {
+public class searchSizeApi {
+
+
+    @SerializedName("id")
+    @Expose
     private Integer id;
+    @SerializedName("name")
+    @Expose
     private String name;
-    private String details;
 
     public Integer getId() {
         return id;
@@ -29,14 +30,6 @@ public class Project {
         this.name = name;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -46,17 +39,13 @@ public class Project {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Project other = (Project) obj;
+        searchSizeApi other = (searchSizeApi) obj;
         if (id != other.id)
             return false;
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", description="
-                + details +"]";
-    }
+
 
 
     @Override

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Datum {
+public class Project {
 
     @SerializedName("reference_id")
     @Expose
@@ -57,7 +57,7 @@ public class Datum {
     private String updateDate;
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("sliders")
     @Expose
     private List<Slider> sliders = null;
@@ -182,11 +182,11 @@ public class Datum {
         this.updateDate = updateDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -227,6 +227,34 @@ public class Datum {
             this.status = status;
         }
 
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Project other = (Project) obj;
+        if (id != other.id)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", name=" + referenceId + ", description="
+                + details +"]";
+    }
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
     }
 }
 

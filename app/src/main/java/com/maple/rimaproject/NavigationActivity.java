@@ -19,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.maple.rimaproject.Retrofit.Datum;
+import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.activites.Contactus_Activity;
 import com.maple.rimaproject.fragments.FavoritesFragment;
 import com.maple.rimaproject.fragments.HomeFragment;
@@ -68,7 +68,7 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
 //        }
 //    };
 
-    List<Datum> projectsList = new ArrayList<>();
+    List<Project> projectsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

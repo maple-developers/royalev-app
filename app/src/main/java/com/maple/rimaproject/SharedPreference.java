@@ -21,7 +21,7 @@
 //    }
 //
 //    // This four methods are used for maintaining favorites.
-//    public void saveFavorites(Context context, List<Project> favorites) {
+//    public void saveArrayList(Context context, List<Project> favorites) {
 //        SharedPreferences settings;
 //        Editor editor;
 //
@@ -37,23 +37,23 @@
 //        editor.commit();
 //    }
 //
-//    public void addFavorite(Context context, Project project) {
-//        List<Project> favorites = getFavorites(context);
+//    public void addArrayList(Context context, Project project) {
+//        List<Project> favorites = getArrayList(context);
 //        if (favorites == null)
 //            favorites = new ArrayList<Project>();
 //        favorites.add(Project);
-//        saveFavorites(context, favorites);
+//        saveArrayList(context, favorites);
 //    }
 //
-//    public void removeFavorite(Context context, Project product) {
-//        ArrayList<Project> favorites = getFavorites(context);
+//    public void removeArrayList(Context context, Project product) {
+//        ArrayList<Project> favorites = getArrayList(context);
 //        if (favorites != null) {
 //            favorites.remove(product);
-//            saveFavorites(context, favorites);
+//            saveArrayList(context, favorites);
 //        }
 //    }
 //
-//    public ArrayList<Project> getFavorites(Context context) {
+//    public ArrayList<Project> getArrayList(Context context) {
 //        SharedPreferences settings;
 //        List<Project> favorites;
 //

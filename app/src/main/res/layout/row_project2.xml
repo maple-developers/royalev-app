@@ -82,6 +82,8 @@
                     android:id="@+id/txtProjectBrief"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_3sdp"
                     android:layout_alignBottom="@+id/imgProject"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"

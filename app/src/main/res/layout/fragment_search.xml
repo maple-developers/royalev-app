@@ -51,26 +51,50 @@
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <me.bendik.simplerangeview.SimpleRangeView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/fixed_rangeview"
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:count="200"
-                        app:end="222"
-                        app:endFixed="222"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp">
 
-                        app:start="30"
-                        app:startFixed="30" />
-                </LinearLayout>
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/rangeSeekbar6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                           />
+
+                        <TextView
+                            android:id="@+id/textMin6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:layout_below="@id/rangeSeekbar6"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            android:textSize="16dp"
+                            android:textColor="#000"/>
+
+                        <TextView
+                            android:id="@+id/textMax6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:layout_below="@id/rangeSeekbar6"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="16dp"
+                            android:textColor="#000"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                    >
 
@@ -185,189 +209,283 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <TextView
+                        <CheckBox
+                            android:id="@+id/size1"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:text="Bedrooms"
+                            android:text=""
                             android:textColor="#000"
                             android:textSize="@dimen/_12sdp" />
 
-                        <TextView
+                        <CheckBox
+                            android:id="@+id/size2"
+
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:text="Bathrooms"
+                            android:text="3+1"
                             android:textColor="#000"
                             android:textSize="@dimen/_12sdp" />
 
-                        <TextView
+                        <CheckBox
+                            android:id="@+id/size3"
+
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:text="Living Room"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="Kitchen"
+                            android:text="5+1"
                             android:textColor="#000"
                             android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <CheckBox
+                            android:id="@+id/size4"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="1+1"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <CheckBox
+                            android:id="@+id/size5"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="3.5+1"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <CheckBox
+                            android:id="@+id/size6"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <CheckBox
+                            android:id="@+id/size7"
+
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:text="2+1"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
 
-                            <ImageView
-                                android:id="@+id/btnMinus1"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginBottom="@dimen/_3sdp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_remove_circle_outline_black_24dp" />
+                        <CheckBox
+                            android:id="@+id/size8"
 
-                            <TextView
-                                android:id="@+id/badroom"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:gravity="center_vertical"
-                                android:text="0"
-                                android:textSize="@dimen/_16sdp" />
-
-                            <ImageView
-                                android:id="@+id/btnPlus1"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_add_circle_outline_black_24dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:text="4+1"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
 
-                            <ImageView
-                                android:id="@+id/btnMinus2"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginBottom="@dimen/_3sdp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_remove_circle_outline_black_24dp" />
-
-                            <TextView
-                                android:id="@+id/bathroom"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:gravity="center_vertical"
-                                android:text="0"
-                                android:textSize="@dimen/_16sdp" />
-
-                            <ImageView
-                                android:id="@+id/btnPlus2"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_add_circle_outline_black_24dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <CheckBox
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:text="4+1"
+                            android:visibility="invisible"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
 
-                            <ImageView
-                                android:id="@+id/btnMinus3"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginBottom="@dimen/_3sdp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_remove_circle_outline_black_24dp" />
 
-                            <TextView
-                                android:id="@+id/livingroom"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:gravity="center_vertical"
-                                android:text="0"
-                                android:textSize="@dimen/_16sdp" />
-
-                            <ImageView
-                                android:id="@+id/btnPlus3"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_add_circle_outline_black_24dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/btnMinus4"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_remove_circle_outline_black_24dp" />
-
-                            <TextView
-                                android:id="@+id/kitchen"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:gravity="center_vertical"
-                                android:text="0"
-                                android:textSize="@dimen/_16sdp" />
-
-                            <ImageView
-                                android:id="@+id/btnPlus4"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@color/colorPrimaryDark"
-                                android:src="@drawable/ic_add_circle_outline_black_24dp" />
-                        </LinearLayout>
 
                     </LinearLayout>
+
+
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/card2"
+            android:id="@+id/cards"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="0dp"
+            android:background="#FFF"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp">
+
+                <com.maple.rimaproject.Font.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:text="Rooms"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/type1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="شقق سكنية"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <CheckBox
+                            android:id="@+id/type4"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="مكاتب"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <CheckBox
+                            android:id="@+id/type2"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="شقق فندقية"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <CheckBox
+                            android:id="@+id/type5"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+
+                            android:layout_weight="1"
+                            android:text="محلات تجارية"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/type3"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="فلل"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+
+                            android:text="4+1"
+                            android:visibility="invisible"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_12sdp" />
+
+
+
+                    </LinearLayout>
+
+
+
 
 
                 </LinearLayout>
@@ -381,12 +499,12 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card2"
+            android:layout_below="@+id/cards"
             android:id="@+id/card3"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="0dp"
             android:background="#FFF"
             app:cardElevation="@dimen/_5sdp"
@@ -730,7 +848,7 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-   <!---->
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
