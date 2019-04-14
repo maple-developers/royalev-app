@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.adapters.FavoritesAdapter;
+import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class FavoritesFragment extends Fragment {
     @BindView(R.id.rv_favorites)
     RecyclerView rvFavorites;
 
-    FavoritesAdapter itemAdapter;
+    ItemAdapter itemAdapter;
     List<Project> favoritesList = new ArrayList<>();
     SharedPreference sharedPreference;
 
@@ -77,10 +78,10 @@ public class FavoritesFragment extends Fragment {
             }
 
             if (favoritesList != null) {
-                itemAdapter = new FavoritesAdapter(getActivity(), favoritesList,false);
+                itemAdapter = new ItemAdapter(getActivity(), favoritesList,false);
             }
                 rvFavorites.setLayoutManager(new LinearLayoutManager(getActivity()));
-                itemAdapter = new FavoritesAdapter(getActivity(), favoritesList, false);
+                itemAdapter = new ItemAdapter(getActivity(), favoritesList, false);
                 rvFavorites.setAdapter(itemAdapter);
                 itemAdapter.notifyDataSetChanged();
 

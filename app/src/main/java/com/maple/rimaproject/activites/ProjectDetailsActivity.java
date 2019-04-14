@@ -1,17 +1,19 @@
 package com.maple.rimaproject.activites;
 
-import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,29 +24,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.maple.rimaproject.Font.CustomTextView;
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.Retrofit.GetFeaures;
-import com.maple.rimaproject.Retrofit.GetUser;
 import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.Retrofit.RetrofitClient;
-import com.maple.rimaproject.SplashScreen;
 import com.maple.rimaproject.adapters.CustomSwipeAdapter;
 import com.maple.rimaproject.adapters.FeatureAdabter;
 import com.maple.rimaproject.adapters.InfinitePagerAdapter;
 import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
-import com.maple.rimaproject.model.Feature;
 import com.maple.rimaproject.model.featureApi;
 import com.smarteist.autoimageslider.DefaultSliderView;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
+import me.gujun.android.taggroup.TagGroup;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,53 +55,69 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     private GoogleMap mMap;
     ItemAdapter itemAdapter;
     ArrayList<Project> projectsList = new ArrayList<>();
-    List<Project> detailsOfProject=new ArrayList<>();
+    List<Project> detailsOfProject = new ArrayList<>();
     SliderLayout sliderLayout;
-    ArrayList<String> arr= new ArrayList<>();
+    ArrayList<String> arr = new ArrayList<>();
     String image;
     int newID;
-    CustomTextView sizeBuilding;
+    TagGroup sizeBuilding;
     CustomTextView typeBuilding;
     String size;
     String size2;
+    String size3;
     String type2;
     String type;
     String details;
     String status;
+    String price;
+    String plan;
+    String location;
 
     CustomTextView projectDetails;
+    CustomTextView Location;
+    CardView LocationCard;
     CustomTextView statusText;
-    String Latu,longt;
-    double latu2,longt2;
-    String location;
-    CustomTextView locationText;
-    List<featureApi>allFeature=new ArrayList<>();
-    List<Project.Slider> sliders=new ArrayList<>();
+    CustomTextView priceText;
+    String Latu, longt;
+    double latu2, longt2;
+    String area;
+    CustomTextView AreaText;
+    CustomTextView PlanText;
+    List<featureApi> allFeature = new ArrayList<>();
+    List<Project.Slider> sliders = new ArrayList<>();
     int PLACE_PICKER_REQUEST = 1;
     //List<String> allFeatures=new ArrayList<>();
     String all;
     String[] allFeatures;
     FeatureAdabter adapter;
-
+    PagerAdapter adapterr;
+    ViewPager viewPageAndroidDetails;
     RecyclerView features;
     SharedPreference sharedPreference;
-    List<featureApi> featuresList=new ArrayList<>();
-    List<String> featureNames=new ArrayList<>();
-    List<String> featureids=new ArrayList<>();
-    List<String> featureimgs=new ArrayList<>();
-    List<String> parts=new ArrayList<>();
+    List<featureApi> featuresList = new ArrayList<>();
+    List<String> featureNames = new ArrayList<>();
+    List<String> featureids = new ArrayList<>();
+    List<String> featureimgs = new ArrayList<>();
+    List<String> parts = new ArrayList<>();
+    String format_Price_TRY;
+    String format_Price_USD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_details);
-        sizeBuilding=findViewById(R.id.size);
-        typeBuilding=findViewById(R.id.type);
-        projectDetails=findViewById(R.id.projectdetails);
-        locationText=findViewById(R.id.location);
+        sizeBuilding = findViewById(R.id.size);
+        typeBuilding = findViewById(R.id.type);
+        projectDetails = findViewById(R.id.projectdetails);
+        AreaText = findViewById(R.id.area);
+        PlanText = findViewById(R.id.plan);
+        Location = findViewById(R.id.location);
+        LocationCard = findViewById(R.id.cardlocation);
 
+
+        viewPageAndroidDetails = findViewById(R.id.viewPageAndroidDetails);
         feature();
-        features=findViewById(R.id.recycfeatures);
+        features = findViewById(R.id.recycfeatures);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -110,10 +126,10 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        sliderLayout = findViewById(R.id.imageSlider);
-        sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
-        sliderLayout.setScrollTimeInSec(5); //set scroll delay in seconds :
+        //sliderLayout = findViewById(R.id.imageSlider);
+//        sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+//        sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
+//        sliderLayout.setScrollTimeInSec(5); //set scroll delay in seconds :
 
         ArrayList<String> animalNames = new ArrayList<>();
         animalNames.add("Hotel");
@@ -125,109 +141,179 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
 
         Bundle extras = getIntent().getExtras();
-        if(extras == null) {
-            newID= 0;
+        if (extras == null) {
+            newID = 0;
         } else {
-            newID= extras.getInt("id");
-            size=extras.getString("size");
-            size2= size.replace("^","");
-            type=extras.getString("type");
-            type2=type.replace("^","");
-            details=extras.getString("info");
-            Latu=extras.getString("lat");
-            longt=extras.getString("longi");
-            status=extras.getString("status");
+            newID = extras.getInt("id");
+            size = extras.getString("size");
 
-            sizeBuilding.setText(size2);
-            typeBuilding.setText(type2);
-            projectDetails.setText(details);
-            locationText.setText(location);
-            longt2 = Double.parseDouble(longt);
-            latu2 = Double.parseDouble(Latu);
-            statusText=findViewById(R.id.status);
-            statusText.setText(status);
-            Log.e("longt2", "longt2: "+latu2+","+longt2 );
-            all=extras.getString("features");
-            location=extras.getString("location");
+            Log.e("asd", "sub: " + size2);
+            size2 = size.replace("^^", "&");
+            Log.e("asd", "rep: " + size2);
+
+            type = extras.getString("type");
+            type2 = type.replace("^", "");
+            details = extras.getString("info");
+            Latu = extras.getString("lat");
+            longt = extras.getString("longi");
+            status = extras.getString("status");
+            plan = extras.getString("plan1");
+            price = extras.getString("price");
+            area = extras.getString("area");
+            location = extras.getString("location");
+
+
+
+
+                Location.setText(location);
+
+
+            String allPrice[] = price.split(Pattern.quote("^"));
+
+            String TRY_price = allPrice[0];
+            String USD_price = allPrice[1];
+            String TYE[] = TRY_price.split("_");
+            Log.e("TYE", "TYE: " + TYE[0]);
+            String USD[] = USD_price.split("_");
+            Log.e("TYE", "TYE: " + USD[0]);
+
+            NumberFormat formatter = new DecimalFormat("#,###");
+            double myNumber = Double.parseDouble(TYE[0]);
+            double myNumber2 = Double.parseDouble(USD[0]);
+            String formattedTRY = formatter.format(myNumber);
+            String formattedUSD = formatter.format(myNumber2);
+
+
+            //format_Price_TRY = (String.format("%,d" ,953430)).replace(' ', ',');
+            //format_Price_USD = (String.format("%,d" ,165082)).replace(' ', ',');
+            Log.e("format_Price_USD", "format_Price_USD: " + formattedUSD);
+            Log.e("format_Price_TRY", "format_Price_TRY: " + formattedTRY);
+
+            //  String[] allPricse=price.split(" ");
+
+
+//          for (int j=0;j<allPrice.length;++j){
+//
+//
+////             price = (String.format("%,d", price));
+//
+//          }
+//            Log.e("dsadzxc", "dsadzxc: "+s );
+            size3 = size2.substring(1, size2.length() - 1);
+            String[] sizes = size3.split("&");
+            Log.e("asd", "asd: " + size3);
+            sizeBuilding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+            sizeBuilding.setTags(sizes);
+
+            if (!type2.equals("")) {
+
+
+                typeBuilding.setText(type2);
+            } else {
+                typeBuilding.setText("غير محدد");
+            }
+
+            if (!details.equals("")) {
+
+
+                projectDetails.setText(details);
+                AreaText.setText(area);
+                longt2 = Double.parseDouble(longt);
+                latu2 = Double.parseDouble(Latu);
+                statusText = findViewById(R.id.status);
+                priceText = findViewById(R.id.price);
+                priceText.setText(formattedTRY + " " + TYE[1] + "\n" + formattedUSD + " " + USD[1]);
+                if (!status.equals("")) {
+                    statusText.setText(status);
+                } else {
+                    statusText.setText("غير محدد");
+                }
+                if (!plan.equals("")) {
+                    PlanText.setText(plan);
+                } else {
+                    priceText.setText("غير محدد");
+                }
+                Log.e("longt2", "longt2: " + latu2 + "," + longt2);
+                all = extras.getString("features");
+
 //            all.replace("^^","^");
 
 
+                String array = all.substring(1, all.length() - 1);
 
-            String array = all.substring(1,all.length()-1);
-
-            String data[]={array};
-            List<Project>list=new ArrayList<>();
-            Log.e("asdsa", "asdasd: "+array );
-            parts =  Arrays.asList(array.split(Pattern.quote("^^")));
-
-            for (int i=0;i<parts.size();i++){
+                String data[] = {array};
+                List<Project> list = new ArrayList<>();
+                Log.e("asdsa", "asdasd: " + array);
+                parts = Arrays.asList(array.split(Pattern.quote("^^")));
 
 
-                Log.e("fghgfhdfhg", "fghgfhdfhg: "+ parts.get(i));
+                // Sliders
+                arr = new ArrayList<>();
+                sliders = (List<Project.Slider>) extras.getSerializable("slider");
+                for (int i = 0; i < sliders.size(); i++) {
+                    //setSliderViews(sliders.get(i).getPhotoPath());
+//                String image=;
+
+                    image = sliders.get(i).getPhotoPath();
+                    Log.e("Imgaessssda", "onCreate: " + image);
+                    arr.add(image);
+
+                }
+                adapterr = new InfinitePagerAdapter(new CustomSwipeAdapter(this, arr));
+
+                viewPageAndroidDetails.setAdapter(adapterr);
+
+
             }
+            Integer[] images = {R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+                    R.drawable.ic_secure_shield,
+            };
 
+            for (int i = 0; i < parts.size(); i++) {
+                featureApi feature = new featureApi();
 
+                feature.setName(parts.get(i));
 
-
-
-            // Sliders
-            sliders= (List<Project.Slider>) extras.getSerializable("slider");
-            for (int i=0; i < sliders.size(); i++){
-                setSliderViews(sliders.get(i).getPhotoPath());
+                featuresList.add(feature);
             }
+            adapter = new FeatureAdabter(ProjectDetailsActivity.this, parts, true);
+            features.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
 
 
-        }
-        Integer[]  images = {R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-                R.drawable.ic_secure_shield,
-        };
-
-        for(int i=0; i < parts.size(); i++){
-            featureApi feature = new featureApi();
-
-            feature.setName(parts.get(i));
-
-            featuresList.add(feature);
-        }
-        adapter = new FeatureAdabter(ProjectDetailsActivity.this, parts, true);
-        features.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        LinearLayoutManager horizontalLayoutManager
-                = new LinearLayoutManager(ProjectDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        features.setLayoutManager(horizontalLayoutManager);
-
-
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+            LinearLayoutManager horizontalLayoutManager
+                    = new LinearLayoutManager(ProjectDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+            features.setLayoutManager(horizontalLayoutManager);
 
 
 //        GetUser service = RetrofitClient.getClient("http://138.201.220.66/royalevcms/").create(GetUser.class);
@@ -314,57 +400,57 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //        itemAdapter.notifyDataSetChanged();
 
 
+        }
     }
-
-    private void setSliderViews(String image) {
-
+        private void setSliderViews (String image){
 
 
-        DefaultSliderView sliderView = new DefaultSliderView(this);
+            DefaultSliderView sliderView = new DefaultSliderView(this);
 
 
-        sliderView.setImageUrl(image);
+            sliderView.setImageUrl(image);
 
 
-        sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
 //        final int finalI = i;
 //            sliderView.setDescription("The quick brown fox jumps over the lazy dog.\n" + "Jackdaws love my big sphinx of quartz. " + (i + 1));
 //            final int finalI = i;
 
-        sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
-            @Override
-            public void onSliderClick(SliderView sliderView) {
+            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
+                @Override
+                public void onSliderClick(SliderView sliderView) {
 //                    Toast.makeText(ProjectDetailsActivity.this, "This is slider " + (finalI + 1), Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                }
+            });
 
-        //at last add this view in your layout :
-        sliderLayout.addSliderView(sliderView);
+            //at last add this view in your layout :
+            sliderLayout.addSliderView(sliderView);
 
 
-    }
+        }
 
-    public void fillProjects() {
-        for (int i=0; i < 16; i++){
-            Project project = new Project();
+        public void fillProjects () {
+            for (int i = 0; i < 16; i++) {
+                Project project = new Project();
 //            project.setId(1);
 //            project.setName("khalid");
 //            project.setName("aldaboubi");
-            projectsList.add(project);
+                projectsList.add(project);
+            }
         }
-    }
-    public void feature(){
-        GetFeaures service = RetrofitClient.getClient("http://138.201.220.66/royalevcms/").create(GetFeaures.class);
-        Call<List<featureApi>> call =  service.getfeature();
-        Log.e("URL Called", call.request().url() + "");
 
-        call.enqueue(new Callback<List<featureApi>>() {
-            @Override
-            public void onResponse(Call<List<featureApi>> call, Response<List<featureApi>> response) {
+        public void feature () {
+            GetFeaures service = RetrofitClient.getClient("http://138.201.220.66/royalevcms/").create(GetFeaures.class);
+            Call<List<featureApi>> call = service.getfeature();
+            Log.e("URL Called", call.request().url() + "");
+
+            call.enqueue(new Callback<List<featureApi>>() {
+                @Override
+                public void onResponse(Call<List<featureApi>> call, Response<List<featureApi>> response) {
 //                Log.e("ResponseLogIn", "onResponse: " + response.body().get(0).getArea());
-                allFeature = response.body();
-                Log.e("allFeature", "allFeature: "+allFeature );
+                    allFeature = response.body();
+                    Log.e("allFeature", "allFeature: " + allFeature);
 
 
 //                Integer[]  images = {R.drawable.ic_secure_shield,
@@ -407,9 +493,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //                }
 
 
-                for (int i=0; i < parts.size(); i++){
-                    Log.e("fdksjghd", parts.get(i));
-                }
+                    for (int i = 0; i < parts.size(); i++) {
+                        Log.e("fdksjghd", parts.get(i));
+                    }
 
 
 //                for(int i=0; i < allFeature.size(); i++){
@@ -444,30 +530,30 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
 //                viewPageAndroidDetails.setAlpha(0.3F);
 
-            }
+                }
 
-            @Override
-            public void onFailure(Call<List<featureApi>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<List<featureApi>> call, Throwable t) {
 //                Toast.makeText(MainActivity.this,, Toast.LENGTH_SHORT).show();
-                Log.e("sagtegrfte", t.getLocalizedMessage() + t.getStackTrace() + t.getCause());
+                    Log.e("sagtegrfte", t.getLocalizedMessage() + t.getStackTrace() + t.getCause());
 
-            }
-        });
-    }
+                }
+            });
+        }
 
 
+        @Override
+        public void onMapReady (GoogleMap googleMap){
+            mMap = googleMap;
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        Log.e("dsfsdf", String.valueOf(latu2+","+longt2));
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(latu2,longt2);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            Log.e("dsfsdf", String.valueOf(latu2 + "," + longt2));
+            // Add a marker in Sydney and move the camera
+            LatLng sydney = new LatLng(latu2, longt2);
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f));
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f));
 
-    }
+        }
+
 }

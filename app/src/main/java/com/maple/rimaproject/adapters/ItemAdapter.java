@@ -58,7 +58,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
 
 //        holder.txtTags.setTags(list);
         holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات", "عقارات", "مكاتب"});
-        holder.tvDetails.setText(ordersList.get(i).getDetails());
+        String strOut = ordersList.get(i).getDetails();
+        if (strOut.length() > 89){
+            String result = strOut.substring(0, 90) + " ... ";
+            holder.tvDetails.setText(result);
+        } else {
+            holder.tvDetails.setText(strOut);
+        }
+
         holder.tvprojectName.setText(ordersList.get(i).getReferenceId());
        Picasso.get()
                 .load(ordersList.get(i).getSliders().get(0).getPhotoPath())
@@ -84,6 +91,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
                 is.putExtra("longi",ordersList.get(i).getLongitude());
                 is.putExtra("info",ordersList.get(i).getDetails());
                 is.putExtra("slider", (ArrayList<Project.Slider>) ordersList.get(i).getSliders());
+                is.putExtra("price",ordersList.get(i).getPricesFrom());
+                is.putExtra("plan1",ordersList.get(i).getPlan1());
+                is.putExtra("area",ordersList.get(i).getArea());
+                for (int j=0;j<ordersList.get(i).getSliders().size();j++){
+
+                    Log.e("ssslllss", "onClick: "+ordersList.get(i).getSliders().get(j).getPhotoPath() );
+                }
                 is.putExtra("features",ordersList.get(i).getFeatures());
                 is.putExtra("location",ordersList.get(i).getLocation());
                 is.putExtra("status",ordersList.get(i).getStatus());
