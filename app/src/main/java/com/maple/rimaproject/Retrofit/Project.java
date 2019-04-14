@@ -157,7 +157,7 @@ public class Project implements Serializable{
     }
 
     public String getPlan1() {
-        return plan1.equals("") ? "غير محدد" : plan1;
+        return plan1;
     }
 
     public void setPlan1(String plan1) {
@@ -165,7 +165,7 @@ public class Project implements Serializable{
     }
 
     public String getPlan2() {
-        return plan2.equals("") ? "غير محدد" : plan2;
+        return plan2;
     }
 
     public void setPlan2(String plan2) {
@@ -173,7 +173,7 @@ public class Project implements Serializable{
     }
 
     public String getTypes() {
-        return types.equals("") ? "غير محدد" : referenceId;    }
+        return types.equals("") ? "غير محدد" : types;    }
 
     public void setTypes(String types) {
         this.types = types;

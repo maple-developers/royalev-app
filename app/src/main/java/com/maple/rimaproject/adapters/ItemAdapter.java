@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import me.gujun.android.taggroup.TagGroup;
 
@@ -56,8 +57,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
     @Override
     public void onBindViewHolder(final ItemAdapter.SingleItemRowHolder holder, final int i) {
 
-//        holder.txtTags.setTags(list);
-        holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات", "عقارات", "مكاتب"});
+//       holder.txtTags.setTags(list);
+        String type2;
+        String type;
+        type=ordersList.get(i).getTypes();
+        type2=type.substring(1,type.length()-1);
+        String[] AllType = type2.split(Pattern.quote("^^"));
+        holder.txtTags.setTags(AllType);
+        Log.e("zxczxc", "xzzxc: "+AllType );
         String strOut = ordersList.get(i).getDetails();
         if (strOut.length() > 89){
             String result = strOut.substring(0, 90) + " ... ";
@@ -93,6 +100,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
                 is.putExtra("slider", (ArrayList<Project.Slider>) ordersList.get(i).getSliders());
                 is.putExtra("price",ordersList.get(i).getPricesFrom());
                 is.putExtra("plan1",ordersList.get(i).getPlan1());
+                is.putExtra("plan2",ordersList.get(i).getPlan2());
                 is.putExtra("area",ordersList.get(i).getArea());
                 for (int j=0;j<ordersList.get(i).getSliders().size();j++){
 

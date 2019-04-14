@@ -61,7 +61,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     String image;
     int newID;
     TagGroup sizeBuilding;
-    CustomTextView typeBuilding;
+    TagGroup typeBuilding;
     String size;
     String size2;
     String size3;
@@ -71,6 +71,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     String status;
     String price;
     String plan;
+    String plan2;
     String location;
 
     CustomTextView projectDetails;
@@ -83,6 +84,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     String area;
     CustomTextView AreaText;
     CustomTextView PlanText;
+    CustomTextView PlanText2;
     List<featureApi> allFeature = new ArrayList<>();
     List<Project.Slider> sliders = new ArrayList<>();
     int PLACE_PICKER_REQUEST = 1;
@@ -111,6 +113,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         projectDetails = findViewById(R.id.projectdetails);
         AreaText = findViewById(R.id.area);
         PlanText = findViewById(R.id.plan);
+        PlanText2 = findViewById(R.id.plan2);
         Location = findViewById(R.id.location);
         LocationCard = findViewById(R.id.cardlocation);
 
@@ -152,12 +155,15 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             Log.e("asd", "rep: " + size2);
 
             type = extras.getString("type");
-            type2 = type.replace("^", "");
+
+            type2=type.substring(1,type.length()-1);
+            String[] AllType = type2.split(Pattern.quote("^^"));
             details = extras.getString("info");
             Latu = extras.getString("lat");
             longt = extras.getString("longi");
             status = extras.getString("status");
             plan = extras.getString("plan1");
+            plan2 = extras.getString("plan2");
             price = extras.getString("price");
             area = extras.getString("area");
             location = extras.getString("location");
@@ -206,13 +212,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
             sizeBuilding.setTags(sizes);
 
-            if (!type2.equals("")) {
+            typeBuilding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
-
-                typeBuilding.setText(type2);
-            } else {
-                typeBuilding.setText("غير محدد");
-            }
+            typeBuilding.setTags(AllType);
 
             if (!details.equals("")) {
 
@@ -229,11 +231,31 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                 } else {
                     statusText.setText("غير محدد");
                 }
-                if (!plan.equals("")) {
+
+                if (!plan.equals("")){
                     PlanText.setText(plan);
-                } else {
-                    priceText.setText("غير محدد");
+                    if (!plan2.equals("")){
+                        PlanText2.setText(plan2);
+                    }
+                    else {
+                        PlanText2.setVisibility(View.GONE);
+                    }
                 }
+                else if (!plan2.equals("")){
+                    PlanText.setVisibility(View.GONE);
+                    PlanText2.setText(plan2);
+                }
+                else{
+                    PlanText2.setVisibility(View.GONE);
+                    PlanText.setText("غير محدد");
+
+                }
+
+
+
+
+
+
                 Log.e("longt2", "longt2: " + latu2 + "," + longt2);
                 all = extras.getString("features");
 
