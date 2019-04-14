@@ -19,8 +19,8 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.maple.rimaproject.Font.CustomTextView;
 import com.maple.rimaproject.R;
+import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.activites.ProjectDetailsActivity;
-import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         List<String> list = new ArrayList<>();
         list.add("khalid");
         list.add("ali");
+
+
+        Intent i = new Intent();
+        i.
 //        holder.txtTags.setTags(list);
         holder.txtTags.setTags(new String[]{"شقق", "مكاتب", "محلات", "عقارات", "مكاتب"});
         if (checkFavoriteItem(ordersList.get(i))) {
