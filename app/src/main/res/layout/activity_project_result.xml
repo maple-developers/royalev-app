@@ -8,6 +8,28 @@
     tools:context=".activites.ProjectDetailsActivity"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:minHeight="?attr/actionBarSize"
+        android:contentInsetStart="0dp"
+        app:contentInsetStart="0dp"
+        >
+
+        <com.maple.rimaproject.Font.CustomTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:typefaceAsset="ge_ss_light.otf"
+            android:text="عدد المشاريع"
+            android:layout_gravity="center"
+            android:textColor="#FFF"
+            android:textSize="@dimen/_18sdp"
+            android:gravity="center"/>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_projects"

@@ -168,26 +168,32 @@ public class SplashScreen extends AppCompatActivity {
             public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
 //                Log.e("ResponseLogIn", "onResponse: " + response.body().get(0).getArea());
                 allProject = response.body();
+
+
                 List<Project> allProject_cache = sharedPreference.getArrayList(SplashScreen.this);
-                if (allProject_cache != null) {
-                    for (Project person2 : allProject_cache) {
-                        // Loop arrayList1 items
-                        boolean found = false;
-                        for (Project person1 : allProject) {
-                            if (person2.getId() == person1.getId()) {
-                                found = true;
-                            }
-                        }
-                        if (!found) {
-                            sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
-//                        results.add(person2.id);
-                        }
-                    }
-                } else {
-                    for (int i = 0; i < allProject.size(); i++) {
-                        sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
-                    }
-                }
+
+                sharedPreference.removeArrayList(SplashScreen.this, allProject_cache.get(i));
+                sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
+
+//                if (allProject_cache != null) {
+//                    for (Project person2 : allProject_cache) {
+//                        // Loop arrayList1 items
+//                        boolean found = false;
+//                        for (Project person1 : allProject) {
+//                            if (person2.getId() == person1.getId()) {
+//                                found = true;
+//                            }
+//                        }
+//                        if (!found) {
+//                            sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
+////                        results.add(person2.id);
+//                        }
+//                    }
+//                } else {
+//                    for (int i = 0; i < allProject.size(); i++) {
+//                        sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
+//                    }
+//                }
 
 
 //

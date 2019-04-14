@@ -199,9 +199,15 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptions options =
                     ActivityOptions.makeSceneTransitionAnimation(this, fab, fab.getTransitionName());
-            startActivityForResult(new Intent(this, RegisterActivity.class), StaticConfig.REQUEST_CODE_REGISTER, options.toBundle());
+            Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+            intent.putExtra("project_name", bundle.getString("project_name"));
+            startActivity(intent);
+            startActivityForResult(intent, StaticConfig.REQUEST_CODE_REGISTER, options.toBundle());
         } else {
-            startActivityForResult(new Intent(this, RegisterActivity.class), StaticConfig.REQUEST_CODE_REGISTER);
+            Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+            intent.putExtra("project_name", bundle.getString("project_name"));
+            startActivity(intent);
+            startActivityForResult(intent, StaticConfig.REQUEST_CODE_REGISTER);
         }
     }
 
@@ -290,9 +296,10 @@ public class LoginActivity extends AppCompatActivity {
                                         .show();
                             } else {
                                 initNewUserInfo();
+                                Intent intent=new Intent();
                                 Toast.makeText(LoginActivity.this, "Register and Login success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, ChatActivity.class));
-                                LoginActivity.this.finish();
+                                startActivity(intent);
+//                                LoginActivity.this.finish();
                             }
                         }
                     })

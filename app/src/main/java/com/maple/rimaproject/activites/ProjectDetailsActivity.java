@@ -1,10 +1,6 @@
 package com.maple.rimaproject.activites;
 
-<<<<<<< HEAD
 import android.content.Intent;
-import android.graphics.Bitmap;
-=======
->>>>>>> 471f93a009e26c77b484d1b9d60a2ebea3ecef3a
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,11 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-<<<<<<< HEAD
 import android.widget.TextView;
 import android.widget.Toast;
-=======
->>>>>>> 471f93a009e26c77b484d1b9d60a2ebea3ecef3a
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +38,7 @@ import com.maple.rimaproject.adapters.InfinitePagerAdapter;
 import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
 import com.maple.rimaproject.model.featureApi;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
@@ -86,7 +81,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     String plan;
     String location;
 
-    CustomTextView projectDetails;
+//    CustomTextView projectDetails;
     CustomTextView Location;
     CardView LocationCard;
     CustomTextView statusText;
@@ -115,6 +110,11 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     String format_Price_TRY;
     String format_Price_USD;
 
+
+    ExpandableTextView expTv1;
+
+
+
     LinearLayout btnChat;
 
     @Override
@@ -124,11 +124,20 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
         sizeBuilding = findViewById(R.id.size);
         typeBuilding = findViewById(R.id.type);
-        projectDetails = findViewById(R.id.projectdetails);
+//        projectDetails = findViewById(R.id.projectdetails);
         AreaText = findViewById(R.id.area);
         PlanText = findViewById(R.id.plan);
         Location = findViewById(R.id.location);
         LocationCard = findViewById(R.id.cardlocation);
+        btnChat = findViewById(R.id.btnChat);
+        expTv1 = (ExpandableTextView) findViewById(R.id.expand_text_view);
+//        expTv1.setOnExpandStateChangeListener(new ExpandableTextView.OnExpandStateChangeListener() {
+//            @Override
+//            public void onExpandStateChanged(TextView textView, boolean isExpanded) {
+//                Toast.makeText(ProjectDetailsActivity.this, isExpanded ? "Expanded" : "Collapsed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+// IMPORTANT - call setText on the ExpandableTextView to set the text content to display
 
 
         viewPageAndroidDetails = findViewById(R.id.viewPageAndroidDetails);
@@ -234,7 +243,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             if (!details.equals("")) {
 
 
-                projectDetails.setText(details);
+//                projectDetails.setText(details);
+                expTv1.setText(details);
                 AreaText.setText(area);
                 longt2 = Double.parseDouble(longt);
                 latu2 = Double.parseDouble(Latu);
@@ -265,7 +275,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                 parts = Arrays.asList(array.split(Pattern.quote("^^")));
 
 
-<<<<<<< HEAD
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,7 +285,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         });
 
 
-=======
                 // Sliders
                 arr = new ArrayList<>();
                 sliders = (List<Project.Slider>) extras.getSerializable("slider");
@@ -343,7 +351,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             LinearLayoutManager horizontalLayoutManager
                     = new LinearLayoutManager(ProjectDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
             features.setLayoutManager(horizontalLayoutManager);
->>>>>>> 471f93a009e26c77b484d1b9d60a2ebea3ecef3a
 
 
 //        GetUser service = RetrofitClient.getClient("http://138.201.220.66/royalevcms/").create(GetUser.class);

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,18 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.maple.rimaproject.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import com.maple.rimaproject.R;
 
 /**
  * Created by Hisham Snaimeh on 8/14/2017.
  */
 
 
-public class CustomSwipeAdapter extends PagerAdapter {
+public class CustomSwipeAdapter2 extends PagerAdapter {
 
     // khalid
 
@@ -34,7 +33,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
     LayoutInflater inflater;
 
 
-    public CustomSwipeAdapter(Activity a, ArrayList<String> i){
+    public CustomSwipeAdapter2(Activity a, ArrayList<String> i){
         activity = a;
         images = i;
     }
@@ -55,8 +54,6 @@ public class CustomSwipeAdapter extends PagerAdapter {
 
         ImageView imageView;
         imageView = (ImageView) view.findViewById(R.id.imgsliderrow);
-
-//        imageView.setImageAlpha(80);
         DisplayMetrics dis = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dis);
         int height = dis.heightPixels;
@@ -68,14 +65,6 @@ public class CustomSwipeAdapter extends PagerAdapter {
                 .load(images.get(position))
                 .resize(600,400)
                 .into(imageView);
-
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                open_image(position);
-            }
-        });
 
 
         container.addView(view);
@@ -94,8 +83,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
         ImageView close = (ImageView) v.findViewById(R.id.close_dialog);
         ViewPager imageSlideFull = (ViewPager) v.findViewById(R.id.imageSlideFull);
 
-        PagerAdapter adapter2 = new InfinitePagerAdapter(new CustomSwipeAdapter2(activity, images));
-        imageSlideFull.setAdapter(adapter2);
+        imageSlideFull.setAdapter(this);
         imageSlideFull.setCurrentItem(p);
         final Dialog dialog = new Dialog(activity, R.style.DialogTheme);
 
