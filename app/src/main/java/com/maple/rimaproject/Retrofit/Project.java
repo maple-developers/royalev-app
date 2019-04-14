@@ -1,14 +1,21 @@
 package com.maple.rimaproject.Retrofit;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Datum {
+public class Project implements Serializable{
+
+
+
     @SerializedName("reference_id")
     @Expose
     private String referenceId;
@@ -56,10 +63,34 @@ public class Datum {
     private String updateDate;
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("sliders")
     @Expose
     private List<Slider> sliders = null;
+
+
+    public Project(){
+
+    }
+
+    protected Project(Parcel in) {
+        id = in.readInt();
+        referenceId = in.readString();
+        area = in.readString();
+        details = in.readString();
+        location = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
+        pricesFrom = in.readString();
+        status = in.readString();
+        plan1 = in.readString();
+        plan2 = in.readString();
+        types = in.readString();
+        sizes = in.readString();
+        features = in.readString();
+        createDate = in.readString();
+        updateDate = in.readString();
+    }
 
     public String getReferenceId() {
         return referenceId;
@@ -181,11 +212,11 @@ public class Datum {
         this.updateDate = updateDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -196,11 +227,28 @@ public class Datum {
     public void setSliders(List<Slider> sliders) {
         this.sliders = sliders;
     }
-    public class Slider {
+
+
+//-----------------------------------com.example.Slider.java-----------------------------------
+
+
+    public class Slider implements Serializable {
 
         @SerializedName("photo_path")
         @Expose
         private String photoPath;
+        @SerializedName("status")
+        @Expose
+        private String status;
+
+        protected Slider(Parcel in) {
+            photoPath = in.readString();
+            status = in.readString();
+        }
+
+
+
+
 
         public String getPhotoPath() {
             return photoPath;
@@ -210,9 +258,48 @@ public class Datum {
             this.photoPath = photoPath;
         }
 
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+
+        public void readFromParcel(Parcel in) {
+           photoPath = in.readString();
+           status = in.readString();
+        }
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Project other = (Project) obj;
+        if (id != other.id)
+            return false;
+        return true;
+    }
+
+
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
+    }
+
+
+
 }
-//-----------------------------------com.example.Slider.java-----------------------------------
 
 
 

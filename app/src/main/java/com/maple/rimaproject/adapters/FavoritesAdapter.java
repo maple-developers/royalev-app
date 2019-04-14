@@ -16,9 +16,7 @@ import android.widget.Toast;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.maple.rimaproject.R;
-import com.maple.rimaproject.model.Favorite;
-import com.maple.rimaproject.model.Product;
-import com.maple.rimaproject.model.Project;
+import com.maple.rimaproject.Retrofit.Project;
 
 import java.util.List;
 
@@ -37,7 +35,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
         this.ordersList = ordersList;
         this.mContext = context;
         this.isHomeFragment = isHomeFragment;
-        sharedPreference=new SharedPreference();
+        sharedPreference=new SharedPreference("favorites");
+
     }
 
     @Override
@@ -61,14 +60,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
         holder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-//                sharedPreference.addFavorite(mContext, ordersList.get(i));
+//                sharedPreference.addArrayList(mContext, ordersList.get(i));
                 Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                sharedPreference.removeFavorite(mContext, ordersList.get(i));
+                sharedPreference.removeArrayList(mContext, ordersList.get(i));
                 remove(ordersList
                         .get(i));
                 Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
@@ -79,7 +78,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
 
     public boolean checkFavoriteItem(Project checkProject) {
         boolean check = false;
-        List<Project> favorites = sharedPreference.getFavorites(mContext);
+        List<Project> favorites = sharedPreference.getArrayList(mContext);
         if (favorites != null) {
             for (Project project : favorites) {
                 if (project.equals(checkProject)) {

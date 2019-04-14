@@ -8,16 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.maple.rimaproject.R;
+import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.adapters.FavoritesAdapter;
-import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
-import com.maple.rimaproject.model.Favorite;
-import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +64,8 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this,view);
-        sharedPreference = new SharedPreference();
-        favoritesList = sharedPreference.getFavorites(getActivity());
+        sharedPreference = new SharedPreference("favorites");
+        favoritesList = sharedPreference.getArrayList(getActivity());
 
 
         if (favoritesList == null) {

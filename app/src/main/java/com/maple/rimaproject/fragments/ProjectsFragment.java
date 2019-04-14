@@ -3,22 +3,30 @@ package com.maple.rimaproject.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.maple.rimaproject.R;
+import com.maple.rimaproject.Retrofit.Project;
+import com.maple.rimaproject.Retrofit.GetUser;
+import com.maple.rimaproject.Retrofit.RetrofitClient;
+import com.maple.rimaproject.adapters.FavoritesAdapter;
 import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
-import com.maple.rimaproject.model.Project;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProjectsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -27,7 +35,9 @@ public class ProjectsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    int id;
+    List<Project> allProject=new ArrayList<>();
+    ArrayList<Project> arr=new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 
 
@@ -37,7 +47,8 @@ public class ProjectsFragment extends Fragment {
     SharedPreference sharedPreference;
 
     ItemAdapter itemAdapter;
-    ArrayList<Project> projectsList = new ArrayList<>();
+   List<Project> projectsList = new ArrayList<>();
+   String details;
     public ProjectsFragment() {
 
     }
@@ -66,28 +77,25 @@ public class ProjectsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
 
         ButterKnife.bind(this,view);
-        sharedPreference = new SharedPreference();
-        fillProjects();
+        sharedPreference = new SharedPreference("projects");
+        allProject = sharedPreference.getArrayList(getContext());
+
+        for (int i=0; i < allProject.size(); i++){
+            Log.e("fkdsjgh", allProject.get(i).getArea());
+        }
 //        DeliveryOrderModel deliveryOrderModel = (DeliveryOrderModel) responseObject;
         rvProjects.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        itemAdapter = new ItemAdapter(getActivity(), projectsList,false);
-
+        itemAdapter = new ItemAdapter(getActivity(), allProject, false);
         rvProjects.setAdapter(itemAdapter);
         itemAdapter.notifyDataSetChanged();
+
+
 //        rv_projects = view.findViewById(R.id.rv_projects);
         return view;
     }
 
-    public void fillProjects() {
-        for (int i=0; i < 16; i++){
-            Project project = new Project();
-            project.setId(i);
-            project.setName("project name "+i);
-            project.setDetails("details "+i);
-            projectsList.add(project);
-        }
-    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
