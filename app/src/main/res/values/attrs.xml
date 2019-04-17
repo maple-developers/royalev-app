@@ -4,3 +4,4 @@
         <attr name="typefaceAsset" format="string"/>
     </declare-styleable>
 </resources>
+

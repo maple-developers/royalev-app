@@ -3,6 +3,7 @@ package com.maple.rimaproject;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.maple.rimaproject.Retrofit.GetType;
 import com.maple.rimaproject.Retrofit.GetUser;
 import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.Retrofit.RetrofitClient;
+
 import com.maple.rimaproject.adapters.SharedPreference;
 import com.maple.rimaproject.adapters.SharedPreferenceSize;
 import com.maple.rimaproject.adapters.SharedPreferenceType;
@@ -23,12 +25,14 @@ import com.maple.rimaproject.model.TypeModel;
 import com.maple.rimaproject.model.featureApi;
 import com.maple.rimaproject.model.searchSizeApi;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -37,6 +41,7 @@ public class SplashScreen extends AppCompatActivity {
     int i,j;
     List<Project> arr = new ArrayList<>();
     VideoView videoView;
+
 
     SharedPreference sharedPreference;
     SharedPreference sharedPreference2;
@@ -52,6 +57,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_splash_screen);
+
 
         sharedPreference = new SharedPreference("projects");
         sharedPreference2 = new SharedPreference("features");
@@ -162,20 +168,39 @@ public class SplashScreen extends AppCompatActivity {
             public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
 //                Log.e("ResponseLogIn", "onResponse: " + response.body().get(0).getArea());
                 allProject = response.body();
+
+
                 List<Project> allProject_cache = sharedPreference.getArrayList(SplashScreen.this);
+
+//                if (allProject_cache != null){
+//                    sharedPreference.removeArrayList(SplashScreen.this, allProject_cache.get(i));
+//                    sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
+//                } else {
+//                    sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
+//                }
+//
+
+
+
                 if (allProject_cache != null) {
-                    for (Project person2 : allProject_cache) {
-                        // Loop arrayList1 items
-                        boolean found = false;
-                        for (Project person1 : allProject) {
-                            if (person2.getId() == person1.getId()) {
-                                found = true;
-                            }
-                        }
-                        if (!found) {
-                            sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
-//                        results.add(person2.id);
-                        }
+//                    for (Project person2 : allProject_cache) {
+//                        // Loop arrayList1 items
+//                        boolean found = false;
+//                        for (Project person1 : allProject) {
+//                            if (person2.getId() == person1.getId()) {
+//                                found = true;
+//                            }
+//                        }
+//                        if (!found) {
+//                            sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
+////                        results.add(person2.id);
+//                        }
+//                    }
+                    for(int i=0; i < allProject_cache.size(); i++){
+                        sharedPreference.removeArrayList(SplashScreen.this, allProject_cache.get(i));
+                    }
+                    for(int i=0; i < allProject.size(); i++){
+                        sharedPreference.addArrayList(SplashScreen.this, allProject.get(i));
                     }
                 } else {
                     for (int i = 0; i < allProject.size(); i++) {
@@ -226,25 +251,47 @@ public class SplashScreen extends AppCompatActivity {
 
                 }
                 List<searchSizeApi> allProject_cache = sharedPreferenceSize.getArrayList(SplashScreen.this);
+//                if (allProject_cache != null){
+//                    sharedPreferenceSize.removeArrayList(SplashScreen.this, allProject_cache.get(i));
+//                    sharedPreferenceSize.addArrayList(SplashScreen.this, allSize.get(j));
+//                } else {
+//                    sharedPreferenceSize.addArrayList(SplashScreen.this, allSize.get(j));
+//                }
+
+
                 if (allProject_cache != null) {
-                    for (searchSizeApi person2 : allProject_cache) {
-                        // Loop arrayList1 items
-                        boolean found = false;
-                        for (searchSizeApi person1 : allSize) {
-                            if (person2.getId() == person1.getId()) {
-                                found = true;
-                            }
-                        }
-                        if (!found) {
-                            sharedPreferenceSize.addArrayList(SplashScreen.this, allSize.get(j));
-//                        results.add(person2.id);
-                        }
+//                    for (searchSizeApi person2 : allProject_cache) {
+//                        // Loop arrayList1 items
+//                        boolean found = false;
+//                        for (searchSizeApi person1 : allSize) {
+//                            if (person2.getId() == person1.getId()) {
+//                                found = true;
+//                            }
+//                        }
+//                        if (!found) {
+//                            sharedPreferenceSize.addArrayList(SplashScreen.this, allSize.get(j));
+////                        results.add(person2.id);
+//                        }
+//                    }
+                    for(int i=0; i < allProject_cache.size(); i++){
+                        sharedPreferenceSize.removeArrayList(SplashScreen.this, allProject_cache.get(i));
+                    }
+                    for(int i=0; i < allSize.size(); i++){
+                        sharedPreferenceSize.addArrayList(SplashScreen.this, allSize.get(i));
                     }
                 } else {
                     for (int k = 0; k < allSize.size(); k++) {
                         sharedPreferenceSize.addArrayList(SplashScreen.this, allSize.get(k));
                     }
                 }
+
+
+                LruCache<String,String> test = new LruCache<>(10);
+                test.put("khalid","aldaboubi");
+//                CacheUtils<String, List<Datum>> cache = new LruCache<>();
+//                if (cache.get("projects") == null){
+//                    cache.put("projects", arr);
+//                }
 
 
 //
@@ -258,7 +305,7 @@ public class SplashScreen extends AppCompatActivity {
 //                 Log.e("image", "image: " + image);
 //                  }
 
-//                viewPageAndroidDetails.setAlpha(0.3F);
+
 
             }
 
@@ -299,22 +346,28 @@ public class SplashScreen extends AppCompatActivity {
                 }
                 List<TypeModel> allProject_cache = sharedPreferenceType.getArrayList(SplashScreen.this);
                 if (allProject_cache != null) {
-                    for (TypeModel person2 : allProject_cache) {
-                        // Loop arrayList1 items
-                        boolean found = false;
-                        for (TypeModel person1 : allType) {
-                            if (person2.getId() == person1.getId()) {
-                                found = true;
-                            }
-                        }
-                        if (!found) {
-                            sharedPreferenceType.addArrayList(SplashScreen.this, allType.get(j));
-//                        results.add(person2.id);
-                        }
+//                    for (TypeModel person2 : allProject_cache) {
+//                        // Loop arrayList1 items
+//                        boolean found = false;
+//                        for (TypeModel person1 : allType) {
+//                            if (person2.getId() == person1.getId()) {
+//                                found = true;
+//                            }
+//                        }
+//                        if (!found) {
+//                            sharedPreferenceType.addArrayList(SplashScreen.this, allType.get(j));
+////                        results.add(person2.id);
+//                        }
+//                    }
+                    for(int i=0; i < allProject_cache.size(); i++){
+                        sharedPreferenceType.removeArrayList(SplashScreen.this, allProject_cache.get(i));
+                    }
+                    for(int i=0; i < allType.size(); i++){
+                        sharedPreferenceType.addArrayList(SplashScreen.this, allType.get(i));
                     }
                 } else {
-                    for (int k = 0; k < allType.size(); k++) {
-                        sharedPreferenceType.addArrayList(SplashScreen.this, allType.get(k));
+                    for (int i = 0; i < allType.size(); i++) {
+                        sharedPreferenceType.addArrayList(SplashScreen.this, allType.get(i));
                     }
                 }
 

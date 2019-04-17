@@ -70,11 +70,11 @@ public class FavoritesFragment extends Fragment {
 
 
         if (favoritesList == null) {
-            Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
         } else {
 
             if (favoritesList.size() == 0) {
-                Toast.makeText(getActivity(), "0", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "0", Toast.LENGTH_SHORT).show();
             }
 
             if (favoritesList != null) {

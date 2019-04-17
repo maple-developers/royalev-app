@@ -1,5 +1,7 @@
 package com.maple.rimaproject.activites;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +17,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,17 +27,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.maple.recyclebannar.layoutmanager.BannerLayout;
+import com.maple.rimaproject.ChatActivity;
 import com.maple.rimaproject.Font.CustomTextView;
+import com.maple.rimaproject.LoginActivity;
 import com.maple.rimaproject.R;
 import com.maple.rimaproject.Retrofit.GetFeaures;
 import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.Retrofit.RetrofitClient;
 import com.maple.rimaproject.adapters.CustomSwipeAdapter;
+import com.maple.rimaproject.adapters.CustomSwipeDialogAdapter;
 import com.maple.rimaproject.adapters.FeatureAdabter;
 import com.maple.rimaproject.adapters.InfinitePagerAdapter;
 import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
+import com.maple.rimaproject.adapters.WebBannerAdapter;
+import com.maple.rimaproject.adapters.WebBannerAdapterDetails;
 import com.maple.rimaproject.model.featureApi;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
@@ -40,6 +53,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -49,7 +63,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ProjectDetailsActivity extends AppCompatActivity implements OnMapReadyCallback, BannerLayout.OnBannerItemClickListener  {
 
 
     private GoogleMap mMap;
@@ -69,20 +83,23 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     String type;
     String details;
     String status;
+
+    String referenceId;
     String price;
     String plan;
     String plan2;
     String location;
 
-    CustomTextView projectDetails;
+//    CustomTextView projectDetails;
     CustomTextView Location;
     CardView LocationCard;
     CustomTextView statusText;
-    CustomTextView priceText;
+    TextView priceText;
+    TextView referance_id;
     String Latu, longt;
     double latu2, longt2;
     String area;
-    CustomTextView AreaText;
+    TextView AreaText;
     CustomTextView PlanText;
     CustomTextView PlanText2;
     List<featureApi> allFeature = new ArrayList<>();
@@ -103,22 +120,44 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     List<String> parts = new ArrayList<>();
     String format_Price_TRY;
     String format_Price_USD;
+    String allPrice[];
+    String TRY_price;
+    String USD_price;
+    String TYE[];
+    String[] sizes1;
+
+    ExpandableTextView expTv1;
+
+
+
+    ImageView btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_details);
+      BannerLayout recyclerBanner =  findViewById(R.id.recycler);
+
         sizeBuilding = findViewById(R.id.size);
-        typeBuilding = findViewById(R.id.type);
-        projectDetails = findViewById(R.id.projectdetails);
+       // typeBuilding = findViewById(R.id.type);
+//        projectDetails = findViewById(R.id.projectdetails);
         AreaText = findViewById(R.id.area);
         PlanText = findViewById(R.id.plan);
         PlanText2 = findViewById(R.id.plan2);
         Location = findViewById(R.id.location);
         LocationCard = findViewById(R.id.cardlocation);
+        btnChat = findViewById(R.id.btnchat);
+        expTv1 = (ExpandableTextView) findViewById(R.id.expand_text_view);
+//        expTv1.setOnExpandStateChangeListener(new ExpandableTextView.OnExpandStateChangeListener() {
+//            @Override
+//            public void onExpandStateChanged(TextView textView, boolean isExpanded) {
+//                Toast.makeText(ProjectDetailsActivity.this, isExpanded ? "Expanded" : "Collapsed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+// IMPORTANT - call setText on the ExpandableTextView to set the text content to display
 
 
-        viewPageAndroidDetails = findViewById(R.id.viewPageAndroidDetails);
+      //  viewPageAndroidDetails = findViewById(R.id.viewPageAndroidDetails);
         feature();
         features = findViewById(R.id.recycfeatures);
 
@@ -147,8 +186,10 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         if (extras == null) {
             newID = 0;
         } else {
+
             newID = extras.getInt("id");
             size = extras.getString("size");
+            referenceId=extras.getString("referenceId");
 
             Log.e("asd", "sub: " + size2);
             size2 = size.replace("^^", "&");
@@ -157,7 +198,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             type = extras.getString("type");
 
             type2=type.substring(1,type.length()-1);
-            String[] AllType = type2.split(Pattern.quote("^^"));
+//            String[] AllType = type2.split(Pattern.quote("^^"));
+            String AllType = type2.replace("^^"," , ");
             details = extras.getString("info");
             Latu = extras.getString("lat");
             longt = extras.getString("longi");
@@ -174,11 +216,11 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                 Location.setText(location);
 
 
-            String allPrice[] = price.split(Pattern.quote("^"));
+             allPrice = price.split(Pattern.quote("^"));
 
-            String TRY_price = allPrice[0];
-            String USD_price = allPrice[1];
-            String TYE[] = TRY_price.split("_");
+             TRY_price = allPrice[0];
+             USD_price = allPrice[1];
+             TYE = TRY_price.split("_");
             Log.e("TYE", "TYE: " + TYE[0]);
             String USD[] = USD_price.split("_");
             Log.e("TYE", "TYE: " + USD[0]);
@@ -207,24 +249,34 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //            Log.e("dsadzxc", "dsadzxc: "+s );
             size3 = size2.substring(1, size2.length() - 1);
             String[] sizes = size3.split("&");
+
             Log.e("asd", "asd: " + size3);
-            sizeBuilding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            sizeBuilding.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
-            sizeBuilding.setTags(sizes);
+            List<String> a=new ArrayList<>();
 
-            typeBuilding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+         for (int i=0;i<sizes.length;i++){
+             a.add(sizes[i]);
+         }
+        Collections.reverse(a);
+            sizeBuilding.setTags(a);
 
-            typeBuilding.setTags(AllType);
+ //           typeBuilding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+//            typeBuilding.setTags(AllType);
 
             if (!details.equals("")) {
 
-
-                projectDetails.setText(details);
+                referance_id = findViewById(R.id.referance_id);
+                referance_id.setText(referenceId+ AllType);
+//                projectDetails.setText(details);
+                expTv1.setText(details);
                 AreaText.setText(area);
                 longt2 = Double.parseDouble(longt);
                 latu2 = Double.parseDouble(Latu);
                 statusText = findViewById(R.id.status);
                 priceText = findViewById(R.id.price);
+
                 priceText.setText(formattedTRY + " " + TYE[1] + "\n" + formattedUSD + " " + USD[1]);
                 if (!status.equals("")) {
                     statusText.setText(status);
@@ -270,6 +322,16 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                 parts = Arrays.asList(array.split(Pattern.quote("^^")));
 
 
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProjectDetailsActivity.this, LoginActivity.class);
+                i.putExtra("project_name", referenceId);
+                startActivity(i);
+            }
+        });
+
+
                 // Sliders
                 arr = new ArrayList<>();
                 sliders = (List<Project.Slider>) extras.getSerializable("slider");
@@ -280,11 +342,22 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     image = sliders.get(i).getPhotoPath();
                     Log.e("Imgaessssda", "onCreate: " + image);
                     arr.add(image);
-
+                   // WebBannerAdapter webBannerAdapter=new WebBannerAdapter(this,arr);
+                   // adapterr = new InfinitePagerAdapter(new CustomSwipeDialogAdapter(this, arr));
                 }
-                adapterr = new InfinitePagerAdapter(new CustomSwipeAdapter(this, arr));
+                Activity activity=this;
 
-                viewPageAndroidDetails.setAdapter(adapterr);
+
+                WebBannerAdapterDetails webBannerAdapter=new WebBannerAdapterDetails(activity,arr);
+                webBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                       //   Toast.makeText(getApplicationContext(), "点击了第  " + position+"  项", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+                recyclerBanner.setAdapter(webBannerAdapter);
 
 
             }
@@ -333,8 +406,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
-            LinearLayoutManager horizontalLayoutManager
-                    = new LinearLayoutManager(ProjectDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+            GridLayoutManager horizontalLayoutManager
+                    = new GridLayoutManager(ProjectDetailsActivity.this, 3);
             features.setLayoutManager(horizontalLayoutManager);
 
 
@@ -578,4 +651,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
         }
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }

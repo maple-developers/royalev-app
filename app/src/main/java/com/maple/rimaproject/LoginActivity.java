@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private EditText editTextUsername, editTextPassword;
     private LovelyProgressDialog waitingDialog;
-
+    Bundle bundle;
     private AuthUtils authUtils;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ListFriend dataListFriend = null;
     private ArrayList<String> listFriendID = null;
-
 
     @Override
     protected void onStart() {
@@ -67,10 +66,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        editTextUsername = (EditText) findViewById(R.id.et_username);
-        editTextPassword = (EditText) findViewById(R.id.et_password);
-
+        fab = findViewById(R.id.fab);
+        editTextUsername = findViewById(R.id.et_username);
+        editTextPassword = findViewById(R.id.et_password);
+        bundle = getIntent().getExtras();
         if (dataListFriend == null) {
             dataListFriend = FriendDB.getInstance(LoginActivity.this).getListFriend();
             if (dataListFriend.getListFriend().size() > 0) {
@@ -169,7 +168,9 @@ public class LoginActivity extends AppCompatActivity {
                     StaticConfig.UID = user.getUid();
                     Log.d(TAG, "onAuth StateChanged:signed_in:" + user.getUid());
                     if (firstTimeAccess) {
-                        startActivity(new Intent(LoginActivity.this, ChatActivity.class));
+                        Intent i = new Intent(LoginActivity.this, ChatActivity.class);
+                        i.putExtra("project_name", bundle.getString("project_name"));
+                        startActivity(i);
                         LoginActivity.this.finish();
                     }
                 } else {
@@ -198,9 +199,15 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptions options =
                     ActivityOptions.makeSceneTransitionAnimation(this, fab, fab.getTransitionName());
-            startActivityForResult(new Intent(this, RegisterActivity.class), StaticConfig.REQUEST_CODE_REGISTER, options.toBundle());
+            Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+            intent.putExtra("project_name", bundle.getString("project_name"));
+            startActivity(intent);
+            startActivityForResult(intent, StaticConfig.REQUEST_CODE_REGISTER, options.toBundle());
         } else {
-            startActivityForResult(new Intent(this, RegisterActivity.class), StaticConfig.REQUEST_CODE_REGISTER);
+            Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+            intent.putExtra("project_name", bundle.getString("project_name"));
+            startActivity(intent);
+            startActivityForResult(intent, StaticConfig.REQUEST_CODE_REGISTER);
         }
     }
 
@@ -289,9 +296,10 @@ public class LoginActivity extends AppCompatActivity {
                                         .show();
                             } else {
                                 initNewUserInfo();
+                                Intent intent=new Intent();
                                 Toast.makeText(LoginActivity.this, "Register and Login success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, ChatActivity.class));
-                                LoginActivity.this.finish();
+                                startActivity(intent);
+//                                LoginActivity.this.finish();
                             }
                         }
                     })
@@ -350,8 +358,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 saveUserInfo();
                                 Log.e("werwaqsdas", "sdfsdfds");
-                                startActivity(new Intent(LoginActivity.this, ChatActivity.class));
-                                LoginActivity.this.finish();
+
                             }
                         }
                     })
@@ -445,6 +452,13 @@ public class LoginActivity extends AppCompatActivity {
                 addFriend(idFriend, true);
                 listFriendID.add(idFriend);
                 dataListFriend.getListFriend().add(userInfo);
+                if (dataListFriend.getListFriend().size() > 0){
+                    Intent i = new Intent(LoginActivity.this, ChatActivity.class);
+                    i.putExtra("project_name", bundle.getString("project_name"));
+                    startActivity(i);
+                }
+//                Log.e("ghgfmn11", String.valueOf(dataListFriend.getListFriend().size()));
+//                Log.e("ghgfmn11", String.valueOf(dataListFriend.getListFriend().size()));
                 FriendDB.getInstance(LoginActivity.this).addFriend(userInfo);
 //            adapter.notifyDataSetChanged();
             }
@@ -561,6 +575,7 @@ public class LoginActivity extends AppCompatActivity {
          * Luu thong tin user info cho nguoi dung dang nhap
          */
         void saveUserInfo() {
+
             FirebaseDatabase.getInstance().getReference().child("user/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -589,6 +604,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     });
+//                    Log.e("djghdj", String.valueOf(count));
+
                 }
 
                 @Override

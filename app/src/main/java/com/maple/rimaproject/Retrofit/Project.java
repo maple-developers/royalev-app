@@ -141,7 +141,7 @@ public class Project implements Serializable{
     }
 
     public String getPricesFrom() {
-        return pricesFrom.equals("") ? "غير محدد" : pricesFrom;
+        return pricesFrom;
     }
 
     public void setPricesFrom(String pricesFrom) {
@@ -248,6 +248,7 @@ public class Project implements Serializable{
 
 
 
+
         public String getPhotoPath() {
             return photoPath.equals("") ? "غير محدد" : photoPath;
         }
@@ -263,6 +264,7 @@ public class Project implements Serializable{
         public void setStatus(String status) {
             this.status = status;
         }
+
 
 
         public void readFromParcel(Parcel in) {
@@ -282,6 +284,7 @@ public class Project implements Serializable{
         if (id != other.id)
             return false;
         return true;
+
     }
 
 

@@ -1,7 +1,9 @@
 package com.maple.rimaproject.adapters;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -9,13 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maple.rimaproject.R;
+import com.maple.rimaproject.Retrofit.Project;
+import com.maple.rimaproject.activites.ProjectDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,17 +34,17 @@ public class CustomSwipeAdapter extends PagerAdapter {
     // khalid
 
     Activity activity;
-    ArrayList<String> images;
+    List<Project> projects;
     LayoutInflater inflater;
 
 
-    public CustomSwipeAdapter(Activity a, ArrayList<String> i){
+    public CustomSwipeAdapter(Activity a, List<Project> projects){
         activity = a;
-        images = i;
+        this.projects = projects;
     }
     @Override
     public int getCount() {
-        return images.size();
+        return projects.size();
     }
 
     @Override
@@ -49,8 +55,9 @@ public class CustomSwipeAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         inflater = (LayoutInflater)activity.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.viewpager_image_row, container, false);
+        View view = inflater.inflate(R.layout.item_image, container, false);
 
+        List<Project.Slider> images = projects.get(position).getSliders();
         ImageView imageView;
         imageView = (ImageView) view.findViewById(R.id.imgsliderrow);
 
@@ -63,16 +70,35 @@ public class CustomSwipeAdapter extends PagerAdapter {
         imageView.setMinimumWidth(width);
 
         Picasso.get()
-                .load(images.get(position))
+                .load(images.get(0).getPhotoPath())
                 .resize(600,400)
                 .into(imageView);
-        Log.e("cxzx", "cxzx: "+images.get(position) );
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                open_image(position);
-                Toast.makeText(activity, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    Intent is = new Intent(activity, ProjectDetailsActivity.class);
+                    is.putExtra("id",projects.get(position).getId());
+                    is.putExtra("referenceId",projects.get(position).getReferenceId());
+                    is.putExtra("type",projects.get(position).getTypes());
+                    is.putExtra("size",projects.get(position).getSizes());
+                    is.putExtra("lat",projects.get(position).getLatitude());
+                    is.putExtra("longi",projects.get(position).getLongitude());
+                    is.putExtra("info",projects.get(position).getDetails());
+                    is.putExtra("slider", (ArrayList<Project.Slider>) projects.get(position).getSliders());
+                    is.putExtra("price",projects.get(position).getPricesFrom());
+                    is.putExtra("plan1",projects.get(position).getPlan1());
+                    is.putExtra("plan2",projects.get(position).getPlan2());
+                    is.putExtra("area",projects.get(position).getArea());
+                    for (int j=0;j<projects.get(position).getSliders().size();j++){
+
+                        Log.e("ssslllss", "onClick: "+projects.get(position).getSliders().get(j).getPhotoPath() );
+                    }
+                    is.putExtra("features",projects.get(position).getFeatures());
+                    is.putExtra("location",projects.get(position).getLocation());
+                    is.putExtra("status",projects.get(position).getStatus());
+                    activity.startActivity(is);
             }
         });
 
@@ -93,7 +119,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
 //        ImageView close = (ImageView) v.findViewById(R.id.close_dialog);
 //        ViewPager imageSlideFull = (ViewPager) v.findViewById(R.id.imageSlideFull);
 //
-//        PagerAdapter adapter2 = new InfinitePagerAdapter(new CustomSwipeAdapter2(activity, images));
+//        PagerAdapter adapter2 = new InfinitePagerAdapter(new CustomSwipeAdapter2(activity, projects.get(p).getSliders()));
 //        imageSlideFull.setAdapter(adapter2);
 //        imageSlideFull.setCurrentItem(p);
 //        final Dialog dialog = new Dialog(activity, R.style.DialogTheme);

@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.LruCache;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,12 +19,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.activites.Contactus_Activity;
 import com.maple.rimaproject.fragments.FavoritesFragment;
 import com.maple.rimaproject.fragments.HomeFragment;
 import com.maple.rimaproject.fragments.ProjectsFragment;
 import com.maple.rimaproject.fragments.SearchFragment;
-import com.maple.rimaproject.util.BottomNavigationViewHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NavigationActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -64,6 +68,7 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
 //        }
 //    };
 
+    List<Project> projectsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +97,7 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
                             case R.id.navigation_home:
 //                            changeFragmentMethod(new HomeFragment(), getString(R.string.home_title));
                             changeFragmentMethod(new HomeFragment(), "test");
-                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.navigation_dashboard:
                                changeFragmentMethod(new SearchFragment(), "test");
@@ -101,14 +106,14 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
                                 break;
                             case R.id.navigation_projects:
                             changeFragmentMethod(new ProjectsFragment(), "project");
-                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.navigation_favorites:
 //                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
                                 NavigationActivity.this.changeFragmentMethod(new FavoritesFragment(), "");
                                 break;
                             case R.id.navigation_alerts:
-                                Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(NavigationActivity.this, "navigation_dashboard", Toast.LENGTH_SHORT).show();
 //                                NavigationActivity.this.changeFragmentMethod(new SearchFragment(), "");
                                 break;
                         }
@@ -119,6 +124,38 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+//        CacheUtils<String, List<Datum>> cache = new LruCache<>();
+//        projectsList = cache.get("projects");
+
+
+
+////        for(int i=0; i < projectsList.size(); i++){
+//            Log.e("khaliddddd", String.valueOf(projectsList.size()));
+//
+        LruCache<String,String> test = new LruCache<>(10);
+        Toast.makeText(this,test.get("khalid") , Toast.LENGTH_SHORT).show();
+
+
+//        List<Datum> cachedEntries = null;
+//        try {
+//            cachedEntries = (List<Datum>) CacheManager.readObject(this, "sesoo");
+//            for (Datum entry : cachedEntries) {
+//                Log.d("rtertert", entry.getArea());
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+        // Display the items from the list retrieved.
+
+
+
+//        }
     }
 
 
@@ -135,7 +172,7 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation, menu);
+//        getMenuInflater().inflate(R.menu.navigation, menu);
         return true;
     }
 
@@ -190,6 +227,9 @@ public class NavigationActivity extends AppCompatActivity implements View.OnClic
             startActivity(i);
         }
         else if (id == R.id.nav_my_account) {
+            Intent i = new Intent(this, detailsActivity.class);
+            startActivity(i);
+
 
         }
         else if (id == R.id.nav_login_out) {

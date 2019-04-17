@@ -1,4 +1,5 @@
 package com.maple.rimaproject.cache;
+
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -19,6 +20,12 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Created by Khalid Aldaboubi on 4/10/2019 3:37 PM .
+ * Maple Technologies Ltd
+ * khalid.aldaboubi93@gmail.com
+ * Project Name : royalev-app
+ */
 
 import static com.maple.rimaproject.BuildConfig.DEBUG;
 
@@ -26,6 +33,7 @@ import static com.maple.rimaproject.BuildConfig.DEBUG;
  * Created by pawneshwer on 11-Dec-16.
  * to save json into cache
  */
+
 
 public class CacheManager {
     private Context context;
@@ -53,6 +61,7 @@ public class CacheManager {
             bufferedWriter.close();
 
         } catch (FileNotFoundException e) {
+
             M.l(TAG,e);
         } catch (IOException e) {
             M.l(TAG,e);
@@ -62,6 +71,7 @@ public class CacheManager {
                     outputStream.flush();
                     outputStream.close();
                 } catch (IOException e) {
+
                     M.l(TAG,e);
                 }
             }
@@ -91,6 +101,7 @@ public class CacheManager {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+
             if (DEBUG) Log.e(TAG, "loadJson, FileNotFoundException e: '" + e + "'");
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,10 +111,12 @@ public class CacheManager {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
+
                     if (DEBUG) Log.e(TAG, "loadJson, finally, e: '" + e + "'");
                 }
             }
         }
         return jsonData;
     }
+
 }

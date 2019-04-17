@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maple.rimaproject.data.FriendDB;
 import com.maple.rimaproject.data.SharedPreferenceHelper;
@@ -71,6 +72,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ListFriend dataListFriend = null;
     private ArrayList<String> listFriendID = null;
 
+    TextView txtTitle;
+
+    Bundle bundle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +87,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 //        Log.e("ewewewccc", roomId);
         String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
 
+        bundle = getIntent().getExtras();
         consersation = new Consersation();
-        btnSend = (ImageButton) findViewById(R.id.btnSend);
+        btnSend = findViewById(R.id.btnSend);
+        txtTitle = findViewById(R.id.txtTitle);
+//        Toast.makeText(this,bundle.getString("project_name") , Toast.LENGTH_SHORT).show();
+        txtTitle.setText(bundle.getString("project_name"));
         btnSend.setOnClickListener(this);
 
         String base64AvataUser = SharedPreferenceHelper.getInstance(this).getUserInfo().avata;
@@ -113,7 +122,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
+//
 //        FirebaseDatabase.getInstance().getReference().child("user").addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
@@ -131,8 +140,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 //
 //            }
 //        });
+//
+//
 
-
+        Log.e("dlfhgdfg", String.valueOf(dataListFriend.getListFriend().size()));
 
 
         editWriteMessage = (EditText) findViewById(R.id.editWriteMessage);
@@ -336,9 +347,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        Intent result = new Intent();
-        result.putExtra("idFriend", idFriend.get(0));
-        setResult(RESULT_OK, result);
+//        Intent result = new Intent();
+//        result.putExtra("idFriend", idFriend.get(0));
+//        setResult(RESULT_OK, result);
         this.finish();
     }
 

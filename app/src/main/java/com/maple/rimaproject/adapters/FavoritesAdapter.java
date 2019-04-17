@@ -61,7 +61,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
             @Override
             public void liked(LikeButton likeButton) {
 //                sharedPreference.addArrayList(mContext, ordersList.get(i));
-                Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -70,7 +70,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Sing
                 sharedPreference.removeArrayList(mContext, ordersList.get(i));
                 remove(ordersList
                         .get(i));
-                Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E2E2E2"
-    tools:context=".activites.ProjectDetailsActivity">
 
-    <LinearLayout
+    android:background="#fff">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,452 +24,374 @@
             app:contentInsetStart="0dp"
             >
 
-        <com.maple.rimaproject.Font.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            custom:typefaceAsset="ge_ss_light.otf"
-            android:text="مشاريعنا"
-            android:layout_gravity="center"
-            android:textColor="#FFF"
-            android:textSize="@dimen/_18sdp"
-            android:gravity="center"/>
-    </android.support.v7.widget.Toolbar>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPageAndroidDetails"
-        android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:layout_below="@+id/imageView4"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-
-        android:background="#00000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
-
-    </android.support.v4.view.ViewPager>
-
-    <com.maple.rimaproject.Font.CustomTextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="214dp"
-        custom:typefaceAsset="ge_ss_light.otf"
-        android:textColor="#fff"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="0dp"
-        android:background="@drawable/textshape"
-
-
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-
-        android:text="mohamed"
-       />
-
-
-    <com.maple.rimaproject.Font.CustomTextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="118dp"
-        android:layout_marginEnd="214dp"
-        android:background="@drawable/textshapeleft"
-        android:gravity="left"
-        android:paddingStart="5dp"
-        android:paddingTop="3dp"
-        android:textColor="#fff"
-        android:paddingEnd="5dp"
-        android:paddingBottom="3dp"
-        android:text="Price TRY : " />
-
-
-
-
-</RelativeLayout>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        app:cardUseCompatPadding="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:visibility="visible"
+            <com.maple.rimaproject.Font.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:layout_weight="1">
-                <com.maple.rimaproject.Font.CustomTextView
-                    android:id="@+id/area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"/>
-
-                <com.maple.rimaproject.Font.CustomTextView
-
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10sdp"
-                    android:text="الموقع : "/>
-
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-
-                    android:src="@drawable/ic_mapsandflags"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"/>
-            </LinearLayout>
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/darker_gray"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-
-                <com.maple.rimaproject.Font.CustomTextView
-                    android:id="@+id/txtChat"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/imgChat"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:textSize="@dimen/_13sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    custom:typefaceAsset="ge_ss_light.otf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="إرسال رسالة"/>
-
-                <ImageView
-                    android:id="@+id/imgChat"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/conversation" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-
-
-
-
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:cardUseCompatPadding="false"
-        android:background="#fff">
-
-        <LinearLayout
+                custom:typefaceAsset="ge_ss_light.otf"
+                android:text="مشاريعنا"
+                android:layout_gravity="center"
+                android:textColor="#FFF"
+                android:textSize="@dimen/_18sdp"
+                android:gravity="center"/>
+        </android.support.v7.widget.Toolbar>
+        <com.github.florent37.shapeofview.shapes.DiagonalView
+            android:id="@+id/diagonalLayout"
+            app:shape_diagonal_angle="10"
+            app:shape_diagonal_position="bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_6sdp"
-            android:orientation="vertical">
+            android:layout_height="266dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="16dp">
 
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_mapsandflags"
-                        android:layout_marginEnd="@dimen/_3sdp"/>
-                    <com.maple.rimaproject.Font.CustomTextView
+                android:layout_height="match_parent">
 
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="Area :  "/>
-                    <com.maple.rimaproject.Font.CustomTextView
-                        android:id="@+id/areadd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5"/>
-                </LinearLayout>
-
-                <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                    android:visibility="gone"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/shower"
-                    android:layout_marginEnd="@dimen/_3sdp"/>
-                <com.maple.rimaproject.Font.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10sdp"
-                    android:text="Type : "/>
-                <com.maple.rimaproject.Font.CustomTextView
-                    android:id="@+id/typexc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"/>
-            </LinearLayout>
-
-                <LinearLayout
-                    android:visibility="gone"
+                <com.maple.recyclebannar.layoutmanager.BannerLayout
+                    android:id="@+id/recycler"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+
+                    app:autoPlaying="true"
+                    app:centerScale="2.4"
+                    app:itemSpace="20"
+                    app:moveSpeed="0.5" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/id1"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/diagonalLayout"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+
+
+                    android:background="@drawable/textshapecenter"
+
                     android:gravity="center"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/fireplace"
-                        android:layout_marginEnd="@dimen/_3sdp"
-                        android:visibility="gone"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Area : "
+                        android:textColor="#fff"
+                        android:textSize="14sp" />
 
                     <com.maple.rimaproject.Font.CustomTextView
+                        android:id="@+id/referance_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="الغرف"/>
-                    <com.maple.rimaproject.Font.CustomTextView
-                        android:id="@+id/pricess"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="5"/>
+                        android:text="5"
+                        android:textColor="#fff" />
 
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
 
 
-        <android.support.v7.widget.CardView
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            <!--<com.maple.rimaproject.Font.CustomTextView-->
+                <!--android:id="@+id/price"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_marginLeft="10dp"-->
 
-           android:layout_marginTop="8dp"
-            android:layout_gravity="right"
-            android:background="#fff">
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginStart="0dp"-->
+                <!--android:layout_marginTop="130dp"-->
+                <!--android:layout_marginEnd="214dp"-->
+                <!--android:background="@drawable/textshapeleft"-->
+                <!--android:gravity="left"-->
+                <!--android:paddingStart="5dp"-->
+                <!--android:paddingTop="3dp"-->
+                <!--android:textColor="#fff"-->
+                <!--android:paddingEnd="5dp"-->
+                <!--android:paddingBottom="3dp"-->
+                <!--android:text="Price TRY : " />-->
+            <!--<com.maple.rimaproject.Font.CustomTextView-->
+                <!--android:id="@+id/referance_id"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_alignParentTop="true"-->
 
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginStart="210dp"-->
+                <!--android:layout_marginTop="11dp"-->
+                <!--android:layout_marginEnd="4dp"-->
+                <!--android:background="@drawable/textshape"-->
+                <!--android:gravity="left"-->
+                <!--android:paddingStart="5dp"-->
+                <!--android:paddingTop="3dp"-->
+                <!--android:paddingEnd="5dp"-->
+                <!--android:paddingBottom="3dp"-->
+                <!--android:text="Price TRY : "-->
 
+                <!--android:textColor="#fff" />-->
 
-
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:layout_gravity="right"
-
-                        android:layoutDirection="rtl"
-                        android:gravity="right">
-                        <com.maple.rimaproject.Font.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="الاحجام : "
-                            custom:typefaceAsset="ge_ss_light.otf"
-                            android:layout_marginStart="@dimen/_6sdp"
-                            android:layout_marginEnd="@dimen/_6sdp"
-                            android:layout_marginBottom="@dimen/_6sdp"
-                            android:textStyle="bold"/>
-
-
-
-                    </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_gravity="right"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="105dp"
+                android:orientation="horizontal">
 
-                android:layoutDirection="rtl"
-                android:gravity="right">
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|left"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="ACTOR"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-
-
+                <TextView
+                    android:id="@+id/referance_idss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|left"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="PRODUCER"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+
+        </com.github.florent37.shapeofview.shapes.DiagonalView>
+
+        <com.github.florent37.shapeofview.shapes.CircleView
+            android:id="@+id/avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="150dp"
+            >
+
+            <ImageView
+                android:id="@+id/btnchat"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@drawable/diagonallayout_circle"
+                android:src="@drawable/ic_chat_speech_bubbles" />
+        </com.github.florent37.shapeofview.shapes.CircleView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:cardUseCompatPadding="true"
-            android:layoutDirection="rtl"
-            android:layout_marginTop="8dp"
+            android:id="@+id/card1"
+            android:layout_below="@+id/avatar"
+            android:layout_marginTop="10dp"
             android:background="#fff">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_6sdp"
+
                 android:orientation="vertical">
+
                 <com.maple.rimaproject.Font.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:textSize="16sp"
-                    android:text="الانواع :  "
-                    custom:typefaceAsset="ge_ss_light.otf"
-                    android:layout_marginBottom="@dimen/_6sdp"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
-
-                    android:textStyle="bold"/>
+                    android:text="شرح المشروع : "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    custom:typefaceAsset="ge_ss_light.otf" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layoutDirection="rtl"
-                    android:textDirection="rtl">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
-
-                    <me.gujun.android.taggroup.TagGroup
-                        android:id="@+id/type"
-                        android:layout_height="wrap_content"
+                    <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/expand_text_view"
                         android:layout_width="match_parent"
-                        android:layoutDirection="rtl"
-                        android:layout_gravity="right"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginEnd="7dp"
-                        style="@style/TagGroup"
-                        android:layout_below="@+id/imgProject"/>
+                        android:layout_height="wrap_content"
+                        expandableTextView:animDuration="200"
+                        expandableTextView:maxCollapsedLines="2">
+
+                        <com.maple.rimaproject.Font.CustomTextView
+                            android:id="@id/expandable_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textColor="#666666"
+                            android:textSize="16sp"
+                            custom:typefaceAsset="ge_ss_light.otf" />
+
+                        <ImageButton
+                            android:id="@id/expand_collapse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|bottom"
+                            android:background="@android:color/transparent"
+                            android:padding="16dp" />
+                    </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+                    <!--<com.maple.rimaproject.Font.CustomTextView-->
+                    <!--android:id="@+id/projectdetails"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="@dimen/_8sdp"-->
+                    <!--android:layout_marginEnd="@dimen/_8sdp"-->
+                    <!--custom:typefaceAsset="ge_ss_light.otf"-->
+                    <!--android:lineSpacingExtra="@dimen/_3sdp"-->
+                    <!--android:text="على الطريق الواصل بين الأوتسترادين الرئيسين في مدينة إسطنبول وهما (E5 – E6) وقربه من جميع الخدمات.-->
+                    <!--المشروع يوفر لكم التقنية العالية في البناء الخاضعة لنظام مقاومة الزلازل على عمق 32 م2، بالإضافة إلى الجودة العالية للمواد المستخدمة في البناء والتشطيبات."/>-->
+
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-
+            android:id="@+id/card2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardUseCompatPadding="true"
-            android:layoutDirection="rtl"
-            android:layout_marginTop="8dp"
-            android:background="#fff">
+            android:layout_below="@+id/card1"
+            android:layout_marginTop="1dp"
+
+
+
+            android:background="#fff"
+            android:layoutDirection="rtl">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_7sdp"
                 android:orientation="vertical">
+
                 <com.maple.rimaproject.Font.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:textSize="16sp"
-                    android:text="الاحجام : "
-                    custom:typefaceAsset="ge_ss_light.otf"
-                    android:layout_marginBottom="@dimen/_6sdp"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
+                    android:text="الاحجام : "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
 
-                    android:textStyle="bold"/>
+                    custom:typefaceAsset="ge_ss_light.otf" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layoutDirection="rtl"
-                    android:textDirection="rtl">
-
+                    android:orientation="vertical"
+                    android:textDirection="ltr">
 
 
                     <me.gujun.android.taggroup.TagGroup
                         android:id="@+id/size"
-                        android:layout_height="wrap_content"
+                        style="@style/TagGroup"
                         android:layout_width="match_parent"
-                        android:layoutDirection="rtl"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgProject"
                         android:layout_gravity="right"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="2dp"
                         android:layout_marginEnd="7dp"
-                        style="@style/TagGroup"
-                        android:layout_below="@+id/imgProject"/>
+                        android:layoutDirection="rtl"
+                        android:textDirection="rtl" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_below="@+id/card2"
+            android:id="@+id/card3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+
+            android:layoutDirection="rtl"
+
+            android:background="#fff">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:orientation="vertical">
+                <com.maple.rimaproject.Font.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="موعد التسليم : "
+                    custom:typefaceAsset="ge_ss_light.otf"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layoutDirection="rtl"
+                    android:textDirection="ltr">
+
+
+                    <com.maple.rimaproject.Font.CustomTextView
+                        android:id="@+id/status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        custom:typefaceAsset="ge_ss_light.otf"
+                        android:lineSpacingExtra="@dimen/_3sdp"
+                        android:text="text"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cardlocation"
-            app:cardUseCompatPadding="false"
+            android:layout_below="@+id/card3"
+            android:layout_marginTop="1dp"
+
+
             android:layoutDirection="rtl"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:background="#fff">
+            android:background="#fff"
+            >
 
             <LinearLayout
                 android:id="@+id/LocationLinear"
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_6sdp"
+
                 android:orientation="vertical">
                 <com.maple.rimaproject.Font.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:textSize="16sp"
                     android:text="العنوان : "
                     custom:typefaceAsset="ge_ss_light.otf"
-                    android:layout_marginBottom="@dimen/_6sdp"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
 
@@ -493,121 +414,34 @@
                         android:layout_marginEnd="@dimen/_8sdp"
                         custom:typefaceAsset="ge_ss_light.otf"
                         android:lineSpacingExtra="@dimen/_3sdp"
-                        android:text="mohamed"/>
+                        android:text="text"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
-
-
-
-
-        <android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardUseCompatPadding="false"
-    android:background="#fff"
-    android:layout_marginTop="@dimen/_7sdp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_6sdp"
-        android:orientation="vertical">
-
-        <com.maple.rimaproject.Font.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:textSize="16sp"
-            android:text="المميزات : "
-            custom:typefaceAsset="ge_ss_light.otf"
-            android:layout_marginStart="@dimen/_6sdp"
-            android:layout_marginEnd="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_6sdp"
-            android:textStyle="bold"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycfeatures"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ECECEC"
-
-            />
-    </LinearLayout>
-
-
-
-</android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            app:cardUseCompatPadding="false"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="right"
-            android:background="#fff">
-
-
-
-
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_gravity="right"
-
-                android:layoutDirection="rtl"
-                android:gravity="right">
-
-                <com.maple.rimaproject.Font.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:textSize="16sp"
-                    android:text="نظام الاقساط : "
-                    custom:typefaceAsset="ge_ss_light.otf"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
-                    android:textStyle="bold"/>
-
-
-
-                <com.maple.rimaproject.Font.CustomTextView
-                    android:id="@+id/plan22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"/>
-            </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardUseCompatPadding="false"
-            android:layout_marginTop="8dp"
+            android:id="@+id/card5"
+            android:layout_below="@id/card4"
+            android:layout_marginTop="1dp"
+
+
+
             android:background="#fff">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_6sdp"
+
                 android:orientation="vertical">
                 <com.maple.rimaproject.Font.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+
                     android:textSize="16sp"
                     android:text="نظام الاقساط : "
                     custom:typefaceAsset="ge_ss_light.otf"
-                    android:layout_marginBottom="@dimen/_6sdp"
+
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:textStyle="bold"/>
@@ -629,7 +463,7 @@
                         android:text="mohamed"/>
 
 
-            </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -651,94 +485,151 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="false"
-        android:layout_marginTop="8dp"
-        android:background="#fff">
-
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_6sdp"
-            android:orientation="vertical">
-            <com.maple.rimaproject.Font.CustomTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textSize="16sp"
-                android:text="شرح المشروع : "
-                custom:typefaceAsset="ge_ss_light.otf"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:layout_marginStart="@dimen/_6sdp"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:textStyle="bold"/>
+            android:layout_marginTop="1dp"
 
+            android:id="@+id/card4"
+            android:layout_below="@+id/cardlocation"
+            android:background="#fff"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
 
-
+                android:orientation="vertical">
 
                 <com.maple.rimaproject.Font.CustomTextView
-                    android:id="@+id/projectdetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
+
+
+                    android:textSize="16sp"
+                    android:text="المميزات : "
                     custom:typefaceAsset="ge_ss_light.otf"
-                    android:lineSpacingExtra="@dimen/_3sdp"
-                    android:text="على الطريق الواصل بين الأوتسترادين الرئيسين في مدينة إسطنبول وهما (E5 – E6) وقربه من جميع الخدمات.
-المشروع يوفر لكم التقنية العالية في البناء الخاضعة لنظام مقاومة الزلازل على عمق 32 م2، بالإضافة إلى الجودة العالية للمواد المستخدمة في البناء والتشطيبات."/>
 
+                    android:layout_marginEnd="@dimen/_6sdp"
+
+                    android:textStyle="bold"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycfeatures"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ECECEC"
+
+                    />
             </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
 
 
 
-    <com.maple.rimaproject.Font.CustomTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:textSize="16sp"
-        android:text="الخريطة"
-        custom:typefaceAsset="ge_ss_light.otf"
-        android:layout_marginBottom="@dimen/_6sdp"
-        android:layout_marginStart="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:textStyle="bold"/>
+        </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        app:cardUseCompatPadding="false"
-        android:background="#fff">
-
-        <LinearLayout
+        <com.maple.rimaproject.Font.CustomTextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:id="@+id/texts"
+            android:layout_below="@+id/card5"
+            android:layout_marginTop="1dp"
 
+            android:textSize="16sp"
+            android:text="الخريطة"
+            custom:typefaceAsset="ge_ss_light.otf"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:textStyle="bold"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_below="@+id/texts"
+            android:background="#fff">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:context=".activites.ProjectDetailsActivity" />
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-    </LinearLayout>
+                    android:orientation="vertical">
 
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:context=".activites.ProjectDetailsActivity" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <LinearLayout
+            android:layout_width="169dp"
+            android:layout_height="41dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="0dp"
+            android:layout_below="@+id/id1"
+            android:background="@drawable/textshape"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/diagonalLayout"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Name :"
+
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="1.9K"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="30dp"-->
+        <!--android:layout_marginRight="30dp"-->
+        <!--android:layout_marginTop="320dp"-->
+        <!--android:text="@string/diagonallayout_description"-->
+        <!--android:textColor="#717171" />-->
+
+
+
+    </RelativeLayout>
 </ScrollView>

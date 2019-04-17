@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.like.LikeButton;
@@ -34,6 +35,7 @@ import me.gujun.android.taggroup.TagGroup;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowHolder> {
 
     private List<Project> ordersList;
+    String feature;
     private Activity mContext;
     private boolean isHomeFragment = false;
     SharedPreference sharedPreference;
@@ -57,14 +59,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
     @Override
     public void onBindViewHolder(final ItemAdapter.SingleItemRowHolder holder, final int i) {
 
-//       holder.txtTags.setTags(list);
         String type2;
         String type;
         type=ordersList.get(i).getTypes();
         type2=type.substring(1,type.length()-1);
-        String[] AllType = type2.split(Pattern.quote("^^"));
-        holder.txtTags.setTags(AllType);
-        Log.e("zxczxc", "xzzxc: "+AllType );
+
+        String FinalType=type2.replace("^^","  ,  ");
+//        String[] AllType = type2.split(Pattern.quote("^^"));
+//        for (int k=0;k < AllType.length;k++){
+//
+//            Log.e("zxczxc", "xzzxc: "+AllType );
+//
+//        }
+        holder.txtTags.setText(FinalType);
+
+
         String strOut = ordersList.get(i).getDetails();
         if (strOut.length() > 89){
             String result = strOut.substring(0, 90) + " ... ";
@@ -76,7 +85,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
         holder.tvprojectName.setText(ordersList.get(i).getReferenceId());
        Picasso.get()
                 .load(ordersList.get(i).getSliders().get(0).getPhotoPath())
-                .resize(600,400)
+                .resize(200,200)
                 .into(holder.ImageProject);
 
         if (checkFavoriteItem(ordersList.get(i))) {
@@ -92,6 +101,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
                 Intent is = new Intent(mContext, ProjectDetailsActivity.class);
 
                 is.putExtra("id",ordersList.get(i).getId());
+                is.putExtra("referenceId",ordersList.get(i).getReferenceId());
                 is.putExtra("type",ordersList.get(i).getTypes());
                 is.putExtra("size",ordersList.get(i).getSizes());
                 is.putExtra("lat",ordersList.get(i).getLatitude());
@@ -107,6 +117,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
                     Log.e("ssslllss", "onClick: "+ordersList.get(i).getSliders().get(j).getPhotoPath() );
                 }
                 is.putExtra("features",ordersList.get(i).getFeatures());
+
                 is.putExtra("location",ordersList.get(i).getLocation());
                 is.putExtra("status",ordersList.get(i).getStatus());
                 mContext.startActivity(is);
@@ -117,14 +128,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
             @Override
             public void liked(LikeButton likeButton) {
                 sharedPreference.addArrayList(mContext, ordersList.get(i));
-                Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "liked", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 sharedPreference.removeArrayList(mContext, ordersList.get(i));
-                Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "un like", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -154,7 +165,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
 
     public class SingleItemRowHolder extends RecyclerView.ViewHolder{
         protected CustomTextView tvAddress,  tvPrice, tvNote,tvprojectName,tvDetails;
-        TagGroup txtTags;
+        CustomTextView txtTags;
         ImageView ImageProject;
         protected Button btnDelivered, btnNotDelivered;
         protected LinearLayout cardlinear;
@@ -175,5 +186,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.SingleItemRowH
 //            btnNotDelivered = view.findViewById(R.id.btnNotDelivered);
         }
     }
+
 
 }

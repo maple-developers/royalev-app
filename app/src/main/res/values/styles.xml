@@ -32,7 +32,13 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    <style name="CheckBox">
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableRight">?android:attr/listChoiceIndicatorSingle</item>
+        <item name="android:drawablePadding">@dimen/_8sdp</item>
+        <item name="android:padding">@dimen/_8sdp</item>
+    </style>
     <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorControlActivated">#FFCC00</item>
@@ -54,4 +60,23 @@
         <item name="colorAccent">#4fa881</item>
         <item name="android:windowBackground">@drawable/bg_main</item>
     </style>
+
+
+    <style name="DialogTheme" parent="android:Theme.Dialog">
+
+        <item name="android:layout_width">fill_parent</item>
+
+        <item name="android:layout_height">fill_parent</item>
+
+        <!-- No backgrounds, titles or window float -->
+
+
+        <item name="android:windowBackground">@null</item>
+
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowIsFloating">false</item>
+
+    </style>
+
 </resources>

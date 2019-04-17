@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.maple.rimaproject.Font.CustomTextView;
 import com.maple.rimaproject.Retrofit.Project;
 import com.maple.rimaproject.adapters.ItemAdapter;
 import com.maple.rimaproject.adapters.SharedPreference;
@@ -28,6 +29,9 @@ public class ProjectResultActivity extends AppCompatActivity {
 
     ItemAdapter itemAdapter;
 
+    @BindView(R.id.txtTitle)
+    CustomTextView txtTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,8 @@ public class ProjectResultActivity extends AppCompatActivity {
         for (int i=0; i < allProject.size(); i++){
             Log.e("fkdsjgh", allProject.get(i).getArea());
         }
+
+        txtTitle.setText("عدد المشاريع "+ " [ "+String.valueOf(allProject.size())+" ] ");
 //        DeliveryOrderModel deliveryOrderModel = (DeliveryOrderModel) responseObject;
         rvProjects.setLayoutManager(new LinearLayoutManager(this));
 //        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);

@@ -6,7 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.SearchFragment"
-    android:background="#eee">
+
+
+    android:background="#f0f0f0">
 
     <RelativeLayout
 
@@ -30,7 +32,7 @@
             android:id="@+id/card1"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
-            android:background="#FFF"
+            android:background="#f0f0f0"
             app:cardElevation="@dimen/_5sdp"
             app:cardUseCompatPadding="false">
 
@@ -62,6 +64,7 @@
                             android:id="@+id/rangeSeekbar6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:bar_color="@color/colorAccent"
                            />
 
                         <TextView
@@ -177,7 +180,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="0dp"
-            android:background="#FFF"
+            android:background="#f0f0f0"
             app:cardElevation="@dimen/_5sdp"
             app:cardUseCompatPadding="false">
 
@@ -193,6 +196,7 @@
                 <com.maple.rimaproject.Font.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#fff"
                     android:layout_marginBottom="@dimen/_6sdp"
                     android:text="Rooms"
                     android:textSize="@dimen/_16sdp"
@@ -201,48 +205,128 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#fff"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:padding="@dimen/_2sdp"
                         android:orientation="vertical">
 
-                        <CheckBox
-                            android:id="@+id/size1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/linearcheck1"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:orientation="horizontal">
 
-                        <CheckBox
-                            android:id="@+id/size2"
+                            <net.igenius.customcheckbox.CustomCheckBox
+                                android:id="@+id/size1"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                app:color_checked="@color/colorPrimaryDark"
+                                app:color_tick="#fff"
+                                android:outlineAmbientShadowColor="#2155F3"
+                                android:outlineSpotShadowColor="#FF5722"
+                                app:color_unchecked_stroke="@color/colorPrimaryDark"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="3+1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                                app:small_tick="false" />
 
-                        <CheckBox
-                            android:id="@+id/size3"
+                            <com.maple.rimaproject.Font.CustomTextView
+                                android:id="@+id/text1"
+                                android:gravity="center"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="5+1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="0+1s"
+                                android:textSize="@dimen/_15sdp"
+
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+
+                            android:id="@+id/linearcheck4"
+
+                            android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                        android:orientation="horizontal">
+                        <net.igenius.customcheckbox.CustomCheckBox
+                        android:id="@+id/size4"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                        app:small_tick="false" />
+
+                        <com.maple.rimaproject.Font.CustomTextView
+                        android:id="@+id/text4"
+                        android:gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3+1s"
+                            android:textSize="@dimen/_15sdp"
+                        android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/linearcheck7"
+
+                            android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                        android:orientation="horizontal">
+
+                        <net.igenius.customcheckbox.CustomCheckBox
+                        android:id="@+id/size7"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                            android:visibility="gone"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                        app:small_tick="false" />
+
+
+                        <com.maple.rimaproject.Font.CustomTextView
+                        android:id="@+id/text7"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                            android:textSize="@dimen/_15sdp"
+                        android:layout_height="wrap_content"
+                        android:text="5+1s"
+
+                        android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -250,43 +334,124 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:padding="@dimen/_2sdp"
+
                         android:orientation="vertical">
-                        <CheckBox
-                            android:id="@+id/size4"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="1+1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                        <LinearLayout
+                            android:id="@+id/linearcheck2"
 
-                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:orientation="horizontal">
+                            <net.igenius.customcheckbox.CustomCheckBox
+                                android:id="@+id/size2"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                android:visibility="gone"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                app:color_checked="@color/colorPrimaryDark"
+                                app:color_tick="#fff"
+                                android:outlineAmbientShadowColor="#2155F3"
+                                android:outlineSpotShadowColor="#FF5722"
+                                app:color_unchecked_stroke="@color/colorPrimaryDark"
+                                app:small_tick="false" />
+
+                            <com.maple.rimaproject.Font.CustomTextView
+
+                                android:id="@+id/text2"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="1+1s"
+                                android:textSize="@dimen/_15sdp"
+                                android:layout_gravity="center_vertical"/>
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:id="@+id/linearcheck5"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:background="@drawable/linearborderunchecked"
+                            android:orientation="horizontal">
+                        <net.igenius.customcheckbox.CustomCheckBox
                             android:id="@+id/size5"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                            app:small_tick="false" />
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="3.5+1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                            <com.maple.rimaproject.Font.CustomTextView
+                                android:id="@+id/text5"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="3.5+1s"
+                                android:textSize="@dimen/_15sdp"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
 
-                        <CheckBox
-                            android:id="@+id/size6"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                        <LinearLayout
+                            android:id="@+id/linearcheck8"
 
+                            android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                        android:orientation="horizontal">
+
+                        <net.igenius.customcheckbox.CustomCheckBox
+                        android:id="@+id/size8"
+                        android:layout_width="27dp"
+                            android:visibility="gone"
+                        android:layout_height="27dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                        app:small_tick="false" />
+                        <com.maple.rimaproject.Font.CustomTextView
+                        android:id="@+id/text8"
+                            android:gravity="center"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="sدوبلكس"
+
+
+                        android:layout_gravity="center_vertical"/>
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -294,42 +459,122 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:padding="@dimen/_2sdp"
+
                         android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/linearcheck3"
 
-                        <CheckBox
-                            android:id="@+id/size7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:orientation="horizontal">
+                            <net.igenius.customcheckbox.CustomCheckBox
+                                android:id="@+id/size3"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                android:visibility="gone"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                app:color_checked="@color/colorPrimaryDark"
+                                app:color_tick="#fff"
+                                android:outlineAmbientShadowColor="#2155F3"
+                                android:outlineSpotShadowColor="#FF5722"
+                                app:color_unchecked_stroke="@color/colorPrimaryDark"
+                                app:small_tick="false" />
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="2+1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
 
-                        <CheckBox
-                            android:id="@+id/size8"
+                            <com.maple.rimaproject.Font.CustomTextView
+                                android:id="@+id/text3"
+                                android:gravity="center"
+                                android:textSize="@dimen/_15sdp"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="4+1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="2+1s"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="4+1"
+
+
+                        <LinearLayout
+                            android:id="@+id/linearcheck6"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:orientation="horizontal">
+                            <net.igenius.customcheckbox.CustomCheckBox
+                                android:id="@+id/size6"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                android:visibility="gone"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                app:color_checked="@color/colorPrimaryDark"
+                                app:color_tick="#fff"
+                                android:outlineAmbientShadowColor="#2155F3"
+                                android:outlineSpotShadowColor="#FF5722"
+                                app:color_unchecked_stroke="@color/colorPrimaryDark"
+                                app:small_tick="false" />
+
+                            <com.maple.rimaproject.Font.CustomTextView
+                                android:id="@+id/text6"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:textSize="@dimen/_15sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="4+1s"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:orientation="horizontal">-->
+
+                        <!--<net.igenius.customcheckbox.CustomCheckBox-->
+                            <!--android:id="@+id/size8"-->
+                            <!--android:layout_width="27dp"-->
+                            <!--android:layout_height="27dp"-->
+                            <!--android:layout_marginStart="@dimen/_10sdp"-->
+                            <!--android:layout_marginEnd="@dimen/_5sdp"-->
+                            <!--android:layout_marginTop="@dimen/_10sdp"-->
+                            <!--app:color_checked="@android:color/transparent"-->
+                            <!--app:color_tick="@color/colorPrimary"-->
+                            <!--app:color_unchecked_stroke="@color/colorAccent"-->
+                            <!--app:small_tick="false" />-->
+                            <!--<com.maple.rimaproject.Font.CustomTextView-->
+                                <!--android:id="@+id/text8"-->
+                                <!--android:layout_marginTop="@dimen/_4sdp"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="دوبلكس"-->
+                                <!--android:gravity="left"-->
+
+                                <!--android:layout_gravity="center_vertical"/>-->
+
+                        <!--</LinearLayout>-->
+                        <net.igenius.customcheckbox.CustomCheckBox
+                            android:id="@+id/size9"
                             android:visibility="invisible"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="16dp"
+                            app:color_checked="@android:color/transparent"
+                            app:color_tick="@color/colorPrimary"
+                            app:color_unchecked_stroke="@color/colorAccent"
+                            app:small_tick="false" />
 
 
 
@@ -386,31 +631,84 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:padding="@dimen/_2sdp"
+
                         android:orientation="vertical">
 
-                        <CheckBox
+                        <LinearLayout
+                            android:id="@+id/linee1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+
+                            android:orientation="horizontal">
+
+                        <net.igenius.customcheckbox.CustomCheckBox
                             android:id="@+id/type1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="شقق سكنية"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                            android:layout_width="27dp"
+                            android:visibility="gone"
+                            android:layout_height="27dp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                            app:small_tick="false" />
 
-                        <CheckBox
-                            android:id="@+id/type4"
+                            <com.maple.rimaproject.Font.CustomTextView
+                                android:id="@+id/txttype1"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="شقق سكنية"
+                                android:textSize="@dimen/_15sdp"
+                                android:layout_gravity="center_vertical"/>
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="مكاتب"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                        </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/linee4"
+
+                            android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+
+                            android:orientation="horizontal">
+                        <net.igenius.customcheckbox.CustomCheckBox
+                        android:id="@+id/type4"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                            android:visibility="gone"
+                        android:layout_marginTop="@dimen/_10sdp"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                        app:small_tick="false" />
+
+                        <com.maple.rimaproject.Font.CustomTextView
+
+                        android:id="@+id/txttype5"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                       android:textSize="@dimen/_15sdp"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                        android:text="محلات تجارية"
+                        android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -418,67 +716,170 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:padding="@dimen/_2sdp"
+
                         android:orientation="vertical">
-                        <CheckBox
-                            android:id="@+id/type2"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="شقق فندقية"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
 
-                        <CheckBox
+                        <LinearLayout
+                            android:id="@+id/linee2"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+
+                            android:orientation="horizontal">
+                            <net.igenius.customcheckbox.CustomCheckBox
+                                android:id="@+id/type2"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                android:visibility="gone"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                app:color_checked="@color/colorPrimaryDark"
+                                app:color_tick="#fff"
+                                android:outlineAmbientShadowColor="#2155F3"
+                                android:outlineSpotShadowColor="#FF5722"
+                                app:color_unchecked_stroke="@color/colorPrimaryDark"
+                                app:small_tick="false" />
+
+                            <com.maple.rimaproject.Font.CustomTextView
+
+                                android:id="@+id/txttype2"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                            android:textSize="@dimen/_15sdp"
+
+                                android:text="شقق فندقية"
+                                android:layout_gravity="center_vertical"/>
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:id="@+id/linee5"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
+
+                            android:orientation="horizontal">
+                        <net.igenius.customcheckbox.CustomCheckBox
                             android:id="@+id/type5"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:visibility="gone"
+                            app:color_checked="@color/colorPrimaryDark"
+                            app:color_tick="#fff"
+                            android:outlineAmbientShadowColor="#2155F3"
+                            android:outlineSpotShadowColor="#FF5722"
+                            app:color_unchecked_stroke="@color/colorPrimaryDark"
+                            app:small_tick="false" />
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
 
-                            android:layout_weight="1"
-                            android:text="محلات تجارية"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                            <com.maple.rimaproject.Font.CustomTextView
 
+                                android:id="@+id/txttype4"
 
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:textSize="@dimen/_15sdp"
+                                android:text="مكاتب"
+                                android:layout_gravity="center_vertical"/>
 
+                </LinearLayout>
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:padding="@dimen/_2sdp"
+
                         android:orientation="vertical">
 
-                        <CheckBox
-                            android:id="@+id/type3"
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="فلل"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
 
 
+                        <LinearLayout
+                            android:id="@+id/linee3"
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/linearborderunchecked"
+                            android:layout_marginBottom="@dimen/_2sdp"
 
-                            android:text="4+1"
-                            android:visibility="invisible"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_12sdp" />
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <net.igenius.customcheckbox.CustomCheckBox
+                                android:id="@+id/type3"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:visibility="gone"
+                                app:color_checked="@color/colorPrimaryDark"
+                                app:color_tick="#fff"
+                                android:outlineAmbientShadowColor="#2155F3"
+                                android:outlineSpotShadowColor="#FF5722"
+                                app:color_unchecked_stroke="@color/colorPrimaryDark"
+                                app:small_tick="false" />
+
+                            <com.maple.rimaproject.Font.CustomTextView
+
+                                android:id="@+id/txttype3"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="فلل"
+                                android:gravity="center"
+                                android:textSize="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:orientation="horizontal">-->
+                            <!--<net.igenius.customcheckbox.CustomCheckBox-->
+                                <!--android:id="@+id/type2"-->
+                                <!--android:layout_width="27dp"-->
+                                <!--android:layout_height="27dp"-->
+                                <!--android:layout_marginStart="@dimen/_10sdp"-->
+                                <!--android:layout_marginEnd="@dimen/_5sdp"-->
+                                <!--android:layout_marginTop="@dimen/_10sdp"-->
+                                <!--app:color_checked="@android:color/transparent"-->
+                                <!--app:color_tick="@color/colorPrimary"-->
+                                <!--app:color_unchecked_stroke="@color/colorAccent"-->
+                                <!--app:small_tick="false" />-->
+
+                            <!--<com.maple.rimaproject.Font.CustomTextView-->
+
+                                <!--android:id="@+id/txttype5"-->
+                                <!--android:layout_marginTop="@dimen/_4sdp"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:gravity="left"-->
+
+                                <!--android:text="محلات تجارية"-->
+                                <!--android:layout_gravity="center_vertical"/>-->
+                        <!--</LinearLayout>-->
+
 
 
 

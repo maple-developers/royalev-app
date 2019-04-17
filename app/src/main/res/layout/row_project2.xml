@@ -4,12 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/tools"
-    custom:cardElevation="3dp"
+    app:cardCornerRadius="15dp"
+
+
+
+
     custom:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_130sdp">
+        android:layout_height="@dimen/_130sdp"
+        >
 
 
 
@@ -23,19 +28,18 @@
             android:src="@drawable/villa" />
         <com.like.LikeButton
             android:id="@+id/favorite"
-            android:layout_width="48dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="0dp"
-
             app:anim_scale_factor="2"
             app:circle_end_color="@color/colorAccent"
             app:circle_start_color="@color/colorPrimary"
             app:dots_primary_color="@color/colorAccent"
             app:dots_secondary_color="@color/colorPrimary"
-            app:icon_size="25dp"
+            app:icon_size="150dp"
             app:icon_type="heart"
             app:is_enabled="false"
             app:like_drawable="@drawable/thumb_on"
@@ -72,7 +76,9 @@
                     android:layout_alignBottom="@+id/imgProject"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:gravity="start"
+                    android:gravity="right"
+                    android:layoutDirection="rtl"
+                    android:textStyle="bold"
                     android:textSize="16sp"
                     android:text="فيلا للبيع"
                     android:textColor="#000"
@@ -82,6 +88,8 @@
                     android:id="@+id/txtProjectBrief"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_3sdp"
                     android:layout_alignBottom="@+id/imgProject"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
@@ -91,18 +99,38 @@
                     android:textColor="#000"
                     custom:typefaceAsset="ge_ss_light.otf" />
 
+                <!--<Button-->
+                    <!--android:id="@+id/favorite"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:layout_marginEnd="0dp"-->
+                    <!--app:anim_scale_factor="2"-->
+                    <!--app:circle_end_color="@color/colorAccent"-->
+                    <!--app:circle_start_color="@color/colorPrimary"-->
+                    <!--app:dots_primary_color="@color/colorAccent"-->
+                    <!--app:dots_secondary_color="@color/colorPrimary"-->
+                    <!--app:icon_size="150dp"-->
+                    <!--app:icon_type="heart"-->
+                    <!--app:is_enabled="false"-->
+                    <!--app:like_drawable="@drawable/thumb_on"-->
+                    <!--app:liked="true"-->
+                    <!--app:unlike_drawable="@drawable/thumb_off" />-->
 
-
-                <me.gujun.android.taggroup.TagGroup
+                <com.maple.rimaproject.Font.CustomTextView
                     android:id="@+id/txtTags"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layoutDirection="rtl"
                     android:layout_gravity="start"
                     android:layout_marginTop="2dp"
+                    custom:typefaceAsset="ge_ss_light.otf"
                     android:layout_marginStart="7dp"
                     android:layout_marginEnd="7dp"
-                    style="@style/TagGroup"
+                    android:background="@drawable/textshapetype"
+
                     android:layout_below="@+id/imgProject"/>
 
             </LinearLayout>
